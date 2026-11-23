@@ -1,0 +1,29 @@
+{
+  "id": "ENSAIO-B",
+  "grupo": "B",
+  "condicao": "com harness",
+  "variante": "harness",
+  "ensaio": true,
+  "pasta": "/tmp/claude-1001/-home-usuario-Documentos-workspace-Harness-agentes-IA/6b921b54-8282-4503-bfc8-4f9db1995aa8/scratchpad/execucoes/ENSAIO-B",
+  "status": "em-andamento",
+  "preparadaEm": "2026-11-23T14:18:50.154Z",
+  "finalizadaEm": null,
+  "repositorioPrincipal": {
+    "commit": "7cf4c4ca305c5a31bd4e3c7a77b6b19ce124658f",
+    "sujo": false
+  },
+  "ambiente": {
+    "node": "v24.9.0",
+    "npm": "11.6.0",
+    "claudeCli": "2.1.300 (Claude Code)",
+    "sistema": "Linux 5.15.0-138-generic"
+  },
+  "limites": {
+    "maxRodadas": 8,
+    "maxMinutos": 120
+  },
+  "commitInicial": "53f3692dfb5c84894e2d24f8c80a07a5b3bb8676",
+  "checkpoints": [],
+  "rodadasDeCorrecao": 0,
+  "edicoesManuais": 0
+}
