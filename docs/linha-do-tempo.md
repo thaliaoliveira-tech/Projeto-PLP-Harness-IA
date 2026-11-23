@@ -41,6 +41,9 @@ As referências "ADR-xxx" apontam para [`decisoes.md`](decisoes.md).
 - **11:11** — Correção de métrica: "casos de teste escritos pelo agente" passou a excluir os testes herdados da base/harness (antes, B contava os 11 testes de contrato como se fossem do agente).
 - **11:12** — Checklist de ambiente (`scripts/verificar-ambiente.sh`): detectou que o Node não está no PATH de processos não interativos — correção documentada no protocolo (passo 0). Gerador do histórico git. Commit `5e1fbb5`.
 - **11:14** — Documentação: protocolo das execuções, visão geral, fundamentação reativa, sistema, harness, metodologia (com ameaças à validade), instrumento de avaliação (com tabela de sobreposição harness × suíte oculta: 7 ✓, 7 ◐, 27 ✗), decisões (ADR-001 a ADR-013), material para slides/relatório e README.
+- **11:20** — Ensaio refeito com a versão definitiva dos scripts (incluindo o caminho de edição manual): ENSAIO-A aprovada com 2 intervenções, ENSAIO-B aprovada sem intervenções. Gráficos revisados (folga no topo da escala).
+- **11:22** — Verificação final: testes do verificador 10/10; camadas `base` e `harness` conferidas; temporários removidos. **Infraestrutura pronta para as execuções A1–B3.**
+- **Pendente antes da primeira execução:** tornar o Node visível para processos não interativos (protocolo, passo 0).
 
 ## Execuções do experimento (registro automático)
 
