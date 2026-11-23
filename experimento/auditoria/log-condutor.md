@@ -164,3 +164,39 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 - Resultado: Execução A2 finalizada (`aprovada`), ramo `execucoes/A2` importado (`88d93ba`), `~/projetos-leilao/A2` removido, `resumo.md` gerado (467 min de relógio devido à pausa de limite da conta, 1 intervenção humana + 1 repetição técnica, US$ 1.50). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
 - Decisão: Fazer commit de A2 (seção 5.6, passo 5) e prosseguir para a próxima execução obrigatória (`A3`).
 - Arquivos gerados: `experimento/execucoes/A2/registro.md`, `experimento/execucoes/A2/resumo.md`, `experimento/execucoes/A2/relatorio.md`, `docs/linha-do-tempo.md`
+
+### 23/11/2026 20:13 — A3 — Preparação da execução A3
+- Comando: `scripts/preparar-execucao.sh A3` (executado fora do sandbox após erro de `mkdir ~/projetos-leilao` no sandbox)
+- Resultado: Pasta `~/projetos-leilao/A3` criada (sem harness), commit inicial `2dbe2c32`. Tabela de configuração preenchida em `experimento/execucoes/A3/registro.md`.
+- Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
+- Arquivos gerados: `experimento/execucoes/A3/registro.md`, `~/projetos-leilao/A3`
+
+### 23/11/2026 20:16 — A3 — Implementador rodada 00 (inicial) e classificação
+- Comando: `scripts/rodar-implementador.sh A3 inicial` (fora do sandbox, em segundo plano)
+- Resultado: Código 0, 138s, 8 turnos, US$ 0.25. Implementador relatou implementação em `src/leiloes/` e `AppModule`, com `npm run build`, `npm run lint`, 4 testes e2e escritos em `test/leiloes.e2e-spec.ts` (`npm run test:e2e`) e verificação com `npm run start:prod` na porta 3456.
+- Decisão: Classificado como **concluiu / apresenta resumo do que fez** (seção 5.3, linha 1). Seguir para seção 5.4: rodar `scripts/checkpoint.sh A3 entrega`.
+- Arquivos gerados: `experimento/execucoes/A3/implementador/rodada-00-inicial.json`
+
+### 23/11/2026 20:17 — A3 — Checkpoint 1 (entrega)
+- Comando: `scripts/checkpoint.sh A3 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
+- Resultado: `❌ REPROVADO — build ok | aceitação 41/41 | violações 3 | erros de tipo 0 | lint 0e/0a` (commit `46c2bead`, 5 min desde a preparação, 3 violações: 2× RX04 `estado-mutavel` e 1× RX02 `subscribe-fora-do-ciclo-de-vida` em `src/leiloes/leiloes.service.ts`). Saída indicou `✍ Intervenção 1`.
+- Decisão: Seguir para seção 5.5 — enviar `intervencao.md` via `scripts/rodar-implementador.sh A3 intervencao`.
+- Arquivos gerados: `experimento/execucoes/A3/checkpoints/01-entrega/avaliacao.md`, `experimento/execucoes/A3/checkpoints/01-entrega/intervencao.md`
+
+### 23/11/2026 20:20 — A3 — Implementador rodada 01 (intervencao) e classificação
+- Comando: `scripts/rodar-implementador.sh A3 intervencao` (fora do sandbox, em segundo plano)
+- Resultado: Código 0, 116s, 8 turnos, US$ 0.51. Implementador extraiu domínio puro para `src/leiloes/leiloes.dominio.ts` (`decidir(estado, comando)`), derivou estado e notificações com `scan` + `shareReplay(1)` em `LeiloesService` e moveu as 2 assinaturas (`estado$` e encerramento com `groupBy`/`switchMap(timer)`) para `onModuleInit` com `takeUntil(destruir$)`. Build, lint e 4 testes e2e passaram.
+- Decisão: Classificado como **concluiu / apresenta resumo do que fez** (seção 5.3, linha 1). Seguir para seção 5.4: rodar `scripts/checkpoint.sh A3 correcao`.
+- Arquivos gerados: `experimento/execucoes/A3/implementador/rodada-01-intervencao.json`
+
+### 23/11/2026 20:21 — A3 — Checkpoint 2 (correcao)
+- Comando: `scripts/checkpoint.sh A3 correcao` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `19f89264`, 8 min desde a preparação, 1 rodada de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh A3`.
+- Arquivos gerados: `experimento/execucoes/A3/checkpoints/02-correcao/avaliacao.md`
+
+### 23/11/2026 20:22 — A3 — Finalização, auditoria de isolamento e relatório
+- Comando: `scripts/finalizar-execucao.sh A3` (fora do sandbox após erro de `.git/FETCH_HEAD` somente leitura no sandbox) e `grep -l "Harness-agentes-IA" experimento/execucoes/A3/sessao/*.jsonl`
+- Resultado: Execução A3 finalizada (`aprovada`), ramo `execucoes/A3` importado (`19f8926`), `~/projetos-leilao/A3` removido, `resumo.md` gerado (6 min, 1 intervenção, US$ 0.76, 4 casos de teste e2e escritos). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
+- Decisão: Fazer commit de A3 (seção 5.6, passo 5) e prosseguir para a última execução obrigatória (`B3`).
+- Arquivos gerados: `experimento/execucoes/A3/registro.md`, `experimento/execucoes/A3/resumo.md`, `experimento/execucoes/A3/relatorio.md`, `docs/linha-do-tempo.md`
