@@ -10,12 +10,12 @@
 
 | Item | Valor |
 |---|---|
-| Versão da extensão / CLI | |
-| Modelo (`/model`) | |
-| Esforço (effort) | |
-| Modo de permissão | |
-| Conversa nova (sem histórico)? | sim / não |
-| Horário em que o prompt inicial foi enviado | |
+| Versão da extensão / CLI | 2.1.300 (Claude Code) |
+| Modelo (`/model`) | claude-sonnet-5-5 |
+| Esforço (effort) | medium |
+| Modo de permissão | acceptEdits (não interativo) |
+| Conversa nova (sem histórico)? | sim |
+| Horário em que o prompt inicial foi enviado | 23/11/2026 20:23 |
 
 ## Ocorrências durante a execução
 
