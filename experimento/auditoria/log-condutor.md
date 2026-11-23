@@ -116,3 +116,51 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 - Resultado: Execução B2 finalizada (`aprovada`), ramo `execucoes/B2` importado (`4afc1a8`), `~/projetos-leilao/B2` removido, `resumo.md` gerado (3 min, 0 intervenções, US$ 0.47, 23 casos de teste escritos, hooks: 2 ok / 1 falha em `testes-unitarios`). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
 - Decisão: Fazer commit de B2 (seção 5.6, passo 5) e prosseguir para a próxima execução obrigatória (`A2`).
 - Arquivos gerados: `experimento/execucoes/B2/registro.md`, `experimento/execucoes/B2/resumo.md`, `experimento/execucoes/B2/relatorio.md`, `experimento/execucoes/B2/harness-hooks.log`, `docs/linha-do-tempo.md`
+
+### 23/11/2026 12:23 — A2 — Preparação da execução A2
+- Comando: `scripts/preparar-execucao.sh A2` (executado fora do sandbox após erro de `mkdir ~/projetos-leilao` no sandbox)
+- Resultado: Pasta `~/projetos-leilao/A2` criada (sem harness), commit inicial `d5285083`. Tabela de configuração preenchida em `experimento/execucoes/A2/registro.md`.
+- Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
+- Arquivos gerados: `experimento/execucoes/A2/registro.md`, `~/projetos-leilao/A2`
+
+### 23/11/2026 12:25 — A2 — Implementador rodada 00 (inicial) e classificação
+- Comando: `scripts/rodar-implementador.sh A2 inicial` (fora do sandbox, em segundo plano)
+- Resultado: Código 0, 83s, 8 turnos, US$ 0.22. Implementador relatou implementação em `src/leilao.service.ts`, `src/notificacoes.service.ts`, `src/leiloes.controller.ts`, `src/leilao.types.ts` e `src/app.module.ts`, com verificação manual via `curl` (mencionando que um processo `node dist/main` na porta 3111 pode ter continuado ativo) e sem testes automatizados.
+- Decisão: Classificado como **concluiu / apresenta resumo do que fez** (seção 5.3, linha 1). Seguir para seção 5.4: rodar `scripts/checkpoint.sh A2 entrega`.
+- Arquivos gerados: `experimento/execucoes/A2/implementador/rodada-00-inicial.json`
+
+### 23/11/2026 12:25 — A2 — Checkpoint 1 (entrega)
+- Comando: `scripts/checkpoint.sh A2 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
+- Resultado: `❌ REPROVADO — build ok | aceitação 41/41 | violações 7 | erros de tipo 0 | lint 0e/0a` (commit `912f6956`, 2 min desde a preparação, 7 violações: RX03=1, RX04=4, RX02=1, RX07=1). Saída indicou `✍ Intervenção 1`.
+- Decisão: Seguir para seção 5.5 — enviar `intervencao.md` via `scripts/rodar-implementador.sh A2 intervencao`.
+- Arquivos gerados: `experimento/execucoes/A2/checkpoints/01-entrega/avaliacao.md`, `experimento/execucoes/A2/checkpoints/01-entrega/intervencao.md`
+
+### 23/11/2026 12:28 — A2 — Limite de uso da sessão do Claude Code na rodada 01 (intervencao)
+- Comando: `scripts/rodar-implementador.sh A2 intervencao` (fora do sandbox, em segundo plano)
+- Resultado: Código 1 (erro), 135s, 6 turnos, US$ 0.51. Mensagem retornada: `You've hit your session limit · resets 2:10pm (America/Maceio)`.
+- Decisão: Parar com segurança sem deixar chamada em aberto e consultar o usuário, conforme seção 7 ("Limite de uso da conta / custo inesperado").
+- Arquivos gerados: `experimento/execucoes/A2/implementador/rodada-01-intervencao.json`, `experimento/execucoes/A2/implementador/rodada-01-intervencao.stderr`
+
+### 23/11/2026 20:09 — A2 — Retomada após pausa por limite de uso (repetição técnica)
+- Comando: `scripts/rodar-implementador.sh A2 intervencao` (repetição técnica após pausa às 12:35 por escolha do usuário — opção 2 — e autorização de retomada às 20:08)
+- Resultado: Em execução em segundo plano.
+- Decisão: Repetir o mesmo comando (`intervencao`) conforme seção 7 ("rodar-implementador.sh termina com código ≠ 0 uma vez → repita o mesmo comando"; não conta como nova intervenção humana).
+- Arquivos gerados: —
+
+### 23/11/2026 20:10 — A2 — Implementador rodada 02 (intervencao — repetição técnica) e classificação
+- Comando: `scripts/rodar-implementador.sh A2 intervencao` (fora do sandbox, em segundo plano)
+- Resultado: Código 0, 37s, 2 turnos, US$ 0.77. Implementador corrigiu RX03 (`private readonly` + `eventos$`), RX04 (redutores puros com `scan`), RX02 (assinaturas em `onModuleInit` com `takeUntil(destruir$)`, `groupBy`/`switchMap(timer)`) e RX07 (`ParticipantesController` separado e `NotificacoesService` assinando `LeilaoService.eventos$`), testando manualmente com `curl`.
+- Decisão: Classificado como **concluiu / apresenta resumo do que fez** (seção 5.3, linha 1). Seguir para seção 5.4: rodar `scripts/checkpoint.sh A2 correcao`.
+- Arquivos gerados: `experimento/execucoes/A2/implementador/rodada-02-intervencao.json`
+
+### 23/11/2026 20:10 — A2 — Checkpoint 2 (correcao)
+- Comando: `scripts/checkpoint.sh A2 correcao` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `88d93ba0`, 468 min desde a preparação em função da pausa por limite da conta entre 12:28 e 20:08, 1 rodada de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh A2`.
+- Arquivos gerados: `experimento/execucoes/A2/checkpoints/02-correcao/avaliacao.md`
+
+### 23/11/2026 20:11 — A2 — Finalização, auditoria de isolamento e relatório
+- Comando: `scripts/finalizar-execucao.sh A2` (fora do sandbox após erro de `.git/FETCH_HEAD` somente leitura no sandbox) e `grep -l "Harness-agentes-IA" experimento/execucoes/A2/sessao/*.jsonl`
+- Resultado: Execução A2 finalizada (`aprovada`), ramo `execucoes/A2` importado (`88d93ba`), `~/projetos-leilao/A2` removido, `resumo.md` gerado (467 min de relógio devido à pausa de limite da conta, 1 intervenção humana + 1 repetição técnica, US$ 1.50). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
+- Decisão: Fazer commit de A2 (seção 5.6, passo 5) e prosseguir para a próxima execução obrigatória (`A3`).
+- Arquivos gerados: `experimento/execucoes/A2/registro.md`, `experimento/execucoes/A2/resumo.md`, `experimento/execucoes/A2/relatorio.md`, `docs/linha-do-tempo.md`
