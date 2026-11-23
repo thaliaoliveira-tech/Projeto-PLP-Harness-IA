@@ -1,4 +1,4 @@
-// ANTI-GABARITO: implementação imperativa típica (funciona, mas viola as regras reativas).
+// ANTI-GABARITO (comentário editado à mão) (funciona, mas viola as regras reativas).
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { Subject } from 'rxjs';
