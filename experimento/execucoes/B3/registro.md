@@ -25,14 +25,14 @@ interrupções, edições manuais etc.
 
 | Horário | Ocorrência | O que você fez |
 |---|---|---|
-| | | |
+| — | Nenhuma ocorrência fora do roteiro (sem perguntas, sem travamentos, sem intervenções humanas). | — |
 
 ## Observações sobre o comportamento do agente
 
-- Seguiu as instruções do projeto (AGENTS.md / CLAUDE.md)? Rodou a validação por conta própria?
-- Que tipo de solução produziu (reativa? imperativa? mista)?
-- O que mais chamou sua atenção (bom ou ruim)?
+- Seguiu as instruções do harness (`AGENTS.md`/`CLAUDE.md`): estruturou `leiloes/` (`dominio`, `aplicacao`, `http`) e `notificacoes/` observando `eventos$` sem acoplamento direto, escreveu 3 arquivos de testes unitários (18 casos, cobrindo domínios de leilões e de notificações), e rodou `npm run validate` até `VALIDAÇÃO OK`, além de teste manual na porta 3456 com 5 lances simultâneos.
+- Produziu arquitetura **reativa** pura desde a primeira entrega: `decidir`/`evoluir` puros, Sink privado (`Subject` + `scan`), `eventos$` com replay, encerramento com `groupBy` + `switchMap(timer)` carregando o prazo agendado conforme `docs/arquitetura.md`.
+- Chamou atenção: 0 violações, 0/41 testes falhando e aprovação na 1ª entrega sem intervenções; nenhum arquivo do harness foi alterado ou removido.
 
 ## Impressão geral
 
-(2–3 frases para usar no relatório)
+Com o harness ativo, o implementador seguiu integralmente a arquitetura orientada a eventos, escreveu 18 testes unitários e validou com `npm run validate` e concorrência manual, sendo aprovado já no primeiro checkpoint sem intervenções humanas (US$ 0.49).

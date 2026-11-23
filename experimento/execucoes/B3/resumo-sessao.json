@@ -1,0 +1,63 @@
+{
+  "arquivos": 1,
+  "sessoes": [
+    "97c14d38-f817-44a1-98e2-c7720146a3f4"
+  ],
+  "modelos": [
+    "claude-sonnet-5-5"
+  ],
+  "versoesClaudeCode": [
+    "2.1.300"
+  ],
+  "pontosDeEntrada": [
+    "sdk-cli"
+  ],
+  "modosDePermissao": [
+    "acceptEdits"
+  ],
+  "esforco": [
+    "medium"
+  ],
+  "inicio": "2026-11-23T23:23:53.198Z",
+  "fim": "2026-11-23T23:27:15.318Z",
+  "duracaoMinutos": 3.37,
+  "mensagensHumanas": 1,
+  "detalheMensagensHumanas": [
+    {
+      "quando": "2026-11-23T23:23:54.140Z",
+      "caracteres": 7086,
+      "inicio": "# Tarefa: API de leilões em tempo real\n\nImplemente, neste projeto NestJS, uma API HTTP de **leilões em tempo real** utilizando **programação reativa / orientada"
+    }
+  ],
+  "interrupcoes": 0,
+  "chamadasDeFerramenta": 9,
+  "ferramentas": {
+    "Bash": 9
+  },
+  "errosDeFerramenta": 2,
+  "detalheErrosDeFerramenta": [
+    {
+      "quando": "2026-11-23T23:26:41.072Z",
+      "trecho": "Exit code 144\n{\"aceito\":true,\"leilao\":{\"id\":\"d9ebd5e3-6a48-4604-ad67-422c2cfd086a\",\"titulo\":\"Bike\",\"lanceInicial\":100,\"incrementoMinimo\":10,\"prorrogacaoSegundos\":3,\"encerraEm\":\"2026-11-23T23:26:37.857Z\",\"status\":\"ABERTO\",\"maiorLance\":{\"participante\":\"ana\",\"valor\":100,\"ocorridoEm\":\"2026-11-23T23:26:3"
+    },
+    {
+      "quando": "2026-11-23T23:26:43.719Z",
+      "trecho": "Exit code 144"
+    }
+  ],
+  "comandosBash": 9,
+  "execucoes": {
+    "validate": 3,
+    "testes": 2,
+    "build": 1,
+    "tsc": 0
+  },
+  "respostasDoModelo": 10,
+  "tokens": {
+    "entrada": 20,
+    "saida": 24343,
+    "cacheEscrita": 52209,
+    "cacheLeitura": 419990
+  },
+  "entradasDeSubagente": 0
+}
