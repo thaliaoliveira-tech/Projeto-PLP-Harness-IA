@@ -1,0 +1,18 @@
+{
+  "name": "kit-avaliacao",
+  "private": true,
+  "type": "module",
+  "description": "Kit de avaliação do experimento (oculto dos agentes): testes de aceitação, verificação de regras e coleta de métricas.",
+  "scripts": {
+    "aceitacao": "vitest run --config vitest.config.ts",
+    "test:verificador": "vitest run --config vitest.verificador.config.ts"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.12"
+  }
+}
