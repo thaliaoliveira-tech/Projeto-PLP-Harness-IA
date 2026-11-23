@@ -330,6 +330,16 @@ function metricasDeCodigo() {
     }
   }
   const contarCasos = (c) => (readFileSync(c, 'utf8').match(/^\s*(it|test)(\.each\([^)]*\))?\(/gm) ?? []).length;
+  // Testes escritos pelo agente = arquivos de teste que não são cópia idêntica dos que vieram da
+  // base (exemplo do NestJS) ou do harness (testes de contrato).
+  const original = (c) => {
+    const rel = relative(PROJETO, c);
+    return ['projetos/base', 'projetos/harness'].some((camada) => {
+      const o = join(RAIZ, camada, rel);
+      return existsSync(o) && hashArquivo(o) === hashArquivo(c);
+    });
+  };
+  const testesDoAgente = testes.filter((c) => !original(c));
 
   const pkg = JSON.parse(readFileSync(join(PROJETO, 'package.json'), 'utf8'));
   const referencia = JSON.parse(
@@ -340,9 +350,10 @@ function metricasDeCodigo() {
   return {
     arquivosCodigo: codigo.length,
     linhasCodigo: codigo.reduce((s, c) => s + linhasDeCodigo(c), 0),
-    arquivosTeste: testes.length,
-    casosDeTeste: testes.reduce((s, c) => s + contarCasos(c), 0),
-    linhasTeste: testes.reduce((s, c) => s + linhasDeCodigo(c), 0),
+    arquivosTeste: testesDoAgente.length,
+    casosDeTeste: testesDoAgente.reduce((s, c) => s + contarCasos(c), 0),
+    linhasTeste: testesDoAgente.reduce((s, c) => s + linhasDeCodigo(c), 0),
+    casosDeTesteHerdados: testes.filter(original).reduce((s, c) => s + contarCasos(c), 0),
     chamadasSubscribe: (textoCodigo.match(/\.subscribe\(/g) ?? []).length,
     importsRxjs: [...operadores].sort(),
     dependenciasAdicionadas: [...deps(pkg)].filter((d) => !antes.has(d)).sort(),
@@ -395,7 +406,7 @@ function relatorioMarkdown() {
     `| Violações arquiteturais (RX01–RX09) | ${m.arquitetura.total ?? 'erro'} |`,
     `| Lint genérico (oxlint, config da base) | ${m.lint.erros} erros, ${m.lint.avisos} avisos |`,
     `| Código | ${m.codigo.arquivosCodigo} arquivos, ${m.codigo.linhasCodigo} linhas |`,
-    `| Testes escritos no projeto | ${m.codigo.arquivosTeste} arquivos, ${m.codigo.casosDeTeste} casos |`,
+    `| Testes escritos pelo agente | ${m.codigo.arquivosTeste} arquivos, ${m.codigo.casosDeTeste} casos (+ ${m.codigo.casosDeTesteHerdados} herdados da base/harness) |`,
     `| Chamadas a \`.subscribe(\` | ${m.codigo.chamadasSubscribe} |`,
     `| Dependências adicionadas | ${m.codigo.dependenciasAdicionadas.join(', ') || '—'} |`,
   ];
@@ -471,7 +482,7 @@ m.aceitacao = await aceitacao();
 m.codigo = metricasDeCodigo();
 m.harness = integridadeDoHarness();
 m.problemas = montarProblemas();
-m.aprovado = m.problemas.total === 0;
+m.aprovado = m.problemas.total === 0 && m.aceitacao.executada === true;
 
 writeFileSync(join(SAIDA, 'metricas.json'), `${JSON.stringify(m, null, 2)}\n`);
 writeFileSync(join(SAIDA, 'avaliacao.md'), relatorioMarkdown());
