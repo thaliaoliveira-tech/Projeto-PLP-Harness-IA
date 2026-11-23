@@ -1,6 +1,0 @@
-# Linha do tempo — execução ENSAIO-A (sem harness)
-
-- **23/11/2026, 11:06** — `ENSAIO-A` preparada (sem harness): pasta `/tmp/claude-1001/-home-usuario-Documentos-workspace-Harness-agentes-IA/6b921b54-8282-4503-bfc8-4f9db1995aa8/scratchpad/execucoes/ENSAIO-A`, commit inicial `6d541920`
-- **23/11/2026, 11:06** — `ENSAIO-A` checkpoint 1 (entrega) — commit `03a3a0bc` — 0/41 testes falhando, 12 violações
-- **23/11/2026, 11:07** — `ENSAIO-A` checkpoint 2 (correcao) — commit `18a8f459` — aprovado (build ok, 0 testes falhando, 0 violações)
-- **23/11/2026, 11:07** — `ENSAIO-A` finalizada — **aprovada** após 1 intervenção(ões) humana(s) e 1 min; histórico no ramo `ensaio/ENSAIO-A`
