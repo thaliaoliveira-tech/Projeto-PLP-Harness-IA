@@ -1,0 +1,29 @@
+{
+  "id": "A3",
+  "grupo": "A",
+  "condicao": "sem harness",
+  "variante": "base",
+  "ensaio": false,
+  "pasta": "~/projetos-leilao/A3",
+  "status": "em-andamento",
+  "preparadaEm": "2026-11-23T23:13:01.547Z",
+  "finalizadaEm": null,
+  "repositorioPrincipal": {
+    "commit": "e620de1d86f40c92fe90538818b747eee647f767",
+    "sujo": false
+  },
+  "ambiente": {
+    "node": "v24.9.0",
+    "npm": "11.6.0",
+    "claudeCli": "2.1.300 (Claude Code)",
+    "sistema": "Linux 5.15.0-138-generic"
+  },
+  "limites": {
+    "maxRodadas": 8,
+    "maxMinutos": 120
+  },
+  "commitInicial": "2dbe2c32e021e6be0c728314b2ee80b5fd3a32ea",
+  "checkpoints": [],
+  "rodadasDeCorrecao": 0,
+  "edicoesManuais": 0
+}
