@@ -3,6 +3,7 @@
 Registro cronológico de tudo o que foi feito: decisões, construção, problemas encontrados e correções.
 Horários no fuso de Brasília (UTC−3). O histórico completo de alterações está no `git log`
 (ver também `docs/historico-git.md`, gerado por `scripts/gerar-historico-git.sh`).
+As referências "ADR-xxx" apontam para [`decisoes.md`](decisoes.md).
 
 ## 23/11/2026 — Entendimento e planejamento
 
@@ -34,7 +35,12 @@ Horários no fuso de Brasília (UTC−3). O histórico completo de alterações 
 - **10:59** — Causa encontrada: o temporizador do Node dispara ~1 ms **antes** de `Date.now()` alcançar o prazo em 8% dos casos (24/300 medidos). O gabarito concluía "ainda não venceu" e o leilão nunca encerrava. Correção: o comando de encerramento carrega o prazo agendado (ADR-008). Depois da correção: 10 rodadas, 410/410 execuções verdes.
 - **11:00** — Avaliador passa a rodar a suíte 2× por checkpoint e marca testes instáveis (ADR-009). A armadilha do temporizador foi registrada na documentação do harness. Commit `2cb2330`.
 - **11:03** — Analisador de transcrições do Claude Code (`scripts/analisar-sessao.mjs`) escrito e testado na própria sessão de construção.
-- **11:05** — Scripts de condução do experimento (`preparar`, `checkpoint`, `finalizar`, `status`) escritos.
+- **11:05** — Scripts de condução do experimento (`preparar`, `checkpoint`, `finalizar`, `status`) escritos. Commit `febccaf`.
+- **11:06** — **Ensaio do protocolo** (dados sintéticos): ENSAIO-A (entrega = anti-gabarito → 12 violações → prompt de intervenção gerado → correção = gabarito → aprovado → finalizada, histórico importado como ramo) e ENSAIO-B (harness; hooks simulados; aprovado na entrega). Fluxo completo validado.
+- **11:10** — Consolidação de resultados com estatística descritiva, delta de Cliff e 6 gráficos SVG (paleta validada para daltonismo). Revisão visual dos gráficos renderizados: subtítulo cortado e rótulo encostado na margem corrigidos.
+- **11:11** — Correção de métrica: "casos de teste escritos pelo agente" passou a excluir os testes herdados da base/harness (antes, B contava os 11 testes de contrato como se fossem do agente).
+- **11:12** — Checklist de ambiente (`scripts/verificar-ambiente.sh`): detectou que o Node não está no PATH de processos não interativos — correção documentada no protocolo (passo 0). Gerador do histórico git. Commit `5e1fbb5`.
+- **11:14** — Documentação: protocolo das execuções, visão geral, fundamentação reativa, sistema, harness, metodologia (com ameaças à validade), instrumento de avaliação (com tabela de sobreposição harness × suíte oculta: 7 ✓, 7 ◐, 27 ✗), decisões (ADR-001 a ADR-013), material para slides/relatório e README.
 
 ## Execuções do experimento (registro automático)
 
