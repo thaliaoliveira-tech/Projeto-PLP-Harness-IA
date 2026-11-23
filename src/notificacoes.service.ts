@@ -1,69 +1,117 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import {
+  Observable,
+  Subject,
+  map,
+  scan,
+  shareReplay,
+  startWith,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { LeilaoService } from './leilao.service.js';
-import type { Notificacao } from './leilao.types.js';
+import type { EventoLeilao, Notificacao } from './leilao.types.js';
 
-/** Deriva notificações a partir do fluxo de eventos de todos os leilões. */
-@Injectable()
-export class NotificacoesService implements OnModuleDestroy {
-  private readonly porParticipante = new Map<string, Notificacao[]>();
-  private readonly titulos = new Map<string, string>();
-  private readonly lideres = new Map<
+interface Estado {
+  readonly leiloes: ReadonlyMap<
     string,
-    { participante: string; valor: number }
-  >();
+    { titulo: string; lider: { participante: string; valor: number } | null }
+  >;
+  readonly notificacoes: ReadonlyMap<string, readonly Notificacao[]>;
+}
 
-  private readonly inscricao;
+const inicial: Estado = { leiloes: new Map(), notificacoes: new Map() };
 
-  constructor(leiloes: LeilaoService) {
-    this.inscricao = leiloes.todosEventos$.subscribe((ev) => {
-      const titulo = this.titulos.get(ev.leilaoId) ?? '';
-      switch (ev.tipo) {
-        case 'LeilaoCriado':
-          this.titulos.set(ev.leilaoId, ev.dados.titulo as string);
-          break;
-        case 'LanceAceito': {
-          const participante = ev.dados.participante as string;
-          const valor = ev.dados.valor as number;
-          const anterior = this.lideres.get(ev.leilaoId);
-          if (anterior && anterior.participante !== participante) {
-            this.adicionar(anterior.participante, {
+const adicionar = (
+  mapa: Estado['notificacoes'],
+  nome: string,
+  n: Notificacao,
+) => new Map(mapa).set(nome, [...(mapa.get(nome) ?? []), n]);
+
+/** Função pura: aplica um evento de leilão ao estado de notificações. */
+function evoluir(estado: Estado, ev: EventoLeilao): Estado {
+  const info = estado.leiloes.get(ev.leilaoId);
+  switch (ev.tipo) {
+    case 'LeilaoCriado':
+      return {
+        ...estado,
+        leiloes: new Map(estado.leiloes).set(ev.leilaoId, {
+          titulo: ev.dados.titulo as string,
+          lider: null,
+        }),
+      };
+    case 'LanceAceito': {
+      if (!info) return estado;
+      const participante = ev.dados.participante as string;
+      const valor = ev.dados.valor as number;
+      const anterior = info.lider;
+      const notificacoes =
+        anterior && anterior.participante !== participante
+          ? adicionar(estado.notificacoes, anterior.participante, {
               tipo: 'LANCE_SUPERADO',
               leilaoId: ev.leilaoId,
-              titulo,
+              titulo: info.titulo,
               valorAnterior: anterior.valor,
               novoValor: valor,
               ocorridoEm: ev.ocorridoEm,
-            });
-          }
-          this.lideres.set(ev.leilaoId, { participante, valor });
-          break;
-        }
-        case 'LeilaoEncerrado':
-          if (ev.dados.vencedor !== null) {
-            this.adicionar(ev.dados.vencedor as string, {
-              tipo: 'LEILAO_VENCIDO',
-              leilaoId: ev.leilaoId,
-              titulo,
-              valor: ev.dados.valor as number,
-              ocorridoEm: ev.ocorridoEm,
-            });
-          }
-          break;
-      }
-    });
+            })
+          : estado.notificacoes;
+      return {
+        leiloes: new Map(estado.leiloes).set(ev.leilaoId, {
+          ...info,
+          lider: { participante, valor },
+        }),
+        notificacoes,
+      };
+    }
+    case 'LeilaoEncerrado':
+      if (!info || ev.dados.vencedor === null) return estado;
+      return {
+        ...estado,
+        notificacoes: adicionar(
+          estado.notificacoes,
+          ev.dados.vencedor as string,
+          {
+            tipo: 'LEILAO_VENCIDO',
+            leilaoId: ev.leilaoId,
+            titulo: info.titulo,
+            valor: ev.dados.valor as number,
+            ocorridoEm: ev.ocorridoEm,
+          },
+        ),
+      };
+    default:
+      return estado;
+  }
+}
+
+/** Observador: assina os eventos de leilões e projeta as notificações. */
+@Injectable()
+export class NotificacoesService implements OnModuleInit, OnModuleDestroy {
+  private readonly destruir$ = new Subject<void>();
+  private readonly estado$: Observable<Estado>;
+
+  constructor(leiloes: LeilaoService) {
+    this.estado$ = leiloes.eventos$.pipe(
+      scan(evoluir, inicial),
+      startWith(inicial),
+      shareReplay({ bufferSize: 1, refCount: true }),
+    );
+  }
+
+  onModuleInit() {
+    this.estado$.pipe(takeUntil(this.destruir$)).subscribe();
   }
 
   onModuleDestroy() {
-    this.inscricao.unsubscribe();
+    this.destruir$.next();
+    this.destruir$.complete();
   }
 
-  private adicionar(nome: string, n: Notificacao) {
-    const lista = this.porParticipante.get(nome) ?? [];
-    lista.push(n);
-    this.porParticipante.set(nome, lista);
-  }
-
-  listar(nome: string): Notificacao[] {
-    return (this.porParticipante.get(nome) ?? []).slice();
+  listar(nome: string): Observable<readonly Notificacao[]> {
+    return this.estado$.pipe(
+      take(1),
+      map((s) => s.notificacoes.get(nome) ?? []),
+    );
   }
 }

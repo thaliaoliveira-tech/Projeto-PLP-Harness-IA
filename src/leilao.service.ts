@@ -1,13 +1,31 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  OnModuleDestroy,
+  OnModuleInit,
+} from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import {
+  EMPTY,
   Observable,
   Subject,
-  concat,
-  concatMap,
-  from,
+  defer,
+  filter,
+  groupBy,
+  ignoreElements,
+  map,
+  merge,
+  mergeMap,
+  of,
+  scan,
+  share,
+  shareReplay,
+  startWith,
   switchMap,
+  take,
+  takeUntil,
   takeWhile,
+  tap,
   timer,
 } from 'rxjs';
 import type {
@@ -17,231 +35,377 @@ import type {
   TipoEvento,
 } from './leilao.types.js';
 
-interface Estado {
-  leilao: Leilao;
-  encerraEmMs: number;
-  eventos: EventoLeilao[];
-  eventos$: Subject<EventoLeilao>;
-  prazo$: Subject<number>;
+export interface DadosCriacao {
+  titulo: string;
+  lanceInicial: number;
+  incrementoMinimo: number;
+  duracaoSegundos: number;
+  prorrogacaoSegundos: number;
 }
 
-type Comando = () => void;
+/** Leilão + seu histórico de eventos (a fonte de verdade é o histórico). */
+interface LeilaoEstado {
+  readonly leilao: Leilao;
+  readonly eventos: readonly EventoLeilao[];
+}
+interface Estado {
+  readonly leiloes: ReadonlyMap<string, LeilaoEstado>;
+}
 
-@Injectable()
-export class LeilaoService implements OnModuleDestroy {
-  private readonly leiloes = new Map<string, Estado>();
-  /** Todos os eventos de todos os leilões (alimenta as notificações). */
-  readonly todosEventos$ = new Subject<EventoLeilao>();
-  /** Fila de comandos: tudo que muda estado passa por aqui, um de cada vez. */
-  private readonly comandos$ = new Subject<Comando>();
-  private readonly inscricao = this.comandos$
-    .pipe(concatMap(async (cmd) => cmd()))
-    .subscribe();
+type Comando = { correlacao: string; agora: number } & (
+  | { tipo: 'criar'; id: string; dados: DadosCriacao }
+  | { tipo: 'lance'; id: string; corpo: unknown }
+  | { tipo: 'encerrar'; id: string; prazo: string }
+);
 
-  onModuleDestroy() {
-    this.inscricao.unsubscribe();
-    for (const e of this.leiloes.values()) e.prazo$.complete();
+type Resultado =
+  ResultadoLance | { status: 'CRIADO'; leilao: Leilao } | { status: 'NENHUM' };
+
+interface Transicao {
+  readonly estado: Estado;
+  readonly eventos: readonly EventoLeilao[];
+  readonly correlacao: string;
+  readonly resultado: Resultado;
+}
+
+const inicial: Transicao = {
+  estado: { leiloes: new Map() },
+  eventos: [],
+  correlacao: '',
+  resultado: { status: 'NENHUM' },
+};
+
+type Rascunho = [TipoEvento, string, Record<string, unknown>];
+
+/** Acrescenta eventos (numerando a sequência) e aplica um patch ao leilão. */
+function anexar(
+  e: LeilaoEstado,
+  patch: Partial<Leilao>,
+  rascunhos: Rascunho[],
+): { e: LeilaoEstado; novos: EventoLeilao[] } {
+  const novos = rascunhos.map(([tipo, ocorridoEm, dados], i): EventoLeilao => ({
+    sequencia: e.eventos.length + i + 1,
+    tipo,
+    leilaoId: e.leilao.id,
+    ocorridoEm,
+    dados,
+  }));
+  return {
+    e: { leilao: { ...e.leilao, ...patch }, eventos: [...e.eventos, ...novos] },
+    novos,
+  };
+}
+
+function encerrar(e: LeilaoEstado) {
+  const l = e.leilao;
+  const vencedor = l.maiorLance?.participante ?? null;
+  return anexar(e, { status: 'ENCERRADO', vencedor }, [
+    [
+      'LeilaoEncerrado',
+      l.encerraEm,
+      { vencedor, valor: l.maiorLance?.valor ?? null },
+    ],
+  ]);
+}
+
+function comLeilao(
+  prev: Transicao,
+  c: Comando,
+  e: LeilaoEstado,
+  novos: EventoLeilao[],
+  resultado: Resultado,
+): Transicao {
+  return {
+    estado: { leiloes: new Map(prev.estado.leiloes).set(e.leilao.id, e) },
+    eventos: novos,
+    correlacao: c.correlacao,
+    resultado,
+  };
+}
+
+/** Função pura: (estado, comando) -> transição. */
+function reduzir(prev: Transicao, c: Comando): Transicao {
+  const semMudanca = (resultado: Resultado): Transicao => ({
+    estado: prev.estado,
+    eventos: [],
+    correlacao: c.correlacao,
+    resultado,
+  });
+
+  if (c.tipo === 'criar') {
+    const d = c.dados;
+    const encerraEm = new Date(
+      c.agora + d.duracaoSegundos * 1000,
+    ).toISOString();
+    const leilao: Leilao = {
+      id: c.id,
+      titulo: d.titulo,
+      lanceInicial: d.lanceInicial,
+      incrementoMinimo: d.incrementoMinimo,
+      prorrogacaoSegundos: d.prorrogacaoSegundos,
+      status: 'ABERTO',
+      maiorLance: null,
+      totalLances: 0,
+      encerraEm,
+      vencedor: null,
+    };
+    const { e, novos } = anexar({ leilao, eventos: [] }, {}, [
+      [
+        'LeilaoCriado',
+        new Date(c.agora).toISOString(),
+        {
+          titulo: d.titulo,
+          lanceInicial: d.lanceInicial,
+          incrementoMinimo: d.incrementoMinimo,
+          prorrogacaoSegundos: d.prorrogacaoSegundos,
+          encerraEm,
+        },
+      ],
+    ]);
+    return comLeilao(prev, c, e, novos, { status: 'CRIADO', leilao: e.leilao });
   }
 
-  private executar<T>(fn: () => T): Promise<T> {
-    return new Promise<T>((resolve, reject) => {
-      this.comandos$.next(() => {
-        try {
-          resolve(fn());
-        } catch (err) {
-          reject(err);
-        }
-      });
+  const atual = prev.estado.leiloes.get(c.id);
+  if (!atual) return semMudanca({ status: 404 });
+
+  if (c.tipo === 'encerrar') {
+    // Ignora timers obsoletos (leilão já encerrado ou prorrogado).
+    if (
+      atual.leilao.status !== 'ABERTO' ||
+      atual.leilao.encerraEm !== c.prazo
+    ) {
+      return semMudanca({ status: 'NENHUM' });
+    }
+    const { e, novos } = encerrar(atual);
+    return comLeilao(prev, c, e, novos, { status: 'NENHUM' });
+  }
+
+  // c.tipo === 'lance'
+  const b = c.corpo as Record<string, unknown> | null | undefined;
+  const participante = b?.participante;
+  const valor = b?.valor;
+  if (
+    typeof participante !== 'string' ||
+    participante === '' ||
+    typeof valor !== 'number' ||
+    !Number.isFinite(valor) ||
+    valor <= 0
+  ) {
+    return semMudanca({ status: 400 });
+  }
+
+  const ocorridoEm = new Date(c.agora).toISOString();
+  const prazoMs = Date.parse(atual.leilao.encerraEm);
+  if (atual.leilao.status === 'ENCERRADO' || c.agora >= prazoMs) {
+    const fechado =
+      atual.leilao.status === 'ABERTO'
+        ? encerrar(atual)
+        : { e: atual, novos: [] };
+    return comLeilao(prev, c, fechado.e, fechado.novos, {
+      status: 409,
+      corpo: { aceito: false, motivo: 'LEILAO_ENCERRADO' },
     });
   }
 
-  private emitir(
-    e: Estado,
-    tipo: TipoEvento,
-    ocorridoEm: string,
-    dados: Record<string, unknown>,
+  const l = atual.leilao;
+  const rejeitar = (motivo: string, extra: Record<string, unknown> = {}) => {
+    const { e, novos } = anexar(atual, {}, [
+      ['LanceRejeitado', ocorridoEm, { participante, valor, motivo }],
+    ]);
+    return comLeilao(prev, c, e, novos, {
+      status: 422,
+      corpo: { aceito: false, motivo, ...extra },
+    });
+  };
+
+  if (l.maiorLance?.participante === participante) {
+    return rejeitar('PARTICIPANTE_JA_LIDERA');
+  }
+  const valorMinimo = l.maiorLance
+    ? l.maiorLance.valor + l.incrementoMinimo
+    : l.lanceInicial;
+  if (valor < valorMinimo) {
+    return rejeitar('VALOR_ABAIXO_DO_MINIMO', { valorMinimo });
+  }
+
+  const prorrogar =
+    l.prorrogacaoSegundos > 0 &&
+    prazoMs - c.agora < l.prorrogacaoSegundos * 1000;
+  const novoPrazo = new Date(
+    c.agora + l.prorrogacaoSegundos * 1000,
+  ).toISOString();
+  const patch: Partial<Leilao> = {
+    maiorLance: { participante, valor, ocorridoEm },
+    totalLances: l.totalLances + 1,
+    ...(prorrogar ? { encerraEm: novoPrazo } : {}),
+  };
+  const rascunhos: Rascunho[] = [
+    ['LanceAceito', ocorridoEm, { participante, valor }],
+    ...(prorrogar
+      ? [
+          [
+            'LeilaoProrrogado',
+            ocorridoEm,
+            { encerraEmAnterior: l.encerraEm, encerraEm: novoPrazo },
+          ] as Rascunho,
+        ]
+      : []),
+  ];
+  const { e, novos } = anexar(atual, patch, rascunhos);
+  return comLeilao(prev, c, e, novos, {
+    status: 201,
+    corpo: { aceito: true, leilao: e.leilao },
+  });
+}
+
+@Injectable()
+export class LeilaoService implements OnModuleInit, OnModuleDestroy {
+  /** Entrada de comandos; só este serviço chama next(). */
+  private readonly comando$ = new Subject<Comando>();
+  private readonly destruir$ = new Subject<void>();
+
+  /** Cada comando produz uma transição, processada em ordem de chegada. */
+  private readonly transicao$ = this.comando$.pipe(
+    scan(reduzir, inicial),
+    share(),
+  );
+
+  private readonly estado$ = this.transicao$.pipe(
+    map((t) => t.estado),
+    startWith(inicial.estado),
+    shareReplay({ bufferSize: 1, refCount: true }),
+  );
+
+  /** Fluxo de todos os eventos de todos os leilões (para observadores). */
+  readonly eventos$: Observable<EventoLeilao> = this.transicao$.pipe(
+    mergeMap((t) => t.eventos),
+    share(),
+  );
+
+  onModuleInit() {
+    // Mantém o estado conectado desde o início.
+    this.estado$.pipe(takeUntil(this.destruir$)).subscribe();
+
+    // Efeito: agenda o encerramento a cada novo prazo (criação/prorrogação).
+    this.eventos$
+      .pipe(
+        filter((ev) =>
+          ['LeilaoCriado', 'LeilaoProrrogado', 'LeilaoEncerrado'].includes(
+            ev.tipo,
+          ),
+        ),
+        groupBy((ev) => ev.leilaoId),
+        mergeMap((porLeilao) =>
+          porLeilao.pipe(
+            takeWhile((ev) => ev.tipo !== 'LeilaoEncerrado', true),
+            switchMap((ev) => {
+              if (ev.tipo === 'LeilaoEncerrado') return EMPTY;
+              const prazo = ev.dados.encerraEm as string;
+              return timer(Math.max(0, Date.parse(prazo) - Date.now())).pipe(
+                map((): Comando => ({
+                  tipo: 'encerrar',
+                  correlacao: randomUUID(),
+                  id: ev.leilaoId,
+                  prazo,
+                  // O timer pode disparar 1 ms antes; o prazo é o instante lógico.
+                  agora: Math.max(Date.now(), Date.parse(prazo)),
+                })),
+              );
+            }),
+          ),
+        ),
+        takeUntil(this.destruir$),
+      )
+      .subscribe((cmd) => this.comando$.next(cmd));
+  }
+
+  onModuleDestroy() {
+    this.destruir$.next();
+    this.destruir$.complete();
+  }
+
+  /** Envia o comando e devolve a resposta da transição correspondente. */
+  private despachar(
+    montar: (base: { correlacao: string; agora: number }) => Comando,
   ) {
-    const ev: EventoLeilao = {
-      sequencia: e.eventos.length + 1,
-      tipo,
-      leilaoId: e.leilao.id,
-      ocorridoEm,
-      dados,
-    };
-    e.eventos.push(ev);
-    e.eventos$.next(ev);
-    this.todosEventos$.next(ev);
+    return defer(() => {
+      const cmd = montar({ correlacao: randomUUID(), agora: Date.now() });
+      return merge(
+        this.transicao$.pipe(
+          filter((t) => t.correlacao === cmd.correlacao),
+          take(1),
+          map((t) => t.resultado),
+        ),
+        of(cmd).pipe(
+          tap((c) => this.comando$.next(c)),
+          ignoreElements(),
+        ),
+      );
+    });
   }
 
   // ---------- consultas ----------
 
-  listar(): Leilao[] {
-    return [...this.leiloes.values()].map((e) => ({ ...e.leilao }));
+  private leilaoEstado(id: string) {
+    return this.estado$.pipe(
+      take(1),
+      map((s) => s.leiloes.get(id)),
+    );
   }
 
-  obter(id: string): Leilao | undefined {
-    const e = this.leiloes.get(id);
-    return e && { ...e.leilao };
+  listar(): Observable<Leilao[]> {
+    return this.estado$.pipe(
+      take(1),
+      map((s) => [...s.leiloes.values()].map((e) => e.leilao)),
+    );
   }
 
-  eventos(id: string): EventoLeilao[] | undefined {
-    return this.leiloes.get(id)?.eventos.slice();
+  obter(id: string): Observable<Leilao> {
+    return this.leilaoEstado(id).pipe(map((e) => this.existente(e).leilao));
+  }
+
+  eventos(id: string): Observable<readonly EventoLeilao[]> {
+    return this.leilaoEstado(id).pipe(map((e) => this.existente(e).eventos));
   }
 
   /** Histórico seguido dos eventos novos; completa após LeilaoEncerrado. */
-  stream(id: string): Observable<EventoLeilao> | undefined {
-    const e = this.leiloes.get(id);
-    if (!e) return undefined;
-    // Tudo síncrono: não há janela entre o snapshot e a assinatura.
-    const historico = e.eventos.slice();
-    const encerrado = historico.at(-1)?.tipo === 'LeilaoEncerrado';
-    if (encerrado) return from(historico);
-    return concat(from(historico), e.eventos$).pipe(
+  stream(id: string): Observable<EventoLeilao> {
+    return this.estado$.pipe(
+      map((s) => this.existente(s.leiloes.get(id)).eventos),
+      scan(
+        (acc, eventos) => ({
+          vistos: eventos.length,
+          novos: eventos.slice(acc.vistos),
+        }),
+        { vistos: 0, novos: [] as readonly EventoLeilao[] },
+      ),
+      mergeMap((acc) => acc.novos),
       takeWhile((ev) => ev.tipo !== 'LeilaoEncerrado', true),
     );
   }
 
+  private existente(e: LeilaoEstado | undefined): LeilaoEstado {
+    if (!e) throw new NotFoundException();
+    return e;
+  }
+
   // ---------- comandos ----------
 
-  criar(dados: {
-    titulo: string;
-    lanceInicial: number;
-    incrementoMinimo: number;
-    duracaoSegundos: number;
-    prorrogacaoSegundos: number;
-  }): Promise<Leilao> {
-    return this.executar(() => {
-      const agora = Date.now();
-      const encerraEmMs = agora + dados.duracaoSegundos * 1000;
-      const leilao: Leilao = {
-        id: randomUUID(),
-        titulo: dados.titulo,
-        lanceInicial: dados.lanceInicial,
-        incrementoMinimo: dados.incrementoMinimo,
-        prorrogacaoSegundos: dados.prorrogacaoSegundos,
-        status: 'ABERTO',
-        maiorLance: null,
-        totalLances: 0,
-        encerraEm: new Date(encerraEmMs).toISOString(),
-        vencedor: null,
-      };
-      const estado: Estado = {
-        leilao,
-        encerraEmMs,
-        eventos: [],
-        eventos$: new Subject(),
-        prazo$: new Subject(),
-      };
-      this.leiloes.set(leilao.id, estado);
-      // Cada novo prazo cancela o timer anterior (prorrogação).
-      estado.prazo$
-        .pipe(switchMap((ms) => timer(Math.max(0, ms - Date.now()))))
-        .subscribe(() => {
-          void this.executar(() => this.encerrarSeVencido(estado));
-        });
-      this.emitir(estado, 'LeilaoCriado', new Date(agora).toISOString(), {
-        titulo: leilao.titulo,
-        lanceInicial: leilao.lanceInicial,
-        incrementoMinimo: leilao.incrementoMinimo,
-        prorrogacaoSegundos: leilao.prorrogacaoSegundos,
-        encerraEm: leilao.encerraEm,
-      });
-      estado.prazo$.next(encerraEmMs);
-      return { ...leilao };
-    });
+  criar(dados: DadosCriacao): Observable<Leilao> {
+    return this.despachar((base) => ({
+      ...base,
+      tipo: 'criar',
+      id: randomUUID(),
+      dados,
+    })).pipe(map((r) => (r as { status: 'CRIADO'; leilao: Leilao }).leilao));
   }
 
-  darLance(id: string, corpo: unknown): Promise<ResultadoLance> {
-    return this.executar((): ResultadoLance => {
-      const e = this.leiloes.get(id);
-      if (!e) return { status: 404 };
-      const b = corpo as Record<string, unknown> | null | undefined;
-      const participante = b?.participante;
-      const valor = b?.valor;
-      if (
-        typeof participante !== 'string' ||
-        participante === '' ||
-        typeof valor !== 'number' ||
-        !Number.isFinite(valor) ||
-        valor <= 0
-      ) {
-        return { status: 400 };
-      }
-
-      const agora = Date.now();
-      this.encerrarSeVencido(e, agora);
-      const l = e.leilao;
-      if (l.status === 'ENCERRADO') {
-        return {
-          status: 409,
-          corpo: { aceito: false, motivo: 'LEILAO_ENCERRADO' },
-        };
-      }
-      const ocorridoEm = new Date(agora).toISOString();
-
-      if (l.maiorLance?.participante === participante) {
-        this.emitir(e, 'LanceRejeitado', ocorridoEm, {
-          participante,
-          valor,
-          motivo: 'PARTICIPANTE_JA_LIDERA',
-        });
-        return {
-          status: 422,
-          corpo: { aceito: false, motivo: 'PARTICIPANTE_JA_LIDERA' },
-        };
-      }
-      const valorMinimo = l.maiorLance
-        ? l.maiorLance.valor + l.incrementoMinimo
-        : l.lanceInicial;
-      if (valor < valorMinimo) {
-        this.emitir(e, 'LanceRejeitado', ocorridoEm, {
-          participante,
-          valor,
-          motivo: 'VALOR_ABAIXO_DO_MINIMO',
-        });
-        return {
-          status: 422,
-          corpo: {
-            aceito: false,
-            motivo: 'VALOR_ABAIXO_DO_MINIMO',
-            valorMinimo,
-          },
-        };
-      }
-
-      l.maiorLance = { participante, valor, ocorridoEm };
-      l.totalLances++;
-      this.emitir(e, 'LanceAceito', ocorridoEm, { participante, valor });
-
-      const prorrog = l.prorrogacaoSegundos * 1000;
-      if (prorrog > 0 && e.encerraEmMs - agora < prorrog) {
-        const anterior = l.encerraEm;
-        e.encerraEmMs = agora + prorrog;
-        l.encerraEm = new Date(e.encerraEmMs).toISOString();
-        this.emitir(e, 'LeilaoProrrogado', ocorridoEm, {
-          encerraEmAnterior: anterior,
-          encerraEm: l.encerraEm,
-        });
-        e.prazo$.next(e.encerraEmMs);
-      }
-      return { status: 201, corpo: { aceito: true, leilao: { ...l } } };
-    });
-  }
-
-  private encerrarSeVencido(e: Estado, agora = Date.now()) {
-    if (e.leilao.status === 'ENCERRADO') return;
-    if (agora < e.encerraEmMs) {
-      // Timer disparou ligeiramente antes do prazo: rearma.
-      e.prazo$.next(e.encerraEmMs);
-      return;
-    }
-    const l = e.leilao;
-    l.status = 'ENCERRADO';
-    l.vencedor = l.maiorLance?.participante ?? null;
-    e.prazo$.complete();
-    this.emitir(e, 'LeilaoEncerrado', new Date(e.encerraEmMs).toISOString(), {
-      vencedor: l.vencedor,
-      valor: l.maiorLance?.valor ?? null,
-    });
+  darLance(id: string, corpo: unknown): Observable<ResultadoLance> {
+    return this.despachar((base) => ({
+      ...base,
+      tipo: 'lance',
+      id,
+      corpo,
+    })).pipe(map((r) => r as ResultadoLance));
   }
 }
