@@ -36,3 +36,14 @@ interrupções, edições manuais etc.
 ## Impressão geral
 
 (2–3 frases para usar no relatório)
+
+## ⚠ Ressalva de validade (preenchido por Claude, que conduziu esta execução)
+
+Esta execução NÃO é independente. Quem a executou foi o mesmo agente que construiu o harness, o
+gabarito e o kit na mesma conversa, e já tinha a solução de referência em contexto (a implementação
+foi reescrita, não copiada, mas segue a mesma arquitetura). Além disso, a sessão não ocorreu na
+pasta da execução, então não há transcrição própria (`sessao/`) e as métricas de processo
+(tokens, chamadas de ferramenta) não valem. O modelo era Sonnet 5.5, não o de A1.
+Fluxo real: escreveu o código, `npm run validate` falhou 1× (E02: faltavam testes unitários do
+domínio, apontado pelo harness), corrigiu e passou; entrega aprovada sem intervenção do kit.
+Uso válido: demonstração do fluxo e do harness; NÃO usar como dado da comparação A × B.

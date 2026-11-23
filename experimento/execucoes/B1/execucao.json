@@ -5,9 +5,9 @@
   "variante": "harness",
   "ensaio": false,
   "pasta": "~/projetos-leilao/B1",
-  "status": "em-andamento",
+  "status": "aprovada",
   "preparadaEm": "2026-11-23T14:37:57.306Z",
-  "finalizadaEm": null,
+  "finalizadaEm": "2026-11-23T14:40:02.435Z",
   "repositorioPrincipal": {
     "commit": "0181620a52eca4331aabd04eb6a71b79fbff677e",
     "sujo": false
@@ -51,5 +51,7 @@
     }
   ],
   "rodadasDeCorrecao": 0,
-  "edicoesManuais": 0
+  "edicoesManuais": 0,
+  "motivoEncerramento": "executada pelo agente construtor (sem independência); ver registro.md",
+  "ramo": "execucoes/B1"
 }

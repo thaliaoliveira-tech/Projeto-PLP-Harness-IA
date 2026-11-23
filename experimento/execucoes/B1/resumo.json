@@ -1,0 +1,63 @@
+{
+  "id": "B1",
+  "grupo": "B",
+  "condicao": "com harness",
+  "status": "aprovada",
+  "primeiraEntrega": {
+    "build": true,
+    "errosTipo": 0,
+    "testesFalhando": 0,
+    "testesTotal": 41,
+    "testesInstaveis": 0,
+    "violacoes": 0,
+    "porRegra": {},
+    "lintErros": 0,
+    "linhasCodigo": 492,
+    "casosDeTesteDoProjeto": 10,
+    "dependenciasAdicionadas": [],
+    "harnessAlterado": []
+  },
+  "final": {
+    "build": true,
+    "errosTipo": 0,
+    "testesFalhando": 0,
+    "testesTotal": 41,
+    "testesInstaveis": 0,
+    "violacoes": 0,
+    "porRegra": {},
+    "lintErros": 0,
+    "linhasCodigo": 492,
+    "casosDeTesteDoProjeto": 10,
+    "dependenciasAdicionadas": [],
+    "harnessAlterado": []
+  },
+  "evolucao": [
+    {
+      "n": 1,
+      "tipo": "entrega",
+      "testesFalhando": 0,
+      "violacoes": 0,
+      "build": true,
+      "aprovado": true
+    }
+  ],
+  "intervencoes": {
+    "promptsDeCorrecao": 0,
+    "edicoesManuais": 0,
+    "outrasMensagens": null,
+    "total": 0
+  },
+  "tempo": {
+    "inicio": "2026-11-23T14:37:57.306Z",
+    "fim": "2026-11-23T14:39:55.121Z",
+    "minutos": 2
+  },
+  "sessao": null,
+  "harness": {
+    "bloqueiosDoStop": 0,
+    "edicoesComViolacao": 0,
+    "edicoesVerificadas": 0,
+    "validacoesOk": 1,
+    "validacoesComFalha": 1
+  }
+}
