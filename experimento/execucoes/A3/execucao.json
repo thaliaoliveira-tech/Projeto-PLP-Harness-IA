@@ -51,8 +51,33 @@
       "casosDeTesteDoProjeto": 4,
       "dependenciasAdicionadas": [],
       "harnessAlterado": null
+    },
+    {
+      "n": 2,
+      "tipo": "correcao",
+      "descricao": null,
+      "commit": "19f89264b3b3e88b6447cf5fae7f947806395303",
+      "em": "2026-11-23T23:21:01.709Z",
+      "arquivosAlterados": 2,
+      "pasta": "checkpoints/02-correcao",
+      "aprovado": true,
+      "build": true,
+      "errosTipo": 0,
+      "testesTotal": 41,
+      "testesFalhando": 0,
+      "testesInstaveis": 0,
+      "servidorIniciou": true,
+      "violacoes": 0,
+      "porRegra": {},
+      "lintErros": 0,
+      "lintAvisos": 0,
+      "linhasCodigo": 436,
+      "arquivosCodigo": 6,
+      "casosDeTesteDoProjeto": 4,
+      "dependenciasAdicionadas": [],
+      "harnessAlterado": null
     }
   ],
-  "rodadasDeCorrecao": 0,
+  "rodadasDeCorrecao": 1,
   "edicoesManuais": 0
 }
