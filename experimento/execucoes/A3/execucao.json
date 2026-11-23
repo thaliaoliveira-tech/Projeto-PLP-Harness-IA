@@ -5,9 +5,9 @@
   "variante": "base",
   "ensaio": false,
   "pasta": "~/projetos-leilao/A3",
-  "status": "em-andamento",
+  "status": "aprovada",
   "preparadaEm": "2026-11-23T23:13:01.547Z",
-  "finalizadaEm": null,
+  "finalizadaEm": "2026-11-23T23:22:04.263Z",
   "repositorioPrincipal": {
     "commit": "e620de1d86f40c92fe90538818b747eee647f767",
     "sujo": false
@@ -79,5 +79,6 @@
     }
   ],
   "rodadasDeCorrecao": 1,
-  "edicoesManuais": 0
+  "edicoesManuais": 0,
+  "ramo": "execucoes/A3"
 }

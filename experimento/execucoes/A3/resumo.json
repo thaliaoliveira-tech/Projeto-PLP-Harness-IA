@@ -1,0 +1,97 @@
+{
+  "id": "A3",
+  "grupo": "A",
+  "condicao": "sem harness",
+  "status": "aprovada",
+  "primeiraEntrega": {
+    "build": true,
+    "errosTipo": 0,
+    "testesFalhando": 0,
+    "testesTotal": 41,
+    "testesInstaveis": 0,
+    "violacoes": 3,
+    "porRegra": {
+      "RX02": 1,
+      "RX04": 2
+    },
+    "lintErros": 0,
+    "linhasCodigo": 351,
+    "casosDeTesteDoProjeto": 4,
+    "dependenciasAdicionadas": [],
+    "harnessAlterado": null
+  },
+  "final": {
+    "build": true,
+    "errosTipo": 0,
+    "testesFalhando": 0,
+    "testesTotal": 41,
+    "testesInstaveis": 0,
+    "violacoes": 0,
+    "porRegra": {},
+    "lintErros": 0,
+    "linhasCodigo": 436,
+    "casosDeTesteDoProjeto": 4,
+    "dependenciasAdicionadas": [],
+    "harnessAlterado": null
+  },
+  "evolucao": [
+    {
+      "n": 1,
+      "tipo": "entrega",
+      "testesFalhando": 0,
+      "violacoes": 3,
+      "build": true,
+      "aprovado": false
+    },
+    {
+      "n": 2,
+      "tipo": "correcao",
+      "testesFalhando": 0,
+      "violacoes": 0,
+      "build": true,
+      "aprovado": true
+    }
+  ],
+  "intervencoes": {
+    "promptsDeCorrecao": 1,
+    "edicoesManuais": 0,
+    "outrasMensagens": 0,
+    "total": 1
+  },
+  "tempo": {
+    "inicio": "2026-11-23T23:14:33.009Z",
+    "fim": "2026-11-23T23:21:01.709Z",
+    "minutos": 6
+  },
+  "sessao": {
+    "modelos": [
+      "claude-sonnet-5-5"
+    ],
+    "versoesClaudeCode": [
+      "2.1.300"
+    ],
+    "esforco": [
+      "medium"
+    ],
+    "modosDePermissao": [
+      "acceptEdits"
+    ],
+    "mensagensHumanas": 2,
+    "interrupcoes": 0,
+    "chamadasDeFerramenta": 14,
+    "errosDeFerramenta": 2,
+    "execucoes": {
+      "validate": 0,
+      "testes": 0,
+      "build": 1,
+      "tsc": 0
+    },
+    "tokens": {
+      "entrada": 34,
+      "saida": 28128,
+      "cacheEscrita": 44573,
+      "cacheLeitura": 543722
+    }
+  },
+  "harness": null
+}
