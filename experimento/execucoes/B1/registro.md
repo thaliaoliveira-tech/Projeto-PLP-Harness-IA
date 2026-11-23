@@ -31,7 +31,7 @@ interrupções, edições manuais etc.
 
 - Seguiu as instruções do harness (`AGENTS.md`/`CLAUDE.md`): estruturou `src/leiloes/` (`dominio/`, `aplicacao/`, `http/`) e `src/notificacoes/` respeitando `dominio-puro`, escreveu 2 arquivos de testes unitários (19 casos), e executou `npm run validate` até obter `VALIDAÇÃO OK`, além de teste manual com `node dist/main` na porta 3111.
 - Produziu arquitetura puramente **reativa** desde a primeira entrega: domínio puro (`decidir`, `evoluir`, `processar`, `registrar`), Sink privado (`Subject` + `scan`), log `eventos$` com replay, temporização com `groupBy` + `switchMap(timer)` carregando o prazo agendado (mitigando a armadilha de ~1 ms antes de `Date.now()`), e notificações como observador de `eventos$`.
-- Chamou atenção: 0 violações, 0/41 testes falhando e aprovação na 1ª entrega sem nenhuma intervenção humana; nenhum arquivo do harness foi alterado ou removido.
+- Chamou atenção: 0 violações, 0/41 testes falhando e aprovação na 1ª entrega sem nenhuma intervenção humana; nenhum arquivo do harness foi alterado ou removido. Conforme `harness-hooks.log`, houve 2 validações completas ok (`12:14:51` durante a execução e `12:15:26` no hook Stop), com 0 bloqueios de encerramento e 0 edições com violação.
 
 ## Impressão geral
 

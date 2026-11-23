@@ -68,3 +68,27 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 - Resultado: Execução A1 finalizada (`aprovada`), ramo `execucoes/A1` importado, `~/projetos-leilao/A1` removido, `resumo.md` gerado (4 min, 1 intervenção, US$ 0.68). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
 - Decisão: Fazer commit de A1 (seção 5.6, passo 5) e prosseguir para a próxima execução obrigatória (`B1`).
 - Arquivos gerados: `experimento/execucoes/A1/registro.md`, `experimento/execucoes/A1/resumo.md`, `experimento/execucoes/A1/relatorio.md`, `docs/linha-do-tempo.md`
+
+### 23/11/2026 12:11 — B1 — Preparação da execução B1
+- Comando: `scripts/preparar-execucao.sh B1` (executado fora do sandbox após erro de `mkdir ~/projetos-leilao` no sandbox)
+- Resultado: Pasta `~/projetos-leilao/B1` criada (com harness), commit inicial `8e1e22bd`. Tabela de configuração preenchida em `experimento/execucoes/B1/registro.md`.
+- Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
+- Arquivos gerados: `experimento/execucoes/B1/registro.md`, `~/projetos-leilao/B1`
+
+### 23/11/2026 12:15 — B1 — Implementador rodada 00 (inicial) e classificação
+- Comando: `scripts/rodar-implementador.sh B1 inicial` (fora do sandbox, em segundo plano)
+- Resultado: Código 0, 183s, 8 turnos, US$ 0.47. Implementador relatou implementação em `src/leiloes/` (`dominio/`, `aplicacao/leiloes.service.ts`, `http/`) e `src/notificacoes/`, com `npm run validate` retornando `VALIDAÇÃO OK`, testes unitários em `regras.spec.ts` e teste manual na porta 3111.
+- Decisão: Classificado como **concluiu / apresenta resumo do que fez** (seção 5.3, linha 1). Seguir para seção 5.4: rodar `scripts/checkpoint.sh B1 entrega`.
+- Arquivos gerados: `experimento/execucoes/B1/implementador/rodada-00-inicial.json`
+
+### 23/11/2026 12:16 — B1 — Checkpoint 1 (entrega)
+- Comando: `scripts/checkpoint.sh B1 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `c5bcdf5a`, 5 min desde a preparação, 0 rodadas de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh B1`.
+- Arquivos gerados: `experimento/execucoes/B1/checkpoints/01-entrega/avaliacao.md`
+
+### 23/11/2026 12:16 — B1 — Finalização, auditoria de isolamento e relatório
+- Comando: `scripts/finalizar-execucao.sh B1` (fora do sandbox após erro de `.git/FETCH_HEAD` somente leitura no sandbox) e `grep -l "Harness-agentes-IA" experimento/execucoes/B1/sessao/*.jsonl`
+- Resultado: Execução B1 finalizada (`aprovada`), ramo `execucoes/B1` importado (`c5bcdf5`), `~/projetos-leilao/B1` removido, `resumo.md` gerado (4 min, 0 intervenções, US$ 0.47, 19 casos de teste escritos, 2 validações ok nos hooks). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
+- Decisão: Fazer commit de B1 (seção 5.6, passo 5) e prosseguir para a próxima execução obrigatória (`B2`).
+- Arquivos gerados: `experimento/execucoes/B1/registro.md`, `experimento/execucoes/B1/resumo.md`, `experimento/execucoes/B1/relatorio.md`, `experimento/execucoes/B1/harness-hooks.log`, `docs/linha-do-tempo.md`
