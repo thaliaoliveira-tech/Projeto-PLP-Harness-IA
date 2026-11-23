@@ -23,7 +23,33 @@
     "maxMinutos": 120
   },
   "commitInicial": "8e1e22bdd49098268f5f18f7881081981cdd329a",
-  "checkpoints": [],
+  "checkpoints": [
+    {
+      "n": 1,
+      "tipo": "entrega",
+      "descricao": null,
+      "commit": "c5bcdf5a8c897b48288fd4a14f83072744009423",
+      "em": "2026-11-23T15:16:12.581Z",
+      "arquivosAlterados": 18,
+      "pasta": "checkpoints/01-entrega",
+      "aprovado": true,
+      "build": true,
+      "errosTipo": 0,
+      "testesTotal": 41,
+      "testesFalhando": 0,
+      "testesInstaveis": 0,
+      "servidorIniciou": true,
+      "violacoes": 0,
+      "porRegra": {},
+      "lintErros": 0,
+      "lintAvisos": 0,
+      "linhasCodigo": 819,
+      "arquivosCodigo": 13,
+      "casosDeTesteDoProjeto": 19,
+      "dependenciasAdicionadas": [],
+      "harnessAlterado": []
+    }
+  ],
   "rodadasDeCorrecao": 0,
   "edicoesManuais": 0
 }
