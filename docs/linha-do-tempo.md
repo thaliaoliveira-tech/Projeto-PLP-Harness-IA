@@ -50,3 +50,4 @@ As referências "ADR-xxx" apontam para [`decisoes.md`](decisoes.md).
 As linhas abaixo são acrescentadas automaticamente pelos scripts do experimento.
 
 - **23/11/2026, 11:30** — `A1` preparada (sem harness): pasta `~/projetos-leilao/A1`, commit inicial `fe374bc2`
+- **23/11/2026, 11:37** — `B1` preparada (com harness): pasta `~/projetos-leilao/B1`, commit inicial `0f605cae`

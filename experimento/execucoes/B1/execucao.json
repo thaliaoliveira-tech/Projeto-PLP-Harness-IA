@@ -1,0 +1,29 @@
+{
+  "id": "B1",
+  "grupo": "B",
+  "condicao": "com harness",
+  "variante": "harness",
+  "ensaio": false,
+  "pasta": "~/projetos-leilao/B1",
+  "status": "em-andamento",
+  "preparadaEm": "2026-11-23T14:37:57.306Z",
+  "finalizadaEm": null,
+  "repositorioPrincipal": {
+    "commit": "0181620a52eca4331aabd04eb6a71b79fbff677e",
+    "sujo": false
+  },
+  "ambiente": {
+    "node": "v24.9.0",
+    "npm": "11.6.0",
+    "claudeCli": "2.1.300 (Claude Code)",
+    "sistema": "Linux 5.15.0-138-generic"
+  },
+  "limites": {
+    "maxRodadas": 8,
+    "maxMinutos": 120
+  },
+  "commitInicial": "0f605cae0b7eb18ef86f6ff1f5eb008946cc3a65",
+  "checkpoints": [],
+  "rodadasDeCorrecao": 0,
+  "edicoesManuais": 0
+}
