@@ -5,9 +5,9 @@
   "variante": "base",
   "ensaio": true,
   "pasta": "/tmp/claude-1001/-home-usuario-Documentos-workspace-Harness-agentes-IA/6b921b54-8282-4503-bfc8-4f9db1995aa8/scratchpad/execucoes/ENSAIO-A",
-  "status": "em-andamento",
+  "status": "aprovada",
   "preparadaEm": "2026-11-23T14:06:27.581Z",
-  "finalizadaEm": null,
+  "finalizadaEm": "2026-11-23T14:07:20.842Z",
   "repositorioPrincipal": {
     "commit": "febccafd19124e2028b2a699ba3fa06ffce03e77",
     "sujo": false
@@ -82,5 +82,6 @@
     }
   ],
   "rodadasDeCorrecao": 1,
-  "edicoesManuais": 0
+  "edicoesManuais": 0,
+  "ramo": "ensaio/ENSAIO-A"
 }
