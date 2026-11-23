@@ -1,0 +1,92 @@
+{
+  "id": "B2",
+  "grupo": "B",
+  "condicao": "com harness",
+  "status": "aprovada",
+  "primeiraEntrega": {
+    "build": true,
+    "errosTipo": 0,
+    "testesFalhando": 0,
+    "testesTotal": 41,
+    "testesInstaveis": 0,
+    "violacoes": 0,
+    "porRegra": {},
+    "lintErros": 0,
+    "linhasCodigo": 578,
+    "casosDeTesteDoProjeto": 23,
+    "dependenciasAdicionadas": [],
+    "harnessAlterado": []
+  },
+  "final": {
+    "build": true,
+    "errosTipo": 0,
+    "testesFalhando": 0,
+    "testesTotal": 41,
+    "testesInstaveis": 0,
+    "violacoes": 0,
+    "porRegra": {},
+    "lintErros": 0,
+    "linhasCodigo": 578,
+    "casosDeTesteDoProjeto": 23,
+    "dependenciasAdicionadas": [],
+    "harnessAlterado": []
+  },
+  "evolucao": [
+    {
+      "n": 1,
+      "tipo": "entrega",
+      "testesFalhando": 0,
+      "violacoes": 0,
+      "build": true,
+      "aprovado": true
+    }
+  ],
+  "intervencoes": {
+    "promptsDeCorrecao": 0,
+    "edicoesManuais": 0,
+    "outrasMensagens": 0,
+    "total": 0
+  },
+  "tempo": {
+    "inicio": "2026-11-23T15:18:05.086Z",
+    "fim": "2026-11-23T15:21:32.317Z",
+    "minutos": 3
+  },
+  "sessao": {
+    "modelos": [
+      "claude-sonnet-5-5"
+    ],
+    "versoesClaudeCode": [
+      "2.1.300"
+    ],
+    "esforco": [
+      "medium"
+    ],
+    "modosDePermissao": [
+      "acceptEdits"
+    ],
+    "mensagensHumanas": 1,
+    "interrupcoes": 0,
+    "chamadasDeFerramenta": 8,
+    "errosDeFerramenta": 1,
+    "execucoes": {
+      "validate": 0,
+      "testes": 0,
+      "build": 1,
+      "tsc": 0
+    },
+    "tokens": {
+      "entrada": 16,
+      "saida": 23869,
+      "cacheEscrita": 49627,
+      "cacheLeitura": 301696
+    }
+  },
+  "harness": {
+    "bloqueiosDoStop": 0,
+    "edicoesComViolacao": 0,
+    "edicoesVerificadas": 0,
+    "validacoesOk": 2,
+    "validacoesComFalha": 1
+  }
+}

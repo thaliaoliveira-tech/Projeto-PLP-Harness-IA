@@ -5,9 +5,9 @@
   "variante": "harness",
   "ensaio": false,
   "pasta": "~/projetos-leilao/B2",
-  "status": "em-andamento",
+  "status": "aprovada",
   "preparadaEm": "2026-11-23T15:17:40.811Z",
-  "finalizadaEm": null,
+  "finalizadaEm": "2026-11-23T15:22:02.282Z",
   "repositorioPrincipal": {
     "commit": "77a8d70eef2a4171825eff1ded0ec8868b3ddfe0",
     "sujo": false
@@ -51,5 +51,6 @@
     }
   ],
   "rodadasDeCorrecao": 0,
-  "edicoesManuais": 0
+  "edicoesManuais": 0,
+  "ramo": "execucoes/B2"
 }

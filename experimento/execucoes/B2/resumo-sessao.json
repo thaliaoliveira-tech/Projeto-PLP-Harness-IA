@@ -1,0 +1,59 @@
+{
+  "arquivos": 1,
+  "sessoes": [
+    "1677e718-4083-4e15-bbba-574219f47736"
+  ],
+  "modelos": [
+    "claude-sonnet-5-5"
+  ],
+  "versoesClaudeCode": [
+    "2.1.300"
+  ],
+  "pontosDeEntrada": [
+    "sdk-cli"
+  ],
+  "modosDePermissao": [
+    "acceptEdits"
+  ],
+  "esforco": [
+    "medium"
+  ],
+  "inicio": "2026-11-23T15:18:05.086Z",
+  "fim": "2026-11-23T15:21:04.521Z",
+  "duracaoMinutos": 2.99,
+  "mensagensHumanas": 1,
+  "detalheMensagensHumanas": [
+    {
+      "quando": "2026-11-23T15:18:05.475Z",
+      "caracteres": 7086,
+      "inicio": "# Tarefa: API de leilões em tempo real\n\nImplemente, neste projeto NestJS, uma API HTTP de **leilões em tempo real** utilizando **programação reativa / orientada"
+    }
+  ],
+  "interrupcoes": 0,
+  "chamadasDeFerramenta": 8,
+  "ferramentas": {
+    "Bash": 8
+  },
+  "errosDeFerramenta": 1,
+  "detalheErrosDeFerramenta": [
+    {
+      "quando": "2026-11-23T15:20:48.471Z",
+      "trecho": "Exit code 144\n{\"aceito\":true,\"leilao\":{\"id\":\"9f2051b3-54d1-4b15-9d02-227357b47dde\",\"titulo\":\"B\",\"lanceInicial\":100,\"incrementoMinimo\":10,\"prorrogacaoSegundos\":2,\"encerraEm\":\"2026-11-23T15:20:46.332Z\",\"status\":\"ABERTO\",\"maiorLance\":{\"participante\":\"ana\",\"valor\":100,\"ocorridoEm\":\"2026-11-23T15:20:44.3"
+    }
+  ],
+  "comandosBash": 8,
+  "execucoes": {
+    "validate": 0,
+    "testes": 0,
+    "build": 1,
+    "tsc": 0
+  },
+  "respostasDoModelo": 8,
+  "tokens": {
+    "entrada": 16,
+    "saida": 23869,
+    "cacheEscrita": 49627,
+    "cacheLeitura": 301696
+  },
+  "entradasDeSubagente": 0
+}
