@@ -5,9 +5,9 @@
   "variante": "base",
   "ensaio": false,
   "pasta": "~/projetos-leilao/A2",
-  "status": "em-andamento",
+  "status": "aprovada",
   "preparadaEm": "2026-11-23T15:23:14.544Z",
-  "finalizadaEm": null,
+  "finalizadaEm": "2026-11-23T23:11:30.875Z",
   "repositorioPrincipal": {
     "commit": "94d2d36bb53cfc188f2ec5ba7a562de337de146f",
     "sujo": false
@@ -81,5 +81,6 @@
     }
   ],
   "rodadasDeCorrecao": 1,
-  "edicoesManuais": 0
+  "edicoesManuais": 0,
+  "ramo": "execucoes/A2"
 }
