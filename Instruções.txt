@@ -1,0 +1,7 @@
+Construindo um Harness para agentes de IA
+
+Prepare um repositório com instruções para agentes, regras arquiteturais, testes, lint e scripts de validação focado em Programação Reativa/Orientada a Eventos.
+
+Implemente a mesma funcionalidade com e sem o harness e compare a quantidade de erros, violações arquiteturais e intervenções humanas.
+
+O projeto pode ser focado numa solução de frontend ou numa solução de backend. Lembrando que os slides sobre Programação Reativa na pasta "Slides".

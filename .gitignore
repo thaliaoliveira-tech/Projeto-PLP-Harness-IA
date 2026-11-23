@@ -1,0 +1,19 @@
+# Dependências e artefatos de build
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Estado local dos hooks do harness
+.harness/
+
+# Saídas temporárias do kit de avaliação
+avaliacao/.tmp/
+
+# Material da disciplina (PDFs grandes, de autoria do professor) — fica na pasta, fora do git
+Slides/
+
+# Sistema / editor
+.DS_Store
+*.log
+.env
