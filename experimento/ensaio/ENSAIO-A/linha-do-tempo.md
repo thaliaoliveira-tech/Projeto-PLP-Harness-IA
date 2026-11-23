@@ -4,3 +4,4 @@
 - **23/11/2026, 11:18** — `ENSAIO-A` checkpoint 1 (entrega) — commit `ace05b85` — 0/41 testes falhando, 12 violações
 - **23/11/2026, 11:18** — `ENSAIO-A` checkpoint 2 (humano: ajuste manual de comentário (simulado)) — commit `429ec4f2` — 0/41 testes falhando, 12 violações
 - **23/11/2026, 11:18** — `ENSAIO-A` checkpoint 3 (correcao) — commit `b8c23980` — aprovado (build ok, 0 testes falhando, 0 violações)
+- **23/11/2026, 11:18** — `ENSAIO-A` finalizada — **aprovada** após 2 intervenção(ões) humana(s) e 1 min; histórico no ramo `ensaio/ENSAIO-A`
