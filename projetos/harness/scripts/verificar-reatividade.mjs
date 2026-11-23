@@ -12,7 +12,7 @@
 // Saída: código 0 sem violações; 1 com violações (no modo --hook: 2, para o agente ver a mensagem).
 // As regras estão documentadas em docs/regras-reativas.md.
 
-import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -540,6 +540,23 @@ export function formatar(resultado) {
 
 // ------------------------------------------------------------------ linha de comando
 
+/** Registro local dos hooks (.harness/hooks.log), usado como evidência no experimento. */
+function registrarNoLog(raiz, texto) {
+  try {
+    const dir = join(raiz, '.harness');
+    mkdirSync(dir, { recursive: true });
+    const d = new Date();
+    const off = -d.getTimezoneOffset();
+    const sinal = off >= 0 ? '+' : '-';
+    const hh = String(Math.floor(Math.abs(off) / 60)).padStart(2, '0');
+    const mm = String(Math.abs(off) % 60).padStart(2, '0');
+    const local = new Date(d.getTime() + off * 60_000).toISOString().slice(0, 19);
+    appendFileSync(join(dir, 'hooks.log'), `${local}${sinal}${hh}${mm} ${texto}\n`);
+  } catch {
+    /* o registro nunca deve quebrar o hook */
+  }
+}
+
 async function lerStdin() {
   const partes = [];
   for await (const p of process.stdin) partes.push(p);
@@ -568,6 +585,7 @@ async function principal() {
     const rel = relative(resolve(raiz), resolve(raiz, arquivo));
     if (!rel.startsWith(`src${sep}`)) process.exit(0);
     const r = verificar({ raiz, arquivos: [rel] });
+    registrarNoLog(raiz, `edicao ${r.total > 0 ? 'violacoes' : 'ok'} ${rel.split(sep).join('/')} ${r.total}`);
     if (r.total > 0) {
       process.stderr.write(`[harness] O arquivo editado viola regras reativas do projeto:\n\n${formatar(r)}\n`);
       process.exit(2);

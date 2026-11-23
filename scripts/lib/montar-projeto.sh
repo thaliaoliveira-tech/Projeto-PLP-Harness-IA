@@ -35,12 +35,20 @@ if [ "$VARIANTE" = harness ]; then
   rsync -a "${EXCLUIR[@]}" "$RAIZ/projetos/harness/" "$DEST/"
 fi
 for o in "${OVERLAYS[@]}"; do
-  # Um overlay substitui por completo as pastas src/ e test/ que ele trouxer.
-  for pasta in src test; do
-    if [ -d "$o/$pasta" ]; then rm -rf "${DEST:?}/$pasta"; fi
-  done
-  rsync -a "${EXCLUIR[@]}" "$o/" "$DEST/"
+  # Um overlay substitui por completo a pasta src/ (se trouxer uma) e acrescenta os demais arquivos.
+  # REMOVER.txt (opcional) lista caminhos a apagar do projeto montado (ex.: testes do exemplo).
+  if [ -d "$o/src" ]; then rm -rf "${DEST:?}/src"; fi
+  rsync -a "${EXCLUIR[@]}" --exclude REMOVER.txt "$o/" "$DEST/"
+  if [ -f "$o/REMOVER.txt" ]; then
+    while IFS= read -r caminho; do
+      [ -n "$caminho" ] && rm -rf "${DEST:?}/$caminho"
+    done < "$o/REMOVER.txt"
+  fi
 done
+
+# Cada projeto montado é um repositório git próprio (ferramentas como o oxlint respeitam o
+# .gitignore do repositório que contém a pasta; sem isso herdariam as regras do repositório principal).
+(cd "$DEST" && git init -q && git symbolic-ref HEAD refs/heads/main)
 
 if [ "$INSTALAR" = 1 ]; then
   (cd "$DEST" && npm ci --prefer-offline --no-audit --no-fund --loglevel=error > /dev/null)
