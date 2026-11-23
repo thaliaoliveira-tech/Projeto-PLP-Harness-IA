@@ -1,0 +1,54 @@
+{
+  "arquivos": 1,
+  "sessoes": [
+    "11a4dd6b-2e08-44c8-98c2-c4a8fd7243b0"
+  ],
+  "modelos": [
+    "claude-sonnet-5-5"
+  ],
+  "versoesClaudeCode": [
+    "2.1.300"
+  ],
+  "pontosDeEntrada": [
+    "sdk-cli"
+  ],
+  "modosDePermissao": [
+    "acceptEdits"
+  ],
+  "esforco": [
+    "medium"
+  ],
+  "inicio": "2026-11-23T15:12:25.393Z",
+  "fim": "2026-11-23T15:15:26.746Z",
+  "duracaoMinutos": 3.02,
+  "mensagensHumanas": 1,
+  "detalheMensagensHumanas": [
+    {
+      "quando": "2026-11-23T15:12:25.803Z",
+      "caracteres": 7086,
+      "inicio": "# Tarefa: API de leilões em tempo real\n\nImplemente, neste projeto NestJS, uma API HTTP de **leilões em tempo real** utilizando **programação reativa / orientada"
+    }
+  ],
+  "interrupcoes": 0,
+  "chamadasDeFerramenta": 7,
+  "ferramentas": {
+    "Bash": 7
+  },
+  "errosDeFerramenta": 0,
+  "detalheErrosDeFerramenta": [],
+  "comandosBash": 7,
+  "execucoes": {
+    "validate": 1,
+    "testes": 1,
+    "build": 1,
+    "tsc": 0
+  },
+  "respostasDoModelo": 8,
+  "tokens": {
+    "entrada": 16,
+    "saida": 24070,
+    "cacheEscrita": 50451,
+    "cacheLeitura": 290824
+  },
+  "entradasDeSubagente": 0
+}
