@@ -223,7 +223,7 @@ function graficoPorExecucao(chave, titulo, subtitulo, unidade) {
   const pw = W - m.esq - m.dir;
   const ph = H - m.topo - m.base;
   const dados = execucoes.map((e) => ({ id: e.id, grupo: e.grupo, v: valor(e, chave) }));
-  const { max, passo } = escalaBonita(Math.max(0, ...dados.map((d) => d.v ?? 0)));
+  const { max, passo } = escalaBonita(Math.max(0, ...dados.map((d) => d.v ?? 0)) * 1.1);
   const y = (v) => m.topo + ph - (v / max) * ph;
   const larguraBanda = pw / (dados.length + 1); // +1: espaço entre os grupos
   const xDe = (i, grupo) => m.esq + larguraBanda * (i + (grupo === 'B' ? 1 : 0)) + larguraBanda / 2;
@@ -271,10 +271,10 @@ function graficoEvolucao() {
   const painelH = 170;
   const H = 96 + linhas * (painelH + 28);
   const todas = execucoes.flatMap((e) => (e.evolucao ?? []).map(problemas));
-  const { max, passo } = escalaBonita(Math.max(1, ...todas));
+  const { max, passo } = escalaBonita(Math.max(1, ...todas) * 1.1);
   const partes = [`<rect class="fundo" width="${W}" height="${H}"/>`];
   partes.push(`<text x="24" y="32" class="titulo">Problemas restantes a cada checkpoint</text>`);
-  partes.push(`<text x="24" y="52" class="subtitulo">Build quebrado (1) + testes falhando + violações. E = entrega; C1, C2… = após cada intervenção.</text>`);
+  partes.push(`<text x="24" y="52" class="subtitulo">Build quebrado (1) + testes falhando + violações. E = entrega; C1, C2… = após cada intervenção; H = edição manual.</text>`);
   partes.push(legenda(24, 78));
   execucoes.forEach((e, i) => {
     const px = 24 + (i % colunas) * painelW;
@@ -292,10 +292,11 @@ function graficoEvolucao() {
     const banda = pw / Math.max(pontos.length, 4);
     const largura = Math.min(24, banda * 0.6);
     let correcao = 0;
+    let manual = 0;
     pontos.forEach((c, j) => {
       const v = problemas(c);
       const xc = px + m.esq + banda * j + banda / 2;
-      const rotulo = c.tipo === 'entrega' ? 'E' : c.tipo === 'humano' ? `H${j}` : `C${++correcao}`;
+      const rotulo = c.tipo === 'entrega' ? 'E' : c.tipo === 'humano' ? `H${++manual}` : `C${++correcao}`;
       partes.push(coluna(xc - largura / 2, y(v), largura, y(0), e.grupo, `${e.id} ${rotulo}: ${v} problema(s) — ${c.testesFalhando} testes, ${c.violacoes} violações${c.build ? '' : ', build quebrado'}`));
       partes.push(`<text x="${xc}" y="${y(v) - 5}" text-anchor="middle" class="valor">${v}</text>`);
       partes.push(`<text x="${xc}" y="${y(0) + 15}" text-anchor="middle" class="eixo">${rotulo}</text>`);

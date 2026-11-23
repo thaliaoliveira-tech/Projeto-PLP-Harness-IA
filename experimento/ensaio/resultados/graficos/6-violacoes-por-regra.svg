@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" width="720" height="480" role="img" aria-label="Violações por regra na primeira entrega">
+  <style>
+    svg { --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781; --grid:#e1e0d9; --base:#c3c2b7; --A:#2a78d6; --B:#eb6834; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    @media (prefers-color-scheme: dark) { svg { --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#898781; --grid:#2c2c2a; --base:#383835; --A:#3987e5; --B:#d95926; } }
+    .fundo { fill: var(--surface); }
+    .titulo { fill: var(--ink); font-size: 18px; font-weight: 600; }
+    .subtitulo { fill: var(--ink2); font-size: 13px; }
+    .eixo { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+    .rotulo { fill: var(--ink2); font-size: 12px; }
+    .valor { fill: var(--ink); font-size: 12px; font-weight: 600; }
+    .grade { stroke: var(--grid); stroke-width: 1; }
+    .base { stroke: var(--base); stroke-width: 1; }
+    .media { stroke: var(--ink2); stroke-width: 1.5; }
+    .A { fill: var(--A); } .B { fill: var(--B); }
+  </style>
+<rect class="fundo" width="720" height="480"/>
+<text x="24" y="32" class="titulo">Violações por regra na primeira entrega</text>
+<text x="24" y="52" class="subtitulo">Soma das 3 execuções de cada condição (verificador RX01–RX09).</text>
+<g transform="translate(24,78)">
+    <rect x="0" y="-9" width="10" height="10" rx="2" class="A"/><text x="16" y="0" class="rotulo">Sem harness (A)</text>
+    <rect x="150" y="-9" width="10" height="10" rx="2" class="B"/><text x="166" y="0" class="rotulo">Com harness (B)</text>
+  </g>
+<line x1="280" x2="280" y1="92" y2="456" class="base"/>
+<text x="280" y="474" text-anchor="middle" class="eixo">0</text>
+<line x1="358.4" x2="358.4" y1="92" y2="456" class="grade"/>
+<text x="358.4" y="474" text-anchor="middle" class="eixo">1</text>
+<line x1="436.8" x2="436.8" y1="92" y2="456" class="grade"/>
+<text x="436.8" y="474" text-anchor="middle" class="eixo">2</text>
+<line x1="515.2" x2="515.2" y1="92" y2="456" class="grade"/>
+<text x="515.2" y="474" text-anchor="middle" class="eixo">3</text>
+<line x1="593.6" x2="593.6" y1="92" y2="456" class="grade"/>
+<text x="593.6" y="474" text-anchor="middle" class="eixo">4</text>
+<line x1="672" x2="672" y1="92" y2="456" class="grade"/>
+<text x="672" y="474" text-anchor="middle" class="eixo">5</text>
+<text x="270" y="113" text-anchor="end" class="rotulo">RX01 · subscribe aninhado</text>
+<text x="286" y="106" class="eixo">0</text>
+<text x="286" y="120" class="eixo">0</text>
+<text x="270" y="153" text-anchor="end" class="rotulo">RX02 · subscribe fora do ciclo de vida</text>
+<path d="M280,136 H354.4 Q358.4,136 358.4,140 V144 Q358.4,148 354.4,148 H280 Z" class="A"><title>RX02 — Sem harness (A): 1</title></path>
+<text x="364.4" y="146" class="eixo">1</text>
+<text x="286" y="160" class="eixo">0</text>
+<text x="270" y="193" text-anchor="end" class="rotulo">RX03 · Subject exposto</text>
+<path d="M280,176 H354.4 Q358.4,176 358.4,180 V184 Q358.4,188 354.4,188 H280 Z" class="A"><title>RX03 — Sem harness (A): 1</title></path>
+<text x="364.4" y="186" class="eixo">1</text>
+<text x="286" y="200" class="eixo">0</text>
+<text x="270" y="233" text-anchor="end" class="rotulo">RX04 · estado mutável</text>
+<path d="M280,216 H668 Q672,216 672,220 V224 Q672,228 668,228 H280 Z" class="A"><title>RX04 — Sem harness (A): 5</title></path>
+<text x="678" y="226" class="eixo">5</text>
+<text x="286" y="240" class="eixo">0</text>
+<text x="270" y="273" text-anchor="end" class="rotulo">RX05 · temporizador imperativo</text>
+<path d="M280,256 H511.20000000000005 Q515.2,256 515.2,260 V264 Q515.2,268 511.20000000000005,268 H280 Z" class="A"><title>RX05 — Sem harness (A): 3</title></path>
+<text x="521.2" y="266" class="eixo">3</text>
+<text x="286" y="280" class="eixo">0</text>
+<text x="270" y="313" text-anchor="end" class="rotulo">RX06 · eventos fora do RxJS</text>
+<text x="286" y="306" class="eixo">0</text>
+<text x="286" y="320" class="eixo">0</text>
+<text x="270" y="353" text-anchor="end" class="rotulo">RX07 · emissor conhece observador</text>
+<path d="M280,336 H432.8 Q436.8,336 436.8,340 V344 Q436.8,348 432.8,348 H280 Z" class="A"><title>RX07 — Sem harness (A): 2</title></path>
+<text x="442.8" y="346" class="eixo">2</text>
+<text x="286" y="360" class="eixo">0</text>
+<text x="270" y="393" text-anchor="end" class="rotulo">RX08 · acumulador mutado</text>
+<text x="286" y="386" class="eixo">0</text>
+<text x="286" y="400" class="eixo">0</text>
+<text x="270" y="433" text-anchor="end" class="rotulo">RX09 · dependência circular</text>
+<text x="286" y="426" class="eixo">0</text>
+<text x="286" y="440" class="eixo">0</text>
+</svg>
