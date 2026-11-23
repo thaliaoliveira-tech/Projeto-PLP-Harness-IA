@@ -9,7 +9,7 @@
   "preparadaEm": "2026-11-23T23:13:01.547Z",
   "finalizadaEm": "2026-11-23T23:22:04.263Z",
   "repositorioPrincipal": {
-    "commit": "e620de1d86f40c92fe90538818b747eee647f767",
+    "commit": "534f6a40e42999b71bbc378fa283f8f6df75752b",
     "sujo": false
   },
   "ambiente": {
@@ -22,13 +22,13 @@
     "maxRodadas": 8,
     "maxMinutos": 120
   },
-  "commitInicial": "2dbe2c32e021e6be0c728314b2ee80b5fd3a32ea",
+  "commitInicial": "509b623447d689935aeb8e8717e1c005a911f28f",
   "checkpoints": [
     {
       "n": 1,
       "tipo": "entrega",
       "descricao": null,
-      "commit": "46c2bead6578b8560587179bb3ae76cf734e49f2",
+      "commit": "27ced693561185262cdd7bfc13cb7ae863ad3bca",
       "em": "2026-11-23T23:17:44.353Z",
       "arquivosAlterados": 9,
       "pasta": "checkpoints/01-entrega",
@@ -56,7 +56,7 @@
       "n": 2,
       "tipo": "correcao",
       "descricao": null,
-      "commit": "19f89264b3b3e88b6447cf5fae7f947806395303",
+      "commit": "76e955a8098b783851b4476f15b79576ba51026d",
       "em": "2026-11-23T23:21:01.709Z",
       "arquivosAlterados": 2,
       "pasta": "checkpoints/02-correcao",

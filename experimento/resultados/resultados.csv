@@ -1,0 +1,7 @@
+id,grupo,status,testes1,violacoes1,problemas1,tipos1,intervencoes,rodadas,manuais,outras,minutos,testesF,violacoesF,ferramentas,errosFerramenta,tokensSaida,linhas,casosTeste
+A1,A,aprovada,0,4,4,0,1,1,0,0,4,0,0,7,2,22353,522,0
+A2,A,aprovada,0,7,7,0,1,1,0,0,467,0,0,13,4,29796,612,0
+A3,A,aprovada,0,3,3,0,1,1,0,0,6,0,0,14,2,28128,436,4
+B1,B,aprovada,0,0,0,0,0,0,0,0,4,0,0,7,0,24070,819,19
+B2,B,aprovada,0,0,0,0,0,0,0,0,3,0,0,8,1,23869,578,23
+B3,B,aprovada,0,0,0,0,0,0,0,0,4,0,0,9,2,24343,795,18

@@ -10,7 +10,7 @@
 
 | Checkpoint | Horário | Build | Testes falhando | Violações | O que foi enviado em seguida |
 |---|---|---|---|---|---|
-| 1 (`entrega`, `c5bcdf5a`) | 23/11/2026 12:15 | ok | 0/41 | 0 | — (aprovada) |
+| 1 (`entrega`, `ac621422`) | 23/11/2026 12:15 | ok | 0/41 | 0 | — (aprovada) |
 
 ## O que deu errado e como foi corrigido
 Nenhum erro ou violação arquitetural ocorreu: a execução foi aprovada no primeiro checkpoint (`entrega`), sem necessidade de intervenções de correção.

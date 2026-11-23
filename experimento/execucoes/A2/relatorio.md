@@ -10,8 +10,8 @@
 
 | Checkpoint | Horário | Build | Testes falhando | Violações | O que foi enviado em seguida |
 |---|---|---|---|---|---|
-| 1 (`entrega`, `912f6956`) | 23/11/2026 12:25 | ok | 0/41 | 7 (`RX02=1, RX03=1, RX04=4, RX07=1`) | `checkpoints/01-entrega/intervencao.md` (1ª tentativa às 12:25 atingiu limite 429; repetição técnica às 20:09) |
-| 2 (`correcao`, `88d93ba0`) | 23/11/2026 20:10 | ok | 0/41 | 0 | — (aprovada) |
+| 1 (`entrega`, `c68cca30`) | 23/11/2026 12:25 | ok | 0/41 | 7 (`RX02=1, RX03=1, RX04=4, RX07=1`) | `checkpoints/01-entrega/intervencao.md` (1ª tentativa às 12:25 atingiu limite 429; repetição técnica às 20:09) |
+| 2 (`correcao`, `933266b0`) | 23/11/2026 20:10 | ok | 0/41 | 0 | — (aprovada) |
 
 ## O que deu errado e como foi corrigido
 
@@ -20,7 +20,7 @@
   - **RX04 (`estado-mutavel`, 4 ocorrências)**: `src/leilao.service.ts:135` (`this.leiloes.set(...)`), `src/notificacoes.service.ts:22` (`this.titulos.set(...)`), `:38` (`this.lideres.set(...)`) e `:63` (`this.porParticipante.set(...)`).
   - **RX02 (`subscribe-fora-do-ciclo-de-vida`, 1 ocorrência)**: `src/leilao.service.ts:137` (`estado.prazo$`).
   - **RX07 (`emissor-conhece-observador`, 1 ocorrência)**: `src/leiloes.controller.ts:14` (`import { NotificacoesService } from './notificacoes.service.js';`).
-- **Correção (`912f6956` → `88d93ba0`)**: o implementador alterou `src/app.module.ts`, `src/leilao.service.ts`, `src/leiloes.controller.ts`, `src/notificacoes.service.ts` e criou `src/participantes.controller.ts` (`+493/-280` linhas). Tornou `comando$` e `destruir$` `private readonly`, derivou o estado de leilões e notificações via `scan` puro sobre cópias imutáveis de `Map`, moveu as assinaturas para `onModuleInit` com `takeUntil(destruir$)` (usando `groupBy` + `switchMap(timer)` nos prazos) e separou a rota de participantes em `ParticipantesController`, deixando `NotificacoesService` observar `LeilaoService.eventos$`.
+- **Correção (`c68cca30` → `933266b0`)**: o implementador alterou `src/app.module.ts`, `src/leilao.service.ts`, `src/leiloes.controller.ts`, `src/notificacoes.service.ts` e criou `src/participantes.controller.ts` (`+493/-280` linhas). Tornou `comando$` e `destruir$` `private readonly`, derivou o estado de leilões e notificações via `scan` puro sobre cópias imutáveis de `Map`, moveu as assinaturas para `onModuleInit` com `takeUntil(destruir$)` (usando `groupBy` + `switchMap(timer)` nos prazos) e separou a rota de participantes em `ParticipantesController`, deixando `NotificacoesService` observar `LeilaoService.eventos$`.
 
 ## Comportamento do agente
 - Sem harness (sem `AGENTS.md`/`CLAUDE.md`). Removeu os testes de exemplo (`app.controller.spec.ts` e `app.e2e-spec.ts`), não escreveu testes automatizados (0 casos no projeto) e validou com `npm run build` e sessões manuais de `curl` contra `node dist/main`.

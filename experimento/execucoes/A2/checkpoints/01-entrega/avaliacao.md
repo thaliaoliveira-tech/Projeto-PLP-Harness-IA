@@ -1,7 +1,7 @@
 # Avaliação — A2 — checkpoint 1 (entrega)
 
 - Avaliado em: 2026-11-23T15:25:26.153Z
-- Projeto: `~/projetos-leilao/A2` (commit `912f69565a`)
+- Projeto: `~/projetos-leilao/A2` (commit `c68cca303a`)
 - **Aprovado:** não ❌
 
 | Métrica | Valor |

@@ -18,28 +18,28 @@ As referências "ADR-xxx" apontam para [`decisoes.md`](decisoes.md).
 
 ## 23/11/2026 — Construção da infraestrutura do experimento
 
-- **10:28** — Repositório git criado; enunciado versionado (`00f004f`).
-- **10:30** — Projeto base gerado com `@nestjs/cli` 12.0.15. **Achado:** o gerador oficial já cria `AGENTS.md`, `CLAUDE.md` e skills de agente, além de telemetria externa (`@nestjs/observe`). Tudo foi removido da base para que a condição A seja de fato "sem harness"; evidência guardada em `docs/evidencias/` (ADR-004). Base versionada (`7752172`).
+- **10:28** — Repositório git criado; enunciado versionado (`59c28f5`).
+- **10:30** — Projeto base gerado com `@nestjs/cli` 12.0.15. **Achado:** o gerador oficial já cria `AGENTS.md`, `CLAUDE.md` e skills de agente, além de telemetria externa (`@nestjs/observe`). Tudo foi removido da base para que a condição A seja de fato "sem harness"; evidência guardada em `docs/evidencias/` (ADR-004). Base versionada (`4f67657`).
 - **10:33** — Especificação da tarefa escrita (`experimento/prompts/tarefa.md`): contrato HTTP completo, idêntico para A e B.
 - **10:35** — Gabarito (implementação reativa de referência) escrito para validar o instrumento: domínio puro (decidir/evoluir), Sink de comandos com `scan`, log de eventos com replay, projeções, temporizador com `switchMap(timer)`, SSE.
 - **10:38** — Suíte de aceitação oculta (41 testes caixa-preta via HTTP) escrita. Problema: a variável `BASE_URL` colidia com `import.meta.env.BASE_URL` do Vite; renomeada para `URL_ALVO`. Resultado: gabarito 41/41.
 - **10:40** — Verificador de regras reativas (RX01–RX09) escrito com a API do compilador TypeScript: gabarito com 0 violações.
 - **10:41** — Anti-gabarito (implementação imperativa típica: `Map` mutável, `setTimeout`, `Subject` público, leilões chamando notificações) escrito: **41/41 testes e 12 violações**, o que prova que os testes medem funcionalidade e o verificador mede paradigma.
-- **10:42** — 10 casos de teste do próprio verificador (um por regra + código correto): todos passam. Commit `14ca6a7`.
+- **10:42** — 10 casos de teste do próprio verificador (um por regra + código correto): todos passam. Commit `aeff6ce`.
 - **10:44** — Harness montado: `AGENTS.md`/`CLAUDE.md`, `docs/arquitetura.md`, `docs/regras-reativas.md`, dependency-cruiser (camadas), verificador de estrutura, testes de contrato, `npm run validate` e hooks do Claude Code (formato confirmado na documentação oficial da versão 2.1.x).
 - **10:46** — Problema: o dependency-cruiser 18.9 não aceitava `extensionAlias`; resolvido com `tsConfig` (os imports `.js` passam a resolver para `.ts`).
 - **10:51** — Problema: o oxlint respeita o `.gitignore` do repositório pai e não encontrava arquivos nos projetos de teste; resolvido fazendo de cada projeto montado um repositório git próprio.
-- **10:52** — Gabarito + harness: `npm run validate` com 7/7 etapas verdes (~13 s). Hooks testados com entradas simuladas (bloqueio do Stop 3×, liberação, reset no novo prompt). Commit `dfd0d06`.
+- **10:52** — Gabarito + harness: `npm run validate` com 7/7 etapas verdes (~13 s). Hooks testados com entradas simuladas (bloqueio do Stop 3×, liberação, reset no novo prompt). Commit `85eee49`.
 - **10:56** — Avaliador de checkpoints (`avaliacao/avaliar.mjs`) escrito.
 - **10:57** — **Problema importante:** um teste de stream falhou no gabarito. Teste de estresse (8 rodadas) mostrou falhas intermitentes nos testes de tempo.
 - **10:59** — Causa encontrada: o temporizador do Node dispara ~1 ms **antes** de `Date.now()` alcançar o prazo em 8% dos casos (24/300 medidos). O gabarito concluía "ainda não venceu" e o leilão nunca encerrava. Correção: o comando de encerramento carrega o prazo agendado (ADR-008). Depois da correção: 10 rodadas, 410/410 execuções verdes.
-- **11:00** — Avaliador passa a rodar a suíte 2× por checkpoint e marca testes instáveis (ADR-009). A armadilha do temporizador foi registrada na documentação do harness. Commit `2cb2330`.
+- **11:00** — Avaliador passa a rodar a suíte 2× por checkpoint e marca testes instáveis (ADR-009). A armadilha do temporizador foi registrada na documentação do harness. Commit `2d6a094`.
 - **11:03** — Analisador de transcrições do Claude Code (`scripts/analisar-sessao.mjs`) escrito e testado na própria sessão de construção.
-- **11:05** — Scripts de condução do experimento (`preparar`, `checkpoint`, `finalizar`, `status`) escritos. Commit `febccaf`.
+- **11:05** — Scripts de condução do experimento (`preparar`, `checkpoint`, `finalizar`, `status`) escritos. Commit `3584d20`.
 - **11:06** — **Ensaio do protocolo** (dados sintéticos): ENSAIO-A (entrega = anti-gabarito → 12 violações → prompt de intervenção gerado → correção = gabarito → aprovado → finalizada, histórico importado como ramo) e ENSAIO-B (harness; hooks simulados; aprovado na entrega). Fluxo completo validado.
 - **11:10** — Consolidação de resultados com estatística descritiva, delta de Cliff e 6 gráficos SVG (paleta validada para daltonismo). Revisão visual dos gráficos renderizados: subtítulo cortado e rótulo encostado na margem corrigidos.
 - **11:11** — Correção de métrica: "casos de teste escritos pelo agente" passou a excluir os testes herdados da base/harness (antes, B contava os 11 testes de contrato como se fossem do agente).
-- **11:12** — Checklist de ambiente (`scripts/verificar-ambiente.sh`): detectou que o Node não está no PATH de processos não interativos — correção documentada no protocolo (passo 0). Gerador do histórico git. Commit `5e1fbb5`.
+- **11:12** — Checklist de ambiente (`scripts/verificar-ambiente.sh`): detectou que o Node não está no PATH de processos não interativos — correção documentada no protocolo (passo 0). Gerador do histórico git. Commit `7cb11f6`.
 - **11:14** — Documentação: protocolo das execuções, visão geral, fundamentação reativa, sistema, harness, metodologia (com ameaças à validade), instrumento de avaliação (com tabela de sobreposição harness × suíte oculta: 7 ✓, 7 ◐, 27 ✗), decisões (ADR-001 a ADR-013), material para slides/relatório e README.
 - **11:20** — Ensaio refeito com a versão definitiva dos scripts (incluindo o caminho de edição manual): ENSAIO-A aprovada com 2 intervenções, ENSAIO-B aprovada sem intervenções. Gráficos revisados (folga no topo da escala).
 - **11:22** — Verificação final: testes do verificador 10/10; camadas `base` e `harness` conferidas; temporários removidos. **Infraestrutura pronta para as execuções A1–B3.**
@@ -55,27 +55,32 @@ As referências "ADR-xxx" apontam para [`decisoes.md`](decisoes.md).
 As linhas abaixo são acrescentadas automaticamente pelos scripts do experimento.
 
 - **23/11/2026, 11:30** — `A1` preparada (sem harness): pasta `~/projetos-leilao/A1`, commit inicial `fe374bc2`
-- **23/11/2026, 11:37** — `B1` preparada (com harness): pasta `~/projetos-leilao/B1`, commit inicial `0f605cae`
-- **23/11/2026, 11:39** — `B1` checkpoint 1 (entrega) — commit `d4921ab8` — aprovado (build ok, 0 testes falhando, 0 violações)
+- **23/11/2026, 11:37** — `B1` preparada (com harness): pasta `~/projetos-leilao/B1`, commit inicial `35c1a097`
+- **23/11/2026, 11:39** — `B1` checkpoint 1 (entrega) — commit `073c1ee6` — aprovado (build ok, 0 testes falhando, 0 violações)
 - **23/11/2026, 11:40** — `B1` finalizada — **aprovada** após 0 intervenção(ões) humana(s) e 2 min; histórico no ramo `execucoes/B1`
-- **23/11/2026, 12:04** — `A1` preparada (sem harness): pasta `~/projetos-leilao/A1`, commit inicial `544980c1`
-- **23/11/2026, 12:07** — `A1` checkpoint 1 (entrega) — commit `6a7a7442` — 0/41 testes falhando, 4 violações
-- **23/11/2026, 12:09** — `A1` checkpoint 2 (correcao) — commit `cf53d748` — aprovado (build ok, 0 testes falhando, 0 violações)
+- **23/11/2026, 12:04** — `A1` preparada (sem harness): pasta `~/projetos-leilao/A1`, commit inicial `7aaa9eeb`
+- **23/11/2026, 12:07** — `A1` checkpoint 1 (entrega) — commit `9e67dd8c` — 0/41 testes falhando, 4 violações
+- **23/11/2026, 12:09** — `A1` checkpoint 2 (correcao) — commit `7f6b927b` — aprovado (build ok, 0 testes falhando, 0 violações)
 - **23/11/2026, 12:10** — `A1` finalizada — **aprovada** após 1 intervenção(ões) humana(s) e 4 min; histórico no ramo `execucoes/A1`
-- **23/11/2026, 12:11** — `B1` preparada (com harness): pasta `~/projetos-leilao/B1`, commit inicial `8e1e22bd`
-- **23/11/2026, 12:16** — `B1` checkpoint 1 (entrega) — commit `c5bcdf5a` — aprovado (build ok, 0 testes falhando, 0 violações)
+- **23/11/2026, 12:11** — `B1` preparada (com harness): pasta `~/projetos-leilao/B1`, commit inicial `73685a81`
+- **23/11/2026, 12:16** — `B1` checkpoint 1 (entrega) — commit `ac621422` — aprovado (build ok, 0 testes falhando, 0 violações)
 - **23/11/2026, 12:16** — `B1` finalizada — **aprovada** após 0 intervenção(ões) humana(s) e 4 min; histórico no ramo `execucoes/B1`
-- **23/11/2026, 12:17** — `B2` preparada (com harness): pasta `~/projetos-leilao/B2`, commit inicial `0c727cec`
-- **23/11/2026, 12:21** — `B2` checkpoint 1 (entrega) — commit `4afc1a81` — aprovado (build ok, 0 testes falhando, 0 violações)
+- **23/11/2026, 12:17** — `B2` preparada (com harness): pasta `~/projetos-leilao/B2`, commit inicial `2f730f81`
+- **23/11/2026, 12:21** — `B2` checkpoint 1 (entrega) — commit `d8017311` — aprovado (build ok, 0 testes falhando, 0 violações)
 - **23/11/2026, 12:22** — `B2` finalizada — **aprovada** após 0 intervenção(ões) humana(s) e 3 min; histórico no ramo `execucoes/B2`
-- **23/11/2026, 12:23** — `A2` preparada (sem harness): pasta `~/projetos-leilao/A2`, commit inicial `d5285083`
-- **23/11/2026, 12:25** — `A2` checkpoint 1 (entrega) — commit `912f6956` — 0/41 testes falhando, 7 violações
-- **23/11/2026, 20:10** — `A2` checkpoint 2 (correcao) — commit `88d93ba0` — aprovado (build ok, 0 testes falhando, 0 violações)
+- **23/11/2026, 12:23** — `A2` preparada (sem harness): pasta `~/projetos-leilao/A2`, commit inicial `ca7267ad`
+- **23/11/2026, 12:25** — `A2` checkpoint 1 (entrega) — commit `c68cca30` — 0/41 testes falhando, 7 violações
+- **23/11/2026, 20:10** — `A2` checkpoint 2 (correcao) — commit `933266b0` — aprovado (build ok, 0 testes falhando, 0 violações)
 - **23/11/2026, 20:11** — `A2` finalizada — **aprovada** após 1 intervenção(ões) humana(s) e 467 min; histórico no ramo `execucoes/A2`
-- **23/11/2026, 20:13** — `A3` preparada (sem harness): pasta `~/projetos-leilao/A3`, commit inicial `2dbe2c32`
-- **23/11/2026, 20:17** — `A3` checkpoint 1 (entrega) — commit `46c2bead` — 0/41 testes falhando, 3 violações
-- **23/11/2026, 20:21** — `A3` checkpoint 2 (correcao) — commit `19f89264` — aprovado (build ok, 0 testes falhando, 0 violações)
+- **23/11/2026, 20:13** — `A3` preparada (sem harness): pasta `~/projetos-leilao/A3`, commit inicial `509b6234`
+- **23/11/2026, 20:17** — `A3` checkpoint 1 (entrega) — commit `27ced693` — 0/41 testes falhando, 3 violações
+- **23/11/2026, 20:21** — `A3` checkpoint 2 (correcao) — commit `76e955a8` — aprovado (build ok, 0 testes falhando, 0 violações)
 - **23/11/2026, 20:22** — `A3` finalizada — **aprovada** após 1 intervenção(ões) humana(s) e 6 min; histórico no ramo `execucoes/A3`
-- **23/11/2026, 20:23** — `B3` preparada (com harness): pasta `~/projetos-leilao/B3`, commit inicial `9a18e926`
-- **23/11/2026, 20:27** — `B3` checkpoint 1 (entrega) — commit `0a867757` — aprovado (build ok, 0 testes falhando, 0 violações)
+- **23/11/2026, 20:23** — `B3` preparada (com harness): pasta `~/projetos-leilao/B3`, commit inicial `e89b9e06`
+- **23/11/2026, 20:27** — `B3` checkpoint 1 (entrega) — commit `618b1bd1` — aprovado (build ok, 0 testes falhando, 0 violações)
 - **23/11/2026, 20:28** — `B3` finalizada — **aprovada** após 0 intervenção(ões) humana(s) e 4 min; histórico no ramo `execucoes/B3`
+
+## 23/11/2026 — Conclusão da condução e consolidação dos resultados
+
+- **12:04–20:29** — Condução completa das 6 execuções na ordem **A1 → B1 → B2 → A2 → A3 → B3** (`claude-sonnet-5-5/medium`, Claude Code `2.1.300`), com pausa entre 12:28 e 20:08 em A2 devido ao limite de sessão (`429 usage_limit_reached`) tratada conforme seção 7 do roteiro.
+- **20:29–20:30** — Todas as 6 execuções finalizadas e aprovadas (`41/41` testes, `0` violações ao final): sem harness (A1–A3) teve média de `4,7 ± 2,1` violações na 1ª entrega e exigiu `1` intervenção cada; com harness (B1–B3) teve `0` violações na 1ª entrega e `0` intervenções. Resultados consolidados em `experimento/resultados/resultados.md`, `experimento/resultados/relatorio-final.md` e `experimento/resultados/graficos/`, histórico git atualizado em `docs/historico-git.md`, e auditoria completa registrada em `experimento/auditoria/log-condutor.md`.

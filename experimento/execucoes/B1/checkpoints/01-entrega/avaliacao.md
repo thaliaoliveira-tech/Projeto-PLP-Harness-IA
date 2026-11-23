@@ -1,7 +1,7 @@
 # Avaliação — B1 — checkpoint 1 (entrega)
 
 - Avaliado em: 2026-11-23T15:15:49.487Z
-- Projeto: `~/projetos-leilao/B1` (commit `c5bcdf5a8c`)
+- Projeto: `~/projetos-leilao/B1` (commit `ac621422e4`)
 - **Aprovado:** sim ✅
 
 | Métrica | Valor |

@@ -9,7 +9,7 @@
   "preparadaEm": "2026-11-23T14:18:50.154Z",
   "finalizadaEm": "2026-11-23T14:19:25.403Z",
   "repositorioPrincipal": {
-    "commit": "7cf4c4ca305c5a31bd4e3c7a77b6b19ce124658f",
+    "commit": "8c2d371e61f1b439562cb123722b68f7e6502982",
     "sujo": false
   },
   "ambiente": {
@@ -22,13 +22,13 @@
     "maxRodadas": 8,
     "maxMinutos": 120
   },
-  "commitInicial": "53f3692dfb5c84894e2d24f8c80a07a5b3bb8676",
+  "commitInicial": "6f04c07eebe77c9d3ced027ce06bbdcc66045776",
   "checkpoints": [
     {
       "n": 1,
       "tipo": "entrega",
       "descricao": null,
-      "commit": "8993a12b3784e829a91fb9501668b9c340d7b8ca",
+      "commit": "533cbd3a3649a51d3faeace4fc64749bd31ccbf6",
       "em": "2026-11-23T14:19:25.292Z",
       "arquivosAlterados": 17,
       "pasta": "checkpoints/01-entrega",

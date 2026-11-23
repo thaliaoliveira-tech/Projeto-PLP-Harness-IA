@@ -10,7 +10,7 @@
 
 | Checkpoint | Horário | Build | Testes falhando | Violações | O que foi enviado em seguida |
 |---|---|---|---|---|---|
-| 1 (`entrega`, `4afc1a81`) | 23/11/2026 12:21 | ok | 0/41 | 0 | — (aprovada) |
+| 1 (`entrega`, `d8017311`) | 23/11/2026 12:21 | ok | 0/41 | 0 | — (aprovada) |
 
 ## O que deu errado e como foi corrigido
 Nenhum erro ou violação arquitetural chegou ao checkpoint: a execução foi aprovada na primeira entrega (`entrega`), sem necessidade de intervenções humanas. Durante a sessão, o próprio `npm run validate` falhou uma vez em `testes-unitarios` (`12:20:20`), levando o agente a corrigir uma expectativa nos seus testes unitários de notificações antes de concluir.

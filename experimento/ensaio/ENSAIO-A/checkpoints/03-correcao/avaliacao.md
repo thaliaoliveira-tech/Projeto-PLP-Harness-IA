@@ -1,7 +1,7 @@
 # Avaliação — ENSAIO-A — checkpoint 3 (correcao)
 
 - Avaliado em: 2026-11-23T14:18:24.672Z
-- Projeto: `/tmp/claude-1001/-home-usuario-Documentos-workspace-Harness-agentes-IA/6b921b54-8282-4503-bfc8-4f9db1995aa8/scratchpad/execucoes/ENSAIO-A` (commit `b8c2398006`)
+- Projeto: `/tmp/claude-1001/-home-usuario-Documentos-workspace-Harness-agentes-IA/6b921b54-8282-4503-bfc8-4f9db1995aa8/scratchpad/execucoes/ENSAIO-A` (commit `bb26cef53e`)
 - **Aprovado:** sim ✅
 
 | Métrica | Valor |

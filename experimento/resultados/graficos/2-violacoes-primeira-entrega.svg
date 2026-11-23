@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-label="Violações arquiteturais na 1ª entrega">
+  <style>
+    svg { --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --muted:#898781; --grid:#e1e0d9; --base:#c3c2b7; --A:#2a78d6; --B:#eb6834; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    @media (prefers-color-scheme: dark) { svg { --surface:#1a1a19; --ink:#f0efec; --ink2:#c3c2b7; --muted:#898781; --grid:#2c2c2a; --base:#383835; --A:#3987e5; --B:#d95926; } }
+    .fundo { fill: var(--surface); }
+    .titulo { fill: var(--ink); font-size: 18px; font-weight: 600; }
+    .subtitulo { fill: var(--ink2); font-size: 13px; }
+    .eixo { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+    .rotulo { fill: var(--ink2); font-size: 12px; }
+    .valor { fill: var(--ink); font-size: 12px; font-weight: 600; }
+    .grade { stroke: var(--grid); stroke-width: 1; }
+    .base { stroke: var(--base); stroke-width: 1; }
+    .media { stroke: var(--ink2); stroke-width: 1.5; }
+    .A { fill: var(--A); } .B { fill: var(--B); }
+  </style>
+<rect class="fundo" width="720" height="400"/>
+<text x="56" y="32" class="titulo">Violações arquiteturais na 1ª entrega</text>
+<text x="56" y="52" class="subtitulo">Regras reativas RX01–RX09 verificadas por análise estática (mesmo verificador para A e B).</text>
+<g transform="translate(56,78)">
+    <rect x="0" y="-9" width="10" height="10" rx="2" class="A"/><text x="16" y="0" class="rotulo">Sem harness (A)</text>
+    <rect x="150" y="-9" width="10" height="10" rx="2" class="B"/><text x="166" y="0" class="rotulo">Com harness (B)</text>
+  </g>
+<line x1="56" x2="624" y1="336" y2="336" class="base"/>
+<text x="48" y="340" text-anchor="end" class="eixo">0</text>
+<line x1="56" x2="624" y1="276" y2="276" class="grade"/>
+<text x="48" y="280" text-anchor="end" class="eixo">2</text>
+<line x1="56" x2="624" y1="216" y2="216" class="grade"/>
+<text x="48" y="220" text-anchor="end" class="eixo">4</text>
+<line x1="56" x2="624" y1="156" y2="156" class="grade"/>
+<text x="48" y="160" text-anchor="end" class="eixo">6</text>
+<line x1="56" x2="624" y1="96" y2="96" class="grade"/>
+<text x="48" y="100" text-anchor="end" class="eixo">8</text>
+<path d="M84.57142857142857,336 V220 Q84.57142857142857,216 88.57142857142857,216 H104.57142857142857 Q108.57142857142857,216 108.57142857142857,220 V336 Z" class="A"><title>A1: 4 violação(ões)</title></path>
+<text x="96.57142857142857" y="210" text-anchor="middle" class="valor">4</text>
+<text x="96.57142857142857" y="354" text-anchor="middle" class="rotulo">A1</text>
+<path d="M165.71428571428572,336 V130 Q165.71428571428572,126 169.71428571428572,126 H185.71428571428572 Q189.71428571428572,126 189.71428571428572,130 V336 Z" class="A"><title>A2: 7 violação(ões)</title></path>
+<text x="177.71428571428572" y="120" text-anchor="middle" class="valor">7</text>
+<text x="177.71428571428572" y="354" text-anchor="middle" class="rotulo">A2</text>
+<path d="M246.85714285714283,336 V250 Q246.85714285714283,246 250.85714285714283,246 H266.85714285714283 Q270.85714285714283,246 270.85714285714283,250 V336 Z" class="A"><title>A3: 3 violação(ões)</title></path>
+<text x="258.85714285714283" y="240" text-anchor="middle" class="valor">3</text>
+<text x="258.85714285714283" y="354" text-anchor="middle" class="rotulo">A3</text>
+<line x1="409.1428571428571" x2="433.1428571428571" y1="336" y2="336" class="base"><title>B1: 0 violação(ões)</title></line>
+<text x="421.1428571428571" y="330" text-anchor="middle" class="valor">0</text>
+<text x="421.1428571428571" y="354" text-anchor="middle" class="rotulo">B1</text>
+<line x1="490.2857142857142" x2="514.2857142857142" y1="336" y2="336" class="base"><title>B2: 0 violação(ões)</title></line>
+<text x="502.2857142857142" y="330" text-anchor="middle" class="valor">0</text>
+<text x="502.2857142857142" y="354" text-anchor="middle" class="rotulo">B2</text>
+<line x1="571.4285714285714" x2="595.4285714285714" y1="336" y2="336" class="base"><title>B3: 0 violação(ões)</title></line>
+<text x="583.4285714285714" y="330" text-anchor="middle" class="valor">0</text>
+<text x="583.4285714285714" y="354" text-anchor="middle" class="rotulo">B3</text>
+<text x="177.7142857142857" y="376" text-anchor="middle" class="subtitulo">Sem harness (A)</text>
+<line x1="72.57142857142857" x2="282.85714285714283" y1="196" y2="196" class="media"><title>Média Sem harness (A): 4,67</title></line>
+<text x="288.85714285714283" y="200" class="rotulo">média 4,7</text>
+<text x="502.2857142857143" y="376" text-anchor="middle" class="subtitulo">Com harness (B)</text>
+<line x1="397.1428571428571" x2="607.4285714285714" y1="336" y2="336" class="media"><title>Média Com harness (B): 0</title></line>
+<text x="613.4285714285714" y="340" class="rotulo">média 0</text>
+</svg>

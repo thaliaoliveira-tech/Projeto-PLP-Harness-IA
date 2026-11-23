@@ -1,7 +1,7 @@
 # Avaliação — ENSAIO-B — checkpoint 1 (entrega)
 
 - Avaliado em: 2026-11-23T14:19:05.596Z
-- Projeto: `/tmp/claude-1001/-home-usuario-Documentos-workspace-Harness-agentes-IA/6b921b54-8282-4503-bfc8-4f9db1995aa8/scratchpad/execucoes/ENSAIO-B` (commit `8993a12b37`)
+- Projeto: `/tmp/claude-1001/-home-usuario-Documentos-workspace-Harness-agentes-IA/6b921b54-8282-4503-bfc8-4f9db1995aa8/scratchpad/execucoes/ENSAIO-B` (commit `533cbd3a36`)
 - **Aprovado:** sim ✅
 
 | Métrica | Valor |

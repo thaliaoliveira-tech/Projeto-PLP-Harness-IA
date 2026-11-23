@@ -35,7 +35,7 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 12:04 — A1 — Preparação da execução A1
 - Comando: `scripts/preparar-execucao.sh A1` (executado fora do sandbox após falha de `mkdir ~/projetos-leilao` no sandbox)
-- Resultado: Pasta `~/projetos-leilao/A1` criada (sem harness), commit inicial `544980c1`. Tabela de configuração preenchida em `experimento/execucoes/A1/registro.md`.
+- Resultado: Pasta `~/projetos-leilao/A1` criada (sem harness), commit inicial `7aaa9eeb`. Tabela de configuração preenchida em `experimento/execucoes/A1/registro.md`.
 - Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
 - Arquivos gerados: `experimento/execucoes/A1/registro.md`, `~/projetos-leilao/A1`
 
@@ -47,7 +47,7 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 12:07 — A1 — Checkpoint 1 (entrega)
 - Comando: `scripts/checkpoint.sh A1 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `❌ REPROVADO — build ok | aceitação 41/41 | violações 4 | erros de tipo 0 | lint 0e/0a` (commit `6a7a7442`, 3 min desde a preparação, 4 violações: 3× RX04 `estado-mutavel` e 1× RX02 `subscribe-fora-do-ciclo-de-vida` em `src/leilao.service.ts`). Saída indicou `✍ Intervenção 1`.
+- Resultado: `❌ REPROVADO — build ok | aceitação 41/41 | violações 4 | erros de tipo 0 | lint 0e/0a` (commit `9e67dd8c`, 3 min desde a preparação, 4 violações: 3× RX04 `estado-mutavel` e 1× RX02 `subscribe-fora-do-ciclo-de-vida` em `src/leilao.service.ts`). Saída indicou `✍ Intervenção 1`.
 - Decisão: Seguir para seção 5.5 — enviar `intervencao.md` via `scripts/rodar-implementador.sh A1 intervencao`.
 - Arquivos gerados: `experimento/execucoes/A1/checkpoints/01-entrega/avaliacao.md`, `experimento/execucoes/A1/checkpoints/01-entrega/intervencao.md`
 
@@ -59,7 +59,7 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 12:09 — A1 — Checkpoint 2 (correcao)
 - Comando: `scripts/checkpoint.sh A1 correcao` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `cf53d748`, 5 min desde a preparação, 1 rodada de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `7f6b927b`, 5 min desde a preparação, 1 rodada de correção). Saída indicou `✅ Critério de conclusão atingido`.
 - Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh A1`.
 - Arquivos gerados: `experimento/execucoes/A1/checkpoints/02-correcao/avaliacao.md`
 
@@ -71,7 +71,7 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 12:11 — B1 — Preparação da execução B1
 - Comando: `scripts/preparar-execucao.sh B1` (executado fora do sandbox após erro de `mkdir ~/projetos-leilao` no sandbox)
-- Resultado: Pasta `~/projetos-leilao/B1` criada (com harness), commit inicial `8e1e22bd`. Tabela de configuração preenchida em `experimento/execucoes/B1/registro.md`.
+- Resultado: Pasta `~/projetos-leilao/B1` criada (com harness), commit inicial `73685a81`. Tabela de configuração preenchida em `experimento/execucoes/B1/registro.md`.
 - Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
 - Arquivos gerados: `experimento/execucoes/B1/registro.md`, `~/projetos-leilao/B1`
 
@@ -83,19 +83,19 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 12:16 — B1 — Checkpoint 1 (entrega)
 - Comando: `scripts/checkpoint.sh B1 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `c5bcdf5a`, 5 min desde a preparação, 0 rodadas de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `ac621422`, 5 min desde a preparação, 0 rodadas de correção). Saída indicou `✅ Critério de conclusão atingido`.
 - Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh B1`.
 - Arquivos gerados: `experimento/execucoes/B1/checkpoints/01-entrega/avaliacao.md`
 
 ### 23/11/2026 12:16 — B1 — Finalização, auditoria de isolamento e relatório
 - Comando: `scripts/finalizar-execucao.sh B1` (fora do sandbox após erro de `.git/FETCH_HEAD` somente leitura no sandbox) e `grep -l "Harness-agentes-IA" experimento/execucoes/B1/sessao/*.jsonl`
-- Resultado: Execução B1 finalizada (`aprovada`), ramo `execucoes/B1` importado (`c5bcdf5`), `~/projetos-leilao/B1` removido, `resumo.md` gerado (4 min, 0 intervenções, US$ 0.47, 19 casos de teste escritos, 2 validações ok nos hooks). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
+- Resultado: Execução B1 finalizada (`aprovada`), ramo `execucoes/B1` importado (`ac62142`), `~/projetos-leilao/B1` removido, `resumo.md` gerado (4 min, 0 intervenções, US$ 0.47, 19 casos de teste escritos, 2 validações ok nos hooks). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
 - Decisão: Fazer commit de B1 (seção 5.6, passo 5) e prosseguir para a próxima execução obrigatória (`B2`).
 - Arquivos gerados: `experimento/execucoes/B1/registro.md`, `experimento/execucoes/B1/resumo.md`, `experimento/execucoes/B1/relatorio.md`, `experimento/execucoes/B1/harness-hooks.log`, `docs/linha-do-tempo.md`
 
 ### 23/11/2026 12:17 — B2 — Preparação da execução B2
 - Comando: `scripts/preparar-execucao.sh B2` (executado fora do sandbox após erro de `mkdir ~/projetos-leilao` no sandbox)
-- Resultado: Pasta `~/projetos-leilao/B2` criada (com harness), commit inicial `0c727cec`. Tabela de configuração preenchida em `experimento/execucoes/B2/registro.md`.
+- Resultado: Pasta `~/projetos-leilao/B2` criada (com harness), commit inicial `2f730f81`. Tabela de configuração preenchida em `experimento/execucoes/B2/registro.md`.
 - Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
 - Arquivos gerados: `experimento/execucoes/B2/registro.md`, `~/projetos-leilao/B2`
 
@@ -107,19 +107,19 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 12:21 — B2 — Checkpoint 1 (entrega)
 - Comando: `scripts/checkpoint.sh B2 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `4afc1a81`, 4 min desde a preparação, 0 rodadas de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `d8017311`, 4 min desde a preparação, 0 rodadas de correção). Saída indicou `✅ Critério de conclusão atingido`.
 - Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh B2`.
 - Arquivos gerados: `experimento/execucoes/B2/checkpoints/01-entrega/avaliacao.md`
 
 ### 23/11/2026 12:22 — B2 — Finalização, auditoria de isolamento e relatório
 - Comando: `scripts/finalizar-execucao.sh B2` (fora do sandbox após erro de `.git/FETCH_HEAD` somente leitura no sandbox) e `grep -l "Harness-agentes-IA" experimento/execucoes/B2/sessao/*.jsonl`
-- Resultado: Execução B2 finalizada (`aprovada`), ramo `execucoes/B2` importado (`4afc1a8`), `~/projetos-leilao/B2` removido, `resumo.md` gerado (3 min, 0 intervenções, US$ 0.47, 23 casos de teste escritos, hooks: 2 ok / 1 falha em `testes-unitarios`). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
+- Resultado: Execução B2 finalizada (`aprovada`), ramo `execucoes/B2` importado (`d801731`), `~/projetos-leilao/B2` removido, `resumo.md` gerado (3 min, 0 intervenções, US$ 0.47, 23 casos de teste escritos, hooks: 2 ok / 1 falha em `testes-unitarios`). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
 - Decisão: Fazer commit de B2 (seção 5.6, passo 5) e prosseguir para a próxima execução obrigatória (`A2`).
 - Arquivos gerados: `experimento/execucoes/B2/registro.md`, `experimento/execucoes/B2/resumo.md`, `experimento/execucoes/B2/relatorio.md`, `experimento/execucoes/B2/harness-hooks.log`, `docs/linha-do-tempo.md`
 
 ### 23/11/2026 12:23 — A2 — Preparação da execução A2
 - Comando: `scripts/preparar-execucao.sh A2` (executado fora do sandbox após erro de `mkdir ~/projetos-leilao` no sandbox)
-- Resultado: Pasta `~/projetos-leilao/A2` criada (sem harness), commit inicial `d5285083`. Tabela de configuração preenchida em `experimento/execucoes/A2/registro.md`.
+- Resultado: Pasta `~/projetos-leilao/A2` criada (sem harness), commit inicial `ca7267ad`. Tabela de configuração preenchida em `experimento/execucoes/A2/registro.md`.
 - Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
 - Arquivos gerados: `experimento/execucoes/A2/registro.md`, `~/projetos-leilao/A2`
 
@@ -131,7 +131,7 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 12:25 — A2 — Checkpoint 1 (entrega)
 - Comando: `scripts/checkpoint.sh A2 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `❌ REPROVADO — build ok | aceitação 41/41 | violações 7 | erros de tipo 0 | lint 0e/0a` (commit `912f6956`, 2 min desde a preparação, 7 violações: RX03=1, RX04=4, RX02=1, RX07=1). Saída indicou `✍ Intervenção 1`.
+- Resultado: `❌ REPROVADO — build ok | aceitação 41/41 | violações 7 | erros de tipo 0 | lint 0e/0a` (commit `c68cca30`, 2 min desde a preparação, 7 violações: RX03=1, RX04=4, RX02=1, RX07=1). Saída indicou `✍ Intervenção 1`.
 - Decisão: Seguir para seção 5.5 — enviar `intervencao.md` via `scripts/rodar-implementador.sh A2 intervencao`.
 - Arquivos gerados: `experimento/execucoes/A2/checkpoints/01-entrega/avaliacao.md`, `experimento/execucoes/A2/checkpoints/01-entrega/intervencao.md`
 
@@ -155,19 +155,19 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 20:10 — A2 — Checkpoint 2 (correcao)
 - Comando: `scripts/checkpoint.sh A2 correcao` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `88d93ba0`, 468 min desde a preparação em função da pausa por limite da conta entre 12:28 e 20:08, 1 rodada de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `933266b0`, 468 min desde a preparação em função da pausa por limite da conta entre 12:28 e 20:08, 1 rodada de correção). Saída indicou `✅ Critério de conclusão atingido`.
 - Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh A2`.
 - Arquivos gerados: `experimento/execucoes/A2/checkpoints/02-correcao/avaliacao.md`
 
 ### 23/11/2026 20:11 — A2 — Finalização, auditoria de isolamento e relatório
 - Comando: `scripts/finalizar-execucao.sh A2` (fora do sandbox após erro de `.git/FETCH_HEAD` somente leitura no sandbox) e `grep -l "Harness-agentes-IA" experimento/execucoes/A2/sessao/*.jsonl`
-- Resultado: Execução A2 finalizada (`aprovada`), ramo `execucoes/A2` importado (`88d93ba`), `~/projetos-leilao/A2` removido, `resumo.md` gerado (467 min de relógio devido à pausa de limite da conta, 1 intervenção humana + 1 repetição técnica, US$ 1.50). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
+- Resultado: Execução A2 finalizada (`aprovada`), ramo `execucoes/A2` importado (`933266b`), `~/projetos-leilao/A2` removido, `resumo.md` gerado (467 min de relógio devido à pausa de limite da conta, 1 intervenção humana + 1 repetição técnica, US$ 1.50). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
 - Decisão: Fazer commit de A2 (seção 5.6, passo 5) e prosseguir para a próxima execução obrigatória (`A3`).
 - Arquivos gerados: `experimento/execucoes/A2/registro.md`, `experimento/execucoes/A2/resumo.md`, `experimento/execucoes/A2/relatorio.md`, `docs/linha-do-tempo.md`
 
 ### 23/11/2026 20:13 — A3 — Preparação da execução A3
 - Comando: `scripts/preparar-execucao.sh A3` (executado fora do sandbox após erro de `mkdir ~/projetos-leilao` no sandbox)
-- Resultado: Pasta `~/projetos-leilao/A3` criada (sem harness), commit inicial `2dbe2c32`. Tabela de configuração preenchida em `experimento/execucoes/A3/registro.md`.
+- Resultado: Pasta `~/projetos-leilao/A3` criada (sem harness), commit inicial `509b6234`. Tabela de configuração preenchida em `experimento/execucoes/A3/registro.md`.
 - Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
 - Arquivos gerados: `experimento/execucoes/A3/registro.md`, `~/projetos-leilao/A3`
 
@@ -179,7 +179,7 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 20:17 — A3 — Checkpoint 1 (entrega)
 - Comando: `scripts/checkpoint.sh A3 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `❌ REPROVADO — build ok | aceitação 41/41 | violações 3 | erros de tipo 0 | lint 0e/0a` (commit `46c2bead`, 5 min desde a preparação, 3 violações: 2× RX04 `estado-mutavel` e 1× RX02 `subscribe-fora-do-ciclo-de-vida` em `src/leiloes/leiloes.service.ts`). Saída indicou `✍ Intervenção 1`.
+- Resultado: `❌ REPROVADO — build ok | aceitação 41/41 | violações 3 | erros de tipo 0 | lint 0e/0a` (commit `27ced693`, 5 min desde a preparação, 3 violações: 2× RX04 `estado-mutavel` e 1× RX02 `subscribe-fora-do-ciclo-de-vida` em `src/leiloes/leiloes.service.ts`). Saída indicou `✍ Intervenção 1`.
 - Decisão: Seguir para seção 5.5 — enviar `intervencao.md` via `scripts/rodar-implementador.sh A3 intervencao`.
 - Arquivos gerados: `experimento/execucoes/A3/checkpoints/01-entrega/avaliacao.md`, `experimento/execucoes/A3/checkpoints/01-entrega/intervencao.md`
 
@@ -191,19 +191,19 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 20:21 — A3 — Checkpoint 2 (correcao)
 - Comando: `scripts/checkpoint.sh A3 correcao` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `19f89264`, 8 min desde a preparação, 1 rodada de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `76e955a8`, 8 min desde a preparação, 1 rodada de correção). Saída indicou `✅ Critério de conclusão atingido`.
 - Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh A3`.
 - Arquivos gerados: `experimento/execucoes/A3/checkpoints/02-correcao/avaliacao.md`
 
 ### 23/11/2026 20:22 — A3 — Finalização, auditoria de isolamento e relatório
 - Comando: `scripts/finalizar-execucao.sh A3` (fora do sandbox após erro de `.git/FETCH_HEAD` somente leitura no sandbox) e `grep -l "Harness-agentes-IA" experimento/execucoes/A3/sessao/*.jsonl`
-- Resultado: Execução A3 finalizada (`aprovada`), ramo `execucoes/A3` importado (`19f8926`), `~/projetos-leilao/A3` removido, `resumo.md` gerado (6 min, 1 intervenção, US$ 0.76, 4 casos de teste e2e escritos). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
+- Resultado: Execução A3 finalizada (`aprovada`), ramo `execucoes/A3` importado (`76e955a`), `~/projetos-leilao/A3` removido, `resumo.md` gerado (6 min, 1 intervenção, US$ 0.76, 4 casos de teste e2e escritos). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
 - Decisão: Fazer commit de A3 (seção 5.6, passo 5) e prosseguir para a última execução obrigatória (`B3`).
 - Arquivos gerados: `experimento/execucoes/A3/registro.md`, `experimento/execucoes/A3/resumo.md`, `experimento/execucoes/A3/relatorio.md`, `docs/linha-do-tempo.md`
 
 ### 23/11/2026 20:23 — B3 — Preparação da execução B3
 - Comando: `scripts/preparar-execucao.sh B3` (executado fora do sandbox após erro de `mkdir ~/projetos-leilao` no sandbox)
-- Resultado: Pasta `~/projetos-leilao/B3` criada (com harness), commit inicial `9a18e926`. Tabela de configuração preenchida em `experimento/execucoes/B3/registro.md`.
+- Resultado: Pasta `~/projetos-leilao/B3` criada (com harness), commit inicial `e89b9e06`. Tabela de configuração preenchida em `experimento/execucoes/B3/registro.md`.
 - Decisão: Seguir para seção 5.2 — disparar o implementador com prompt `inicial`.
 - Arquivos gerados: `experimento/execucoes/B3/registro.md`, `~/projetos-leilao/B3`
 
@@ -215,12 +215,24 @@ Formato: uma entrada por ação. Decisões sempre com o motivo.
 
 ### 23/11/2026 20:28 — B3 — Checkpoint 1 (entrega)
 - Comando: `scripts/checkpoint.sh B3 entrega` (executado fora do sandbox após erro de pasta não encontrada no sandbox)
-- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `0a867757`, 5 min desde a preparação, 0 rodadas de correção). Saída indicou `✅ Critério de conclusão atingido`.
+- Resultado: `✅ APROVADO — build ok | aceitação 41/41 | violações 0 | erros de tipo 0 | lint 0e/0a` (commit `618b1bd1`, 5 min desde a preparação, 0 rodadas de correção). Saída indicou `✅ Critério de conclusão atingido`.
 - Decisão: Seguir para seção 5.6 — completar `registro.md` e finalizar com `scripts/finalizar-execucao.sh B3`.
 - Arquivos gerados: `experimento/execucoes/B3/checkpoints/01-entrega/avaliacao.md`
 
 ### 23/11/2026 20:28 — B3 — Finalização, auditoria de isolamento e relatório
 - Comando: `scripts/finalizar-execucao.sh B3` (fora do sandbox após erro de `.git/FETCH_HEAD` somente leitura no sandbox) e `grep -l "Harness-agentes-IA" experimento/execucoes/B3/sessao/*.jsonl`
-- Resultado: Execução B3 finalizada (`aprovada`), ramo `execucoes/B3` importado (`0a86775`), `~/projetos-leilao/B3` removido, `resumo.md` gerado (4 min, 0 intervenções, US$ 0.49, 18 casos de teste escritos, hooks: 3 validações ok e 0 bloqueios). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
+- Resultado: Execução B3 finalizada (`aprovada`), ramo `execucoes/B3` importado (`618b1bd`), `~/projetos-leilao/B3` removido, `resumo.md` gerado (4 min, 0 intervenções, US$ 0.49, 18 casos de teste escritos, hooks: 3 validações ok e 0 bloqueios). `grep` retornou código 1 (nenhum arquivo listado — isolamento ok). `registro.md` e `relatorio.md` concluídos.
 - Decisão: Fazer commit de B3 (seção 5.6, passo 5) e prosseguir para a seção 9 (consolidação das 6 execuções e relatório final).
 - Arquivos gerados: `experimento/execucoes/B3/registro.md`, `experimento/execucoes/B3/resumo.md`, `experimento/execucoes/B3/relatorio.md`, `experimento/execucoes/B3/harness-hooks.log`, `docs/linha-do-tempo.md`
+
+### 23/11/2026 20:29 — GERAL — Verificação de status, consolidação de resultados e histórico git
+- Comando: `scripts/status-execucoes.sh`, `node scripts/consolidar-resultados.mjs`, `scripts/gerar-historico-git.sh`
+- Resultado: Todas as 6 execuções confirmadas como `aprovada` (A1, A2, A3 com 1 rodada/intervenção; B1, B2, B3 com 0 rodadas/intervenções). `experimento/resultados/resultados.md`, `resultados.csv` e 6 gráficos SVG em `experimento/resultados/graficos/` gerados. `docs/historico-git.md` atualizado.
+- Decisão: Seguir para seção 9 (escrever `relatorio-final.md` e atualizar `docs/linha-do-tempo.md`) e seção 10 (auditoria final).
+- Arquivos gerados: `experimento/resultados/resultados.md`, `experimento/resultados/resultados.csv`, `experimento/resultados/graficos/*.svg`, `docs/historico-git.md`
+
+### 23/11/2026 20:30 — GERAL — Relatório final e verificação do checklist de auditoria (seção 10)
+- Comando: Verificação de arquivos (`experimento/execucoes/<ID>/{implementador,checkpoints,sessao,resumo.md,registro.md,relatorio.md}`), cabeçalhos de `rodada-*.prompt.md`, `git log --format='%an %s' execucoes/<ID>`, `git diff --stat` nos diretórios protegidos e leitura de `experimento/resultados/resultados.md`.
+- Resultado: Todos os itens da seção 10 conferidos: ordem A1 → B1 → B2 → A2 → A3 → B3 registrada com horários; nenhum texto escrito pelo condutor em `rodada-*.prompt.md`; zero commits `fix(humano)` nos 6 ramos `execucoes/*`; zero alterações em `projetos/`, `avaliacao/`, `scripts/`, `experimento/prompts/`, `experimento/config-implementador.env`, `experimento/protocolo.md` e `experimento/ROTEIRO-CONDUTOR.md`; auditoria de isolamento ok para as 6 execuções; `relatorio-final.md` escrito estritamente com os números de `resultados.md` e entrada resumida acrescentada a `docs/linha-do-tempo.md`.
+- Decisão: Realizar o commit final da seção 9 (`git add experimento docs && git commit -m "exp: resultados consolidados e relatório final"`).
+- Arquivos gerados: `experimento/resultados/relatorio-final.md`, `docs/linha-do-tempo.md`, `experimento/auditoria/log-condutor.md`
