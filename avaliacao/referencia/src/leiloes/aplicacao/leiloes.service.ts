@@ -89,11 +89,15 @@ export class LeiloesService implements OnModuleInit, OnModuleDestroy {
       eventosDoLeilao$.pipe(
         takeWhile((e) => e.tipo !== 'LeilaoEncerrado'),
         filter(ehPrazo),
-        switchMap((e) => timer(new Date(e.dados.encerraEm))),
-        map((): Comando => ({
-          tipo: 'EncerrarLeilao',
-          leilaoId: eventosDoLeilao$.key,
-        })),
+        switchMap((e) =>
+          timer(new Date(e.dados.encerraEm)).pipe(
+            map((): Comando => ({
+              tipo: 'EncerrarLeilao',
+              leilaoId: eventosDoLeilao$.key,
+              prazo: e.dados.encerraEm,
+            })),
+          ),
+        ),
       ),
     ),
   );

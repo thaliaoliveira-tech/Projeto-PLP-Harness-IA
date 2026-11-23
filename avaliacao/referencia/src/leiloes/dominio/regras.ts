@@ -4,6 +4,7 @@ import type {
   Comando,
   CriarLeilao,
   DarLance,
+  EncerrarLeilao,
   Entrada,
   Estado,
   EstadoLeilao,
@@ -48,7 +49,7 @@ export function decidir(
     case 'DarLance':
       return decidirLance(estado, comando, instante);
     case 'EncerrarLeilao':
-      return decidirEncerramento(estado, comando.leilaoId, instante);
+      return decidirEncerramento(estado, comando, instante);
   }
 }
 
@@ -99,19 +100,21 @@ function eventoDeEncerramento(
 
 function decidirEncerramento(
   estado: Estado,
-  leilaoId: string,
+  cmd: EncerrarLeilao,
   instante: number,
 ): Decisao {
-  const atual = estado.leiloes.get(leilaoId);
+  const atual = estado.leiloes.get(cmd.leilaoId);
   if (atual === undefined) {
     return { eventos: [], resultado: { tipo: 'NaoEncontrado' } };
   }
-  if (!venceu(atual.leilao, instante)) {
-    // Ainda não venceu (ex.: foi prorrogado) ou já está encerrado: nada a fazer.
+  // O temporizador agendou este comando para `cmd.prazo`. Se o prazo mudou (prorrogação), um novo
+  // temporizador já foi agendado e este comando não tem efeito. Decidir pelo prazo agendado (e não
+  // só por Date.now()) evita depender da precisão do temporizador, que pode disparar ~1 ms antes.
+  if (atual.leilao.status !== 'ABERTO' || atual.leilao.encerraEm !== cmd.prazo) {
     return { eventos: [], resultado: { tipo: 'SemEfeito' } };
   }
   return {
-    eventos: [eventoDeEncerramento(atual, instante)],
+    eventos: [eventoDeEncerramento(atual, Math.max(instante, Date.parse(cmd.prazo)))],
     resultado: { tipo: 'SemEfeito' },
   };
 }

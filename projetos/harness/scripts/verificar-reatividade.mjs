@@ -159,6 +159,7 @@ function analisarArquivo(ts, caminhoAbs, raiz) {
       linha: line + 1,
       coluna: character + 1,
       trecho,
+      descricao: REGRAS[regra].mensagem,
       mensagem: detalhe ? `${REGRAS[regra].mensagem} ${detalhe}` : REGRAS[regra].mensagem,
       comoCorrigir: REGRAS[regra].comoCorrigir,
     });
@@ -506,6 +507,7 @@ export function verificar({ raiz = process.cwd(), arquivos } = {}) {
         linha: 1,
         coluna: 1,
         trecho: nomes.join(' ⇄ '),
+        descricao: REGRAS.RX09.mensagem,
         mensagem: `${REGRAS.RX09.mensagem} (${nomes.join(' ⇄ ')})`,
         comoCorrigir: REGRAS.RX09.comoCorrigir,
       });

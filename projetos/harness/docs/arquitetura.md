@@ -133,12 +133,19 @@ private readonly expiracoes$ = this.eventos$.pipe(
   mergeMap((grupo$) => grupo$.pipe(
     takeWhile((e) => e.tipo !== 'Finalizado'),
     filter(temPrazo),
-    switchMap((e) => timer(new Date(e.dados.prazo))),
-    map(() => comandoDeExpiracao(grupo$.key)),
+    switchMap((e) => timer(new Date(e.dados.prazo)).pipe(
+      map(() => comandoDeExpiracao(grupo$.key, e.dados.prazo)),   // o comando leva o prazo agendado
+    )),
   )),
 );
 // no onModuleInit: this.expiracoes$.pipe(concatMap((c) => this.executar(c)), takeUntil(this.destruir$)).subscribe();
 ```
+
+> **Armadilha conhecida:** o temporizador do Node pode disparar ~1 ms **antes** de `Date.now()`
+> alcançar o prazo. Se o domínio decidir a expiração comparando apenas `Date.now() >= prazo`, às
+> vezes concluirá "ainda não venceu" e, como nenhum novo temporizador será agendado, a entidade
+> nunca expira. Por isso o comando de expiração carrega o prazo para o qual foi agendado: o domínio
+> expira se esse prazo ainda for o vigente (e ignora o comando se o prazo mudou por prorrogação).
 
 ### 4. Stream SSE = projeção filtrada do log
 

@@ -84,15 +84,17 @@ describe('decidir/processar', () => {
     ]);
   });
 
-  it('EncerrarLeilao antes do prazo (após prorrogação) não tem efeito', () => {
+  it('EncerrarLeilao só tem efeito se o prazo agendado ainda for o vigente', () => {
     const estado = estadoCom([
       [criar({ duracaoSegundos: 1, prorrogacaoSegundos: 3 }), T0],
-      [lance('ana', 100), T0 + 500],
+      [lance('ana', 100), T0 + 500], // prorroga para T0 + 3500
     ]);
-    expect(decidir(estado, { tipo: 'EncerrarLeilao', leilaoId: 'L1' }, T0 + 1000).eventos).toEqual([]);
-    expect(decidir(estado, { tipo: 'EncerrarLeilao', leilaoId: 'L1' }, T0 + 3500).eventos[0]).toMatchObject({
-      tipo: 'LeilaoEncerrado',
-    });
+    const prazoOriginal = '2026-01-01T12:00:01.000Z';
+    const prazoNovo = '2026-01-01T12:00:03.500Z';
+    expect(decidir(estado, { tipo: 'EncerrarLeilao', leilaoId: 'L1', prazo: prazoOriginal }, T0 + 1000).eventos).toEqual([]);
+    // o temporizador pode disparar ~1 ms antes de Date.now() alcançar o prazo: ainda assim encerra
+    const d = decidir(estado, { tipo: 'EncerrarLeilao', leilaoId: 'L1', prazo: prazoNovo }, T0 + 3499);
+    expect(d.eventos[0]).toMatchObject({ tipo: 'LeilaoEncerrado', ocorridoEm: prazoNovo });
   });
 
   it('comando para leilão inexistente devolve NaoEncontrado sem eventos', () => {

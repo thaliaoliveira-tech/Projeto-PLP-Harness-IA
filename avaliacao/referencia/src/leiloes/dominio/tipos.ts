@@ -97,6 +97,8 @@ export interface DarLance {
 export interface EncerrarLeilao {
   readonly tipo: 'EncerrarLeilao';
   readonly leilaoId: string;
+  /** Prazo (encerraEm) para o qual o temporizador foi agendado. */
+  readonly prazo: string;
 }
 
 export type Comando = CriarLeilao | DarLance | EncerrarLeilao;
