@@ -51,3 +51,4 @@ As linhas abaixo são acrescentadas automaticamente pelos scripts do experimento
 
 - **23/11/2026, 11:30** — `A1` preparada (sem harness): pasta `~/projetos-leilao/A1`, commit inicial `fe374bc2`
 - **23/11/2026, 11:37** — `B1` preparada (com harness): pasta `~/projetos-leilao/B1`, commit inicial `0f605cae`
+- **23/11/2026, 11:39** — `B1` checkpoint 1 (entrega) — commit `d4921ab8` — aprovado (build ok, 0 testes falhando, 0 violações)

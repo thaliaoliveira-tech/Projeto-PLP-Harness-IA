@@ -1,0 +1,134 @@
+{
+  "versaoKit": 1,
+  "avaliadoEm": "2026-11-23T14:39:35.406Z",
+  "projeto": {
+    "caminho": "~/projetos-leilao/B1",
+    "rotulo": "B1 — checkpoint 1 (entrega)",
+    "commit": "d4921ab8ba29830c8a2e148f403fae98c4fa7d86"
+  },
+  "instalacao": {
+    "executada": false,
+    "ok": true,
+    "duracaoMs": 0
+  },
+  "tipos": {
+    "ok": true,
+    "erros": 0,
+    "duracaoMs": 2190
+  },
+  "build": {
+    "ok": true,
+    "duracaoMs": 3510,
+    "saida": ""
+  },
+  "lint": {
+    "erros": 0,
+    "avisos": 0,
+    "porRegra": {}
+  },
+  "arquitetura": {
+    "total": 0,
+    "porRegra": {
+      "RX01": 0,
+      "RX02": 0,
+      "RX03": 0,
+      "RX04": 0,
+      "RX05": 0,
+      "RX06": 0,
+      "RX07": 0,
+      "RX08": 0,
+      "RX09": 0
+    },
+    "violacoes": [],
+    "arquivosAnalisados": 12
+  },
+  "aceitacao": {
+    "executada": true,
+    "servidorIniciou": true,
+    "servidorCaiu": true,
+    "repeticoes": 2,
+    "instaveis": [],
+    "total": 41,
+    "passaram": 41,
+    "falharam": 0,
+    "porArquivo": {
+      "01-criacao.test.ts": {
+        "total": 12,
+        "falharam": 0
+      },
+      "02-lances.test.ts": {
+        "total": 10,
+        "falharam": 0
+      },
+      "03-eventos.test.ts": {
+        "total": 3,
+        "falharam": 0
+      },
+      "04-tempo.test.ts": {
+        "total": 7,
+        "falharam": 0
+      },
+      "05-notificacoes.test.ts": {
+        "total": 3,
+        "falharam": 0
+      },
+      "06-stream.test.ts": {
+        "total": 4,
+        "falharam": 0
+      },
+      "07-concorrencia.test.ts": {
+        "total": 2,
+        "falharam": 0
+      }
+    },
+    "falhas": []
+  },
+  "codigo": {
+    "arquivosCodigo": 12,
+    "linhasCodigo": 492,
+    "arquivosTeste": 2,
+    "casosDeTeste": 10,
+    "linhasTeste": 80,
+    "casosDeTesteHerdados": 11,
+    "chamadasSubscribe": 3,
+    "importsRxjs": [
+      "EMPTY",
+      "Observable",
+      "Subject",
+      "concatMap",
+      "defer",
+      "filter",
+      "first",
+      "firstValueFrom",
+      "from",
+      "groupBy",
+      "map",
+      "merge",
+      "mergeMap",
+      "scan",
+      "share",
+      "shareReplay",
+      "startWith",
+      "switchMap",
+      "take",
+      "takeUntil",
+      "takeWhile",
+      "timer"
+    ],
+    "dependenciasAdicionadas": [],
+    "dependenciasRemovidas": []
+  },
+  "harness": {
+    "aplicavel": true,
+    "arquivosVerificados": 16,
+    "alterados": [],
+    "removidos": []
+  },
+  "problemas": {
+    "build": 0,
+    "testesFalhando": 0,
+    "violacoes": 0,
+    "total": 0
+  },
+  "aprovado": true
+}
