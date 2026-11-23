@@ -1,0 +1,244 @@
+{
+  "versaoKit": 1,
+  "avaliadoEm": "2026-11-23T14:17:44.945Z",
+  "projeto": {
+    "caminho": "/tmp/claude-1001/-home-usuario-Documentos-workspace-Harness-agentes-IA/6b921b54-8282-4503-bfc8-4f9db1995aa8/scratchpad/execucoes/ENSAIO-A",
+    "rotulo": "ENSAIO-A — checkpoint 1 (entrega)",
+    "commit": "ace05b856fd3243df0fe53d59c40d0d1dd0f0cef"
+  },
+  "instalacao": {
+    "executada": false,
+    "ok": true,
+    "duracaoMs": 0
+  },
+  "tipos": {
+    "ok": true,
+    "erros": 0,
+    "duracaoMs": 2846
+  },
+  "build": {
+    "ok": true,
+    "duracaoMs": 3441,
+    "saida": ""
+  },
+  "lint": {
+    "erros": 0,
+    "avisos": 0,
+    "porRegra": {}
+  },
+  "arquitetura": {
+    "total": 12,
+    "porRegra": {
+      "RX01": 0,
+      "RX02": 1,
+      "RX03": 1,
+      "RX04": 5,
+      "RX05": 3,
+      "RX06": 0,
+      "RX07": 2,
+      "RX08": 0,
+      "RX09": 0
+    },
+    "violacoes": [
+      {
+        "regra": "RX02",
+        "nome": "subscribe-fora-do-ciclo-de-vida",
+        "arquivo": "src/leiloes/leiloes.controller.ts",
+        "linha": 77,
+        "coluna": 17,
+        "trecho": "this.service.eventos$.subscribe((e) => {",
+        "descricao": "subscribe() fora do construtor/onModuleInit/onApplicationBootstrap (ou dentro de um controller).",
+        "mensagem": "subscribe() fora do construtor/onModuleInit/onApplicationBootstrap (ou dentro de um controller). (dentro de controller)",
+        "comoCorrigir": "Controllers e métodos chamados por requisição devem DEVOLVER um Observable (o NestJS assina). Assinaturas permanentes (efeitos colaterais, projeções) ficam no onModuleInit, com takeUntil(destruir$) liberado no onModuleDestroy."
+      },
+      {
+        "regra": "RX07",
+        "nome": "emissor-conhece-observador",
+        "arquivo": "src/leiloes/leiloes.module.ts",
+        "linha": 2,
+        "coluna": 1,
+        "trecho": "import { NotificacoesModule } from '../notificacoes/notificacoes.module.js';",
+        "descricao": "O módulo de leilões/lances depende do módulo de notificações (o emissor chama o observador).",
+        "mensagem": "O módulo de leilões/lances depende do módulo de notificações (o emissor chama o observador). (import de \"../notificacoes/notificacoes.module.js\")",
+        "comoCorrigir": "Inverta a dependência: leilões apenas publicam eventos; notificações (e qualquer outro observador) assinam o fluxo de eventos de leilões. Quem muda não deve conhecer quem reage."
+      },
+      {
+        "regra": "RX03",
+        "nome": "subject-exposto",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 44,
+        "coluna": 3,
+        "trecho": "readonly eventos$ = new Subject<Evento>();",
+        "descricao": "Subject acessível fora da classe/módulo que o criou.",
+        "mensagem": "Subject acessível fora da classe/módulo que o criou.",
+        "comoCorrigir": "Declare o Subject como \"private readonly\" e exponha apenas um Observable (ex.: readonly eventos$ = this.entrada$.asObservable()). Só o dono do Sink pode chamar next()."
+      },
+      {
+        "regra": "RX04",
+        "nome": "estado-mutavel",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 69,
+        "coluna": 5,
+        "trecho": "this.leiloes.set(id, leilao)",
+        "descricao": "Estado mutado de forma imperativa (campo da classe ou variável de módulo).",
+        "mensagem": "Estado mutado de forma imperativa (campo da classe ou variável de módulo). (campo da classe)",
+        "comoCorrigir": "Não guarde estado em campos/variáveis alterados por métodos. Derive o estado do fluxo de eventos com scan()/reduce puros e exponha-o como Observable (ex.: estado$ = eventos$.pipe(scan(evoluir, inicial), shareReplay(1)))."
+      },
+      {
+        "regra": "RX04",
+        "nome": "estado-mutavel",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 70,
+        "coluna": 5,
+        "trecho": "this.eventos.set(id, [])",
+        "descricao": "Estado mutado de forma imperativa (campo da classe ou variável de módulo).",
+        "mensagem": "Estado mutado de forma imperativa (campo da classe ou variável de módulo). (campo da classe)",
+        "comoCorrigir": "Não guarde estado em campos/variáveis alterados por métodos. Derive o estado do fluxo de eventos com scan()/reduce puros e exponha-o como Observable (ex.: estado$ = eventos$.pipe(scan(evoluir, inicial), shareReplay(1)))."
+      },
+      {
+        "regra": "RX05",
+        "nome": "temporizador-imperativo",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 157,
+        "coluna": 5,
+        "trecho": "clearTimeout(this.timers.get(id))",
+        "descricao": "Uso de setTimeout/setInterval/setImmediate (ou node:timers).",
+        "mensagem": "Uso de setTimeout/setInterval/setImmediate (ou node:timers).",
+        "comoCorrigir": "Modele o tempo como fluxo: timer(), interval(), delay(), debounceTime()... Para reagendar um prazo que pode mudar, use switchMap(prazo => timer(prazo))."
+      },
+      {
+        "regra": "RX04",
+        "nome": "estado-mutavel",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 159,
+        "coluna": 5,
+        "trecho": "this.timers.set(id, setTimeout(() => this.encerrar(id), ms))",
+        "descricao": "Estado mutado de forma imperativa (campo da classe ou variável de módulo).",
+        "mensagem": "Estado mutado de forma imperativa (campo da classe ou variável de módulo). (campo da classe)",
+        "comoCorrigir": "Não guarde estado em campos/variáveis alterados por métodos. Derive o estado do fluxo de eventos com scan()/reduce puros e exponha-o como Observable (ex.: estado$ = eventos$.pipe(scan(evoluir, inicial), shareReplay(1)))."
+      },
+      {
+        "regra": "RX05",
+        "nome": "temporizador-imperativo",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 159,
+        "coluna": 25,
+        "trecho": "setTimeout(() => this.encerrar(id), ms)",
+        "descricao": "Uso de setTimeout/setInterval/setImmediate (ou node:timers).",
+        "mensagem": "Uso de setTimeout/setInterval/setImmediate (ou node:timers).",
+        "comoCorrigir": "Modele o tempo como fluxo: timer(), interval(), delay(), debounceTime()... Para reagendar um prazo que pode mudar, use switchMap(prazo => timer(prazo))."
+      },
+      {
+        "regra": "RX05",
+        "nome": "temporizador-imperativo",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 167,
+        "coluna": 5,
+        "trecho": "clearTimeout(this.timers.get(id))",
+        "descricao": "Uso de setTimeout/setInterval/setImmediate (ou node:timers).",
+        "mensagem": "Uso de setTimeout/setInterval/setImmediate (ou node:timers).",
+        "comoCorrigir": "Modele o tempo como fluxo: timer(), interval(), delay(), debounceTime()... Para reagendar um prazo que pode mudar, use switchMap(prazo => timer(prazo))."
+      },
+      {
+        "regra": "RX04",
+        "nome": "estado-mutavel",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 168,
+        "coluna": 5,
+        "trecho": "this.timers.delete(id)",
+        "descricao": "Estado mutado de forma imperativa (campo da classe ou variável de módulo).",
+        "mensagem": "Estado mutado de forma imperativa (campo da classe ou variável de módulo). (campo da classe)",
+        "comoCorrigir": "Não guarde estado em campos/variáveis alterados por métodos. Derive o estado do fluxo de eventos com scan()/reduce puros e exponha-o como Observable (ex.: estado$ = eventos$.pipe(scan(evoluir, inicial), shareReplay(1)))."
+      },
+      {
+        "regra": "RX07",
+        "nome": "emissor-conhece-observador",
+        "arquivo": "src/leiloes/leiloes.service.ts",
+        "linha": 5,
+        "coluna": 1,
+        "trecho": "import { NotificacoesService } from '../notificacoes/notificacoes.service.js';",
+        "descricao": "O módulo de leilões/lances depende do módulo de notificações (o emissor chama o observador).",
+        "mensagem": "O módulo de leilões/lances depende do módulo de notificações (o emissor chama o observador). (import de \"../notificacoes/notificacoes.service.js\")",
+        "comoCorrigir": "Inverta a dependência: leilões apenas publicam eventos; notificações (e qualquer outro observador) assinam o fluxo de eventos de leilões. Quem muda não deve conhecer quem reage."
+      },
+      {
+        "regra": "RX04",
+        "nome": "estado-mutavel",
+        "arquivo": "src/notificacoes/notificacoes.service.ts",
+        "linha": 13,
+        "coluna": 5,
+        "trecho": "this.porParticipante.set(participante, lista)",
+        "descricao": "Estado mutado de forma imperativa (campo da classe ou variável de módulo).",
+        "mensagem": "Estado mutado de forma imperativa (campo da classe ou variável de módulo). (campo da classe)",
+        "comoCorrigir": "Não guarde estado em campos/variáveis alterados por métodos. Derive o estado do fluxo de eventos com scan()/reduce puros e exponha-o como Observable (ex.: estado$ = eventos$.pipe(scan(evoluir, inicial), shareReplay(1)))."
+      }
+    ],
+    "arquivosAnalisados": 8
+  },
+  "aceitacao": {
+    "executada": true,
+    "servidorIniciou": true,
+    "servidorCaiu": true,
+    "repeticoes": 2,
+    "instaveis": [],
+    "total": 41,
+    "passaram": 41,
+    "falharam": 0,
+    "porArquivo": {
+      "01-criacao.test.ts": {
+        "total": 12,
+        "falharam": 0
+      },
+      "02-lances.test.ts": {
+        "total": 10,
+        "falharam": 0
+      },
+      "03-eventos.test.ts": {
+        "total": 3,
+        "falharam": 0
+      },
+      "04-tempo.test.ts": {
+        "total": 7,
+        "falharam": 0
+      },
+      "05-notificacoes.test.ts": {
+        "total": 3,
+        "falharam": 0
+      },
+      "06-stream.test.ts": {
+        "total": 4,
+        "falharam": 0
+      },
+      "07-concorrencia.test.ts": {
+        "total": 2,
+        "falharam": 0
+      }
+    },
+    "falhas": []
+  },
+  "codigo": {
+    "arquivosCodigo": 8,
+    "linhasCodigo": 300,
+    "arquivosTeste": 0,
+    "casosDeTeste": 0,
+    "linhasTeste": 0,
+    "casosDeTesteHerdados": 0,
+    "chamadasSubscribe": 1,
+    "importsRxjs": [
+      "Observable",
+      "Subject"
+    ],
+    "dependenciasAdicionadas": [],
+    "dependenciasRemovidas": []
+  },
+  "harness": {
+    "aplicavel": false
+  },
+  "problemas": {
+    "build": 0,
+    "testesFalhando": 0,
+    "violacoes": 12,
+    "total": 12
+  },
+  "aprovado": false
+}
