@@ -20,7 +20,7 @@ intervenções em cada etapa; tudo fica registrado no git.
 | Harness (`projetos/harness`) | ✅ pronto e validado com o gabarito (`npm run validate` 7/7) |
 | Kit de avaliação (`avaliacao/`) | ✅ pronto e validado (gabarito 41/41 e 0 violações; anti-gabarito 41/41 e 12 violações; estresse 410/410) |
 | Scripts do experimento + ensaio do protocolo | ✅ prontos (ensaio em `experimento/ensaio/`, dados sintéticos) |
-| Execuções A1–A3 e B1–B3 | ⏳ a fazer — siga [`experimento/protocolo.md`](experimento/protocolo.md) |
+| Execuções A1–A3 e B1–B3 | ⏳ a fazer — por um agente condutor seguindo [`experimento/ROTEIRO-CONDUTOR.md`](experimento/ROTEIRO-CONDUTOR.md) (ou manualmente: [`experimento/protocolo.md`](experimento/protocolo.md)) |
 | Resultados consolidados | ⏳ após as execuções (`node scripts/consolidar-resultados.mjs`) |
 
 Andamento das execuções a qualquer momento: `scripts/status-execucoes.sh`.

@@ -45,6 +45,11 @@ As referências "ADR-xxx" apontam para [`decisoes.md`](decisoes.md).
 - **11:22** — Verificação final: testes do verificador 10/10; camadas `base` e `harness` conferidas; temporários removidos. **Infraestrutura pronta para as execuções A1–B3.**
 - **Pendente antes da primeira execução:** tornar o Node visível para processos não interativos (protocolo, passo 0).
 
+## 23/11/2026 — Mudança na condução
+
+- **11:35** — Tentativa de execução B1 conduzida e implementada pelo próprio agente construtor: aprovada de primeira (41/41, 0 violações; o harness pegou 1 falha — faltavam testes unitários do domínio), mas **descartada** por falta de independência (o agente tinha o gabarito em contexto e não havia transcrição própria). Movida para `experimento/descartadas/` junto com a A1 preparada e não usada.
+- **11:45** — O aluno decidiu delegar a condução a outro agente de IA. Criados: `experimento/ROTEIRO-CONDUTOR.md` (prompt fechado, passo a passo, com o que pode e não pode, formato de logs e relatórios e checklist de auditoria), `scripts/rodar-implementador.sh` (implementador = sessão nova e isolada do Claude Code em modo não interativo, dentro da pasta da execução) e `experimento/config-implementador.env` (modelo `claude-sonnet-5-5`, esforço `medium`, fixos para as 6 execuções). "Outras mensagens" passam a ser contadas pelo registro do script, não pela transcrição.
+
 ## Execuções do experimento (registro automático)
 
 As linhas abaixo são acrescentadas automaticamente pelos scripts do experimento.

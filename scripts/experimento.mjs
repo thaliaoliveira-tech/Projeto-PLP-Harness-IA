@@ -355,8 +355,16 @@ function resumir(estado) {
     harnessAlterado: c.harnessAlterado,
   });
   // Mensagens humanas na sessão = prompt inicial + prompts de intervenção + outras (esclarecimentos, "continue"...).
+  // Se a execução foi conduzida por scripts/rodar-implementador.sh, cada mensagem enviada ao agente
+  // está registrada em implementador/ — fonte exata (a transcrição pode registrar retornos de hooks
+  // como mensagens de usuário).
   const mensagens = sessao?.mensagensHumanas ?? null;
-  const outras = mensagens === null ? null : Math.max(0, mensagens - 1 - estado.rodadasDeCorrecao);
+  const dirImp = join(dir, 'implementador');
+  const outras = existsSync(dirImp)
+    ? readdirSync(dirImp).filter((f) => /^rodada-\d+-(pergunta|continuar)\.json$/.test(f)).length
+    : mensagens === null
+      ? null
+      : Math.max(0, mensagens - 1 - estado.rodadasDeCorrecao);
   const inicio = sessao?.inicio ?? estado.preparadaEm;
   const fim = estado.checkpoints.at(-1).em;
   return {
