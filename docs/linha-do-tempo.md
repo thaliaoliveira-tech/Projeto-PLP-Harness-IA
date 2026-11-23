@@ -69,3 +69,4 @@ As linhas abaixo são acrescentadas automaticamente pelos scripts do experimento
 - **23/11/2026, 12:21** — `B2` checkpoint 1 (entrega) — commit `4afc1a81` — aprovado (build ok, 0 testes falhando, 0 violações)
 - **23/11/2026, 12:22** — `B2` finalizada — **aprovada** após 0 intervenção(ões) humana(s) e 3 min; histórico no ramo `execucoes/B2`
 - **23/11/2026, 12:23** — `A2` preparada (sem harness): pasta `~/projetos-leilao/A2`, commit inicial `d5285083`
+- **23/11/2026, 12:25** — `A2` checkpoint 1 (entrega) — commit `912f6956` — 0/41 testes falhando, 7 violações
