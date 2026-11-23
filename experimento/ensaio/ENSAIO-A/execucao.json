@@ -54,8 +54,39 @@
       "casosDeTesteDoProjeto": 0,
       "dependenciasAdicionadas": [],
       "harnessAlterado": null
+    },
+    {
+      "n": 2,
+      "tipo": "humano",
+      "descricao": "ajuste manual de comentário (simulado)",
+      "commit": "429ec4f243929c0131152753a417984bb8c8f68b",
+      "em": "2026-11-23T14:18:24.426Z",
+      "arquivosAlterados": 1,
+      "pasta": "checkpoints/02-humano",
+      "aprovado": false,
+      "build": true,
+      "errosTipo": 0,
+      "testesTotal": 41,
+      "testesFalhando": 0,
+      "testesInstaveis": 0,
+      "servidorIniciou": true,
+      "violacoes": 12,
+      "porRegra": {
+        "RX02": 1,
+        "RX03": 1,
+        "RX04": 5,
+        "RX05": 3,
+        "RX07": 2
+      },
+      "lintErros": 0,
+      "lintAvisos": 0,
+      "linhasCodigo": 300,
+      "arquivosCodigo": 8,
+      "casosDeTesteDoProjeto": 0,
+      "dependenciasAdicionadas": [],
+      "harnessAlterado": null
     }
   ],
   "rodadasDeCorrecao": 0,
-  "edicoesManuais": 0
+  "edicoesManuais": 1
 }
