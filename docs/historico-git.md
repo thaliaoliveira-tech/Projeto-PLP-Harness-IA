@@ -1,6 +1,6 @@
 # Histórico git
 
-Gerado em 23/11/2026 20:29 por `scripts/gerar-historico-git.sh`.
+Gerado em 26/11/2026 00:26 por `scripts/gerar-historico-git.sh`.
 
 ## Repositório principal (main)
 
@@ -67,6 +67,9 @@ Gerado em 23/11/2026 20:29 por `scripts/gerar-historico-git.sh`.
 | 23/11/2026 20:27 | `adbeee3` | exp(B3): checkpoint 1 (entrega) — aprovado (build ok, 0 testes falhando, 0 violações) |
 | 23/11/2026 20:28 | `de18c60` | exp(B3): execução finalizada — aprovada, 0 intervenção(ões) |
 | 23/11/2026 20:29 | `6b4b31d` | exp(B3): registro, auditoria e relatório da execução |
+| 23/11/2026 20:31 | `0d5206b` | exp: resultados consolidados e relatório final |
+| 26/11/2026 00:23 | `607d33d` | docs: atualiza referências de commits após reescrita do histórico |
+| 26/11/2026 00:26 | `1c74697` | docs: materiais de apresentação finais (21 slides, roteiro e livro) |
 
 ## Execução `ensaio/ENSAIO-A`
 
