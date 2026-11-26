@@ -1,0 +1,1310 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Harness para agentes de IA — livro do trabalho</title>
+<link rel="stylesheet" href="../fontes/identidade.css">
+<link rel="stylesheet" href="../fontes/impresso.css">
+<style>
+@page { margin: 25mm 22mm 25mm 24mm; }
+@page resumo { @top-right { content: none; } @bottom-left { content: none; } }
+@page sumario { @top-right { content: none; } @bottom-left { content: none; } }
+body { font-family: var(--serif); font-size: 10.6pt; line-height: 1.58; color: #253042; hyphens: auto; text-align: justify; }
+p { margin: 0 0 7pt; orphans: 3; widows: 3; }
+h1, h2, h3, h4 { font-family: var(--sans); color: var(--tinta); text-align: left; hyphens: manual; }
+ul, ol { margin: 0 0 8pt; padding-left: 16pt; } li { margin-bottom: 2.5pt; text-align: left; }
+b, strong { color: #141c2b; }
+
+/* capítulos */
+.abertura { break-before: page; padding-top: 18mm; }
+.cap-num { font: 800 10pt var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--B); display: flex; align-items: center; gap: 10pt; }
+.cap-num::before { content: ""; width: 26pt; height: 3pt; background: var(--B); border-radius: 2pt; }
+h1.cap { font: 800 27pt/1.1 var(--sans); letter-spacing: -.02em; margin: 10pt 0 12pt; string-set: capitulo content(text); }
+.cap-intro { font: 400 12pt/1.55 var(--sans); color: var(--suave); text-align: left; margin: 0 0 26pt; max-width: 135mm; }
+.marbles { margin: 0 0 22pt; }
+h2.sec { font: 750 14pt/1.25 var(--sans); margin: 22pt 0 8pt; break-after: avoid; }
+h3 { font: 700 11pt/1.3 var(--sans); margin: 16pt 0 6pt; break-after: avoid; }
+h4 { font: 700 9.6pt var(--sans); margin: 12pt 0 4pt; break-after: avoid; color: var(--tinta-2); text-transform: uppercase; letter-spacing: .06em; }
+
+/* blocos */
+pre.codigo { background: #f6f5f1; color: #1e2a3c; border: .6pt solid var(--linha); border-radius: 6pt; font-size: 7.7pt; line-height: 1.5; padding: 9pt 12pt; margin: 8pt 0 12pt; white-space: pre-wrap; break-inside: avoid; text-align: left; }
+pre.codigo .k { color: #8a3ab9; } pre.codigo .t { color: #1d5aa6; } pre.codigo .s { color: #3c7a1e; }
+pre.codigo .c { color: #8a8f99; font-style: italic; } pre.codigo .o { color: #b2481c; font-weight: 600; }
+pre.codigo .m { background: #fbe7e9; } pre.codigo .g { background: #e3f4ec; }
+.rotulo-cod { font: 600 7.8pt var(--sans); color: var(--suave); margin: 8pt 0 -4pt; }
+.quadro { background: var(--papel); border: .6pt solid var(--linha); border-radius: 8pt; padding: 10pt 14pt; margin: 12pt 0; break-inside: avoid; font-size: 10pt; }
+.quadro h4 { margin-top: 0; color: var(--B); }
+.quadro p:last-child, .quadro ul:last-child { margin-bottom: 0; }
+.destaque { border-left: 3pt solid var(--B); background: var(--B-claro); padding: 9pt 13pt; border-radius: 0 6pt 6pt 0; margin: 12pt 0; break-inside: avoid; font-size: 10.2pt; }
+.destaque p:last-child { margin: 0; }
+.nota-rodape { font: 400 8pt/1.4 var(--sans); color: var(--suave); }
+table { font-size: 8.4pt; text-align: left; hyphens: manual; }
+td code, th code { font-size: .92em; }
+.num-grande { font: 800 26pt/1 var(--sans); }
+.cifras { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8pt; margin: 12pt 0; break-inside: avoid; }
+.cifras div { background: var(--papel); border: .6pt solid var(--linha); border-radius: 8pt; padding: 9pt 11pt; font: 400 8.4pt/1.4 var(--sans); color: var(--suave); text-align: left; }
+.cifras b { display: block; font: 800 20pt/1.1 var(--sans); margin-bottom: 3pt; }
+
+/* capa */
+.capa-in { position: absolute; left: 24mm; right: 24mm; top: 52mm; }
+.capa .k { font: 700 9pt var(--sans); letter-spacing: .18em; text-transform: uppercase; color: #f08a5d; }
+.capa h1 { font: 800 44pt/1.02 var(--sans); color: #fff; margin: 12pt 0 16pt; letter-spacing: -.025em; }
+.capa .sub { font: 400 14pt/1.5 var(--sans); color: #aab6c8; margin: 0; max-width: 140mm; text-align: left; }
+.capa .rodape { position: absolute; left: 24mm; right: 24mm; bottom: 28mm; font: 500 10.5pt/1.7 var(--sans); color: #8f9db3; text-align: left; }
+
+/* folha de rosto */
+.rosto { page: limpa; break-before: page; text-align: center; font-family: var(--sans); height: 230mm; display: flex; flex-direction: column; }
+.rosto .inst { font: 600 10.5pt/1.6 var(--sans); color: var(--tinta); }
+.rosto .autor { margin-top: 30mm; font: 600 13pt var(--sans); color: var(--tinta); }
+.rosto .titulo { margin-top: 30mm; font: 800 22pt/1.15 var(--sans); color: var(--tinta); }
+.rosto .subt { font: 400 12pt/1.5 var(--sans); color: var(--suave); margin-top: 8pt; }
+.rosto .natureza { margin: 24mm 0 0 auto; width: 85mm; text-align: justify; font: 400 9.5pt/1.5 var(--sans); color: var(--tinta-2); }
+.rosto .local { margin-top: auto; font: 600 10.5pt var(--sans); color: var(--tinta); }
+
+/* sumário */
+.sumario { page: sumario; }
+.sumario h1 { font: 800 22pt var(--sans); margin: 0 0 18pt; }
+#sumario-lista { list-style: none; padding: 0; margin: 0; font-family: var(--sans); }
+#sumario-lista li { margin: 0; }
+#sumario-lista li.n1 { font: 700 10pt var(--sans); color: var(--tinta); margin-top: 9pt; }
+#sumario-lista li.n2 { font: 400 9pt var(--sans); color: var(--tinta-2); padding-left: 14pt; margin-top: 2.5pt; }
+#sumario-lista a { display: flex; align-items: baseline; }
+#sumario-lista a .pt { flex: 1; border-bottom: .8pt dotted #b9b6ac; margin: 0 5pt; transform: translateY(-3pt); }
+#sumario-lista a::after { content: target-counter(attr(href url), page); font-variant-numeric: tabular-nums; }
+
+.resumo { page: resumo; }
+.resumo h1 { font: 800 18pt var(--sans); margin: 0 0 12pt; }
+.chaves { font-family: var(--sans); font-size: 9.5pt; margin-top: 10pt; }
+
+.refs p { padding-left: 16pt; text-indent: -16pt; text-align: left; font-size: 9.6pt; }
+.glossario dt { font: 700 9.6pt var(--sans); color: var(--tinta); margin-top: 7pt; break-after: avoid; }
+.glossario dt, .glossario dd { text-align: left; }
+li, dd, dt, td, th, figcaption, .cap-intro { text-align-last: auto !important; }
+.glossario dd { margin: 1pt 0 0 0; font-size: 9.8pt; }
+</style>
+<script>
+// Sumário automático: lê os capítulos (h1.cap) e as seções (h2.sec) antes da paginação.
+document.addEventListener('DOMContentLoaded', () => {
+  const lista = document.getElementById('sumario-lista');
+  document.querySelectorAll('h1.cap, h2.sec').forEach((h, i) => {
+    if (!h.id) h.id = 't' + i;
+    const li = document.createElement('li');
+    li.className = h.tagName === 'H1' ? 'n1' : 'n2';
+    const pre = h.tagName === 'H1' && h.dataset.num ? h.dataset.num + '  ' : '';
+    li.innerHTML = `<a href="#${h.id}"><span>${pre}${h.textContent}</span><span class="pt"></span></a>`;
+    lista.appendChild(li);
+  });
+});
+</script>
+</head>
+<body>
+
+<!-- ======================= CAPA ======================= -->
+<section class="capa">
+  <svg width="794" height="1123" viewBox="0 0 794 1123" style="position:absolute;inset:0" aria-hidden="true">
+    <g transform="translate(0,880)">
+      <line x1="0" y1="0" x2="720" y2="0" stroke="#2b3a55" stroke-width="3"/>
+      <polygon points="720,-8 736,0 720,8" fill="#2b3a55"/>
+      <circle cx="210" cy="0" r="13" fill="#2a78d6"/><circle cx="310" cy="0" r="13" fill="#eb6834"/>
+      <circle cx="390" cy="0" r="13" fill="#eb6834"/><circle cx="520" cy="0" r="13" fill="#fff"/>
+      <circle cx="590" cy="0" r="13" fill="#eb6834"/><line x1="660" y1="-20" x2="660" y2="20" stroke="#fff" stroke-width="3"/>
+    </g>
+    <g transform="translate(0,930)"><line x1="160" y1="0" x2="720" y2="0" stroke="#22304a" stroke-width="2"/><circle cx="360" cy="0" r="8" fill="#22304a"/><circle cx="560" cy="0" r="8" fill="#22304a"/></g>
+  </svg>
+  <div class="capa-in">
+    <div class="k">Livro do trabalho prático</div>
+    <h1>Harness para<br>agentes de <span style="color:#eb6834">IA</span></h1>
+    <p class="sub">Programação reativa com NestJS e RxJS: o mesmo agente implementando a mesma funcionalidade com e sem harness — construção, experimento e resultados.</p>
+  </div>
+  <div class="rodape">
+    <span style="color:#dfe5ee;font-weight:600">Thalia Oliveira</span><br>
+    Paradigmas de Linguagens de Programação · Prof. Thiago de Sales<br>
+    Universidade Federal de Alagoas — Campus Arapiraca · 2026
+  </div>
+</section>
+
+<!-- ======================= FOLHA DE ROSTO ======================= -->
+<section class="rosto">
+  <div class="inst">UNIVERSIDADE FEDERAL DE ALAGOAS<br>CAMPUS ARAPIRACA</div>
+  <div class="autor">Thalia Oliveira</div>
+  <div class="titulo">Harness para agentes de IA</div>
+  <div class="subt">Programação reativa com NestJS e RxJS: o mesmo agente,<br>com e sem harness</div>
+  <div class="natureza">Trabalho prático apresentado à disciplina Paradigmas de Linguagens de Programação, ministrada pelo Prof. Thiago de Sales, como registro completo da construção de um harness para agentes de IA focado em Programação Reativa / Orientada a Eventos e do experimento que comparou a mesma funcionalidade implementada com e sem esse harness.</div>
+  <div class="local">Arapiraca — AL<br>Novembro de 2026</div>
+</section>
+
+<!-- ======================= RESUMO ======================= -->
+<section class="resumo">
+  <span class="titulo-doc">Harness para agentes de IA · Livro do trabalho</span>
+  <h1>Resumo</h1>
+  <p>Agentes de IA para programação já produzem código funcional, mas tendem ao estilo mais frequente nos seus dados de treino — no caso do NestJS, o imperativo —, mesmo quando o projeto exige outro paradigma. Este trabalho construiu um <i>harness</i>, isto é, um conjunto de artefatos de repositório que guia e verifica o agente, focado em Programação Reativa / Orientada a Eventos: instruções para agentes (<code>AGENTS.md</code>, <code>CLAUDE.md</code>), regras arquiteturais documentadas e verificadas automaticamente (nove regras reativas RX01–RX09, camadas checadas pelo dependency-cruiser), testes de contrato, lint genérico e arquitetural, um script de validação em sete etapas e <i>hooks</i> do Claude Code. Para avaliar o efeito do harness, uma API de leilões em tempo real (NestJS + RxJS, com lances, prorrogação anti-sniping, encerramento automático, notificações e stream SSE) foi implementada pelo mesmo agente (Claude Code, modelo <code>claude-sonnet-5-5</code>, esforço médio) três vezes sem harness (A1–A3) e três vezes com harness (B1–B3), em ordem contrabalançada, com a condução feita por outro agente seguindo um roteiro fechado. Um kit de avaliação oculto — 41 testes caixa-preta via HTTP e um verificador estático das regras reativas, validado previamente com uma implementação reativa e uma imperativa — mediu cada entrega. As seis execuções passaram nos 41 testes já na primeira entrega, de modo que a hipótese de menos erros funcionais com harness não foi confirmada. As execuções sem harness, porém, entregaram em média 4,7 ± 2,1 violações arquiteturais (14 no total, sobretudo estado mutável) e exigiram uma rodada de correção cada, enquanto as execuções com harness entregaram zero violações e não exigiram nenhuma intervenção (delta de Cliff = 1 nas duas medidas). Com harness, o agente também escreveu mais testes próprios (20 contra 1,3 casos, em média), organizou o código em camadas e custou menos (US$ 0,48 contra 0,98 por execução). O registro dos hooks indica que o efeito veio das instruções e da validação: o hook executado a cada edição nunca disparou, porque os agentes escreveram os arquivos por comandos de terminal. Os resultados são descritivos (n = 3 por condição, uma tarefa, um modelo) e parte da vantagem em violações decorre de o harness ensinar as regras que o instrumento mede.</p>
+  <p class="chaves"><b>Palavras-chave:</b> agentes de IA; harness; programação reativa; orientação a eventos; RxJS; NestJS; conformidade arquitetural; engenharia de software experimental.</p>
+</section>
+
+<!-- ======================= SUMÁRIO ======================= -->
+<section class="sumario">
+  <h1>Sumário</h1>
+  <ul id="sumario-lista"></ul>
+</section>
+
+<!-- ======================= CAPÍTULO 1 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 1</div>
+  <h1 class="cap" data-num="1">Introdução</h1>
+  <p class="cap-intro">O que motivou o trabalho, a pergunta que ele responde, seus objetivos e como este livro está organizado.</p>
+</section>
+
+<h2 class="sec">1.1 Contexto</h2>
+<p>Agentes de IA para programação — ferramentas como Claude Code, GitHub Copilot e Cursor — deixaram de apenas sugerir trechos de código e passaram a operar sobre o repositório inteiro: leem arquivos, editam, executam comandos, rodam testes e declaram uma tarefa concluída. Com isso, uma parte crescente do código de um projeto pode ser escrita sem que um humano digite cada linha.</p>
+<p>Essa autonomia traz uma pergunta prática: <b>como garantir que o código escrito pelo agente siga as decisões do projeto?</b> Um agente, sem orientação específica, tende a seguir o estilo mais comum nos dados com que foi treinado. Para um backend NestJS, o estilo mais comum é o imperativo: estado guardado em estruturas como <code>Map</code> e alterado diretamente, temporizadores com <code>setTimeout</code>, um serviço chamando métodos de outro. Esse código pode funcionar perfeitamente e, ainda assim, contrariar o paradigma e a arquitetura que o projeto escolheu.</p>
+<p>O enunciado deste trabalho, proposto na disciplina Paradigmas de Linguagens de Programação, enfrenta exatamente esse ponto:</p>
+<div class="destaque"><p><i>“Construindo um Harness para agentes de IA. Prepare um repositório com instruções para agentes, regras arquiteturais, testes, lint e scripts de validação focado em Programação Reativa/Orientada a Eventos. Implemente a mesma funcionalidade com e sem o harness e compare a quantidade de erros, violações arquiteturais e intervenções humanas.”</i></p></div>
+
+<h2 class="sec">1.2 O problema</h2>
+<p>O problema tem duas faces. A primeira é de <b>conformidade arquitetural</b>: um código pode passar em todos os testes de comportamento e ainda assim violar o paradigma exigido. Este trabalho demonstra isso de forma concreta (Seção 3.8): duas implementações da mesma API — uma reativa e outra imperativa — passam nos mesmos 41 testes de aceitação, mas uma tem zero e a outra doze violações das regras reativas. Testes funcionais, sozinhos, não enxergam o paradigma.</p>
+<p>A segunda face é de <b>custo humano</b>: se a conformidade só é verificada por revisão humana, cada entrega do agente exige que alguém leia o código, identifique os desvios e peça correções. Um <i>harness</i> propõe deslocar esse trabalho para o próprio repositório, que passa a orientar o agente antes de ele escrever e a verificá-lo automaticamente depois.</p>
+
+<h2 class="sec">1.3 Pergunta de pesquisa e hipóteses</h2>
+<p>A pergunta que orienta o experimento é: <b>um harness focado em programação reativa reduz os erros, as violações arquiteturais e as intervenções humanas quando um agente de IA implementa uma funcionalidade orientada a eventos?</b> Dela derivam três hipóteses, uma para cada medida pedida no enunciado:</p>
+<table>
+  <caption>Tabela 1 — Hipóteses e suas medidas</caption>
+  <tr><th>Hipótese</th><th>Enunciado</th><th>Medida</th></tr>
+  <tr><td><b>H1</b></td><td>Com harness, a primeira entrega tem menos erros.</td><td>Testes de aceitação ocultos falhando (de 41) e build quebrado na primeira entrega.</td></tr>
+  <tr><td><b>H2</b></td><td>Com harness, a primeira entrega tem menos violações arquiteturais.</td><td>Ocorrências das regras RX01–RX09 na primeira entrega.</td></tr>
+  <tr><td><b>H3</b></td><td>Com harness, são necessárias menos intervenções humanas até a solução correta.</td><td>Prompts de correção + edições manuais + outras mensagens humanas.</td></tr>
+</table>
+<p>Foram registradas também medidas exploratórias: tempo, custo, chamadas de ferramenta, tokens gerados, tamanho do código, testes escritos pelo agente e a atuação dos hooks do harness.</p>
+
+<h2 class="sec">1.4 Objetivos</h2>
+<h3>Objetivo geral</h3>
+<p>Construir um harness para agentes de IA focado em Programação Reativa / Orientada a Eventos e avaliar experimentalmente o seu efeito sobre a quantidade de erros, de violações arquiteturais e de intervenções humanas, comparando a mesma funcionalidade implementada pelo mesmo agente com e sem o harness.</p>
+<h3>Objetivos específicos</h3>
+<ol>
+  <li>Especificar uma funcionalidade orientada a eventos, com tempo, observadores e concorrência, que possa ser testada inteiramente de fora, por HTTP: uma API de leilões em tempo real.</li>
+  <li>Construir uma camada de harness com instruções para agentes, regras arquiteturais, testes, lint, script de validação e hooks, aplicável sobre um projeto NestJS limpo.</li>
+  <li>Transformar o paradigma reativo em regras verificáveis por máquina (RX01–RX09) e implementar um verificador estático para elas.</li>
+  <li>Construir um instrumento de avaliação independente e oculto do agente — suíte de aceitação caixa-preta e verificador — e validá-lo com uma implementação reativa (gabarito) e uma imperativa (anti-gabarito).</li>
+  <li>Conduzir seis execuções controladas (três sem e três com harness) com protocolo padronizado, intervenções geradas automaticamente e registro completo em git.</li>
+  <li>Consolidar e analisar os resultados de forma descritiva, discutindo as hipóteses e as ameaças à validade.</li>
+  <li>Documentar todo o processo — decisões, problemas, correções e linha do tempo — de forma reproduzível.</li>
+</ol>
+
+<h2 class="sec">1.5 Escopo e escolhas iniciais</h2>
+<p>O enunciado permitia uma solução de frontend ou de backend. Foram consideradas duas opções em Node.js: NestJS no backend e React com Vite no frontend. A escolha foi <b>somente backend, com NestJS 12 e RxJS 7</b> (decisão registrada como ADR-001), por quatro motivos: testes de API são simples e estáveis (HTTP e JSON), enquanto testes de interface exigem um navegador simulado; o NestJS já integra o RxJS — controllers podem devolver <code>Observable</code> e há suporte nativo a Server-Sent Events —, enquanto no React a fronteira entre código reativo e não reativo fica difusa entre hooks e estado local; regras arquiteturais de backend (módulos, camadas, dependências) são verificáveis por ferramentas; e as métricas resultantes são objetivas.</p>
+<p>Também foram fixadas, logo no planejamento, algumas decisões de protocolo: git apenas local, três repetições por condição e documentação de todas as etapas com linha do tempo.</p>
+
+<h2 class="sec">1.6 Organização deste livro</h2>
+<p>O Capítulo 2 apresenta a fundamentação: agentes de programação, o conceito de harness, o paradigma orientado a eventos e a programação reativa, as ferramentas RxJS e NestJS e as medidas estatísticas usadas. O Capítulo 3 descreve o sistema de leilões e as duas implementações de referência. O Capítulo 4 detalha o harness construído e o Capítulo 5, o instrumento de avaliação. O Capítulo 6 descreve a metodologia do experimento e o Capítulo 7 reúne as ferramentas e tecnologias. O Capítulo 8 narra o desenvolvimento em ordem cronológica. Os Capítulos 9 e 10 apresentam e discutem os resultados. O Capítulo 11 reúne as dificuldades encontradas e as soluções adotadas, e o Capítulo 12 traz as considerações finais e os trabalhos futuros. Os apêndices trazem um glossário, o registro de decisões, um exemplo completo de intervenção e instruções para reproduzir o trabalho.</p>
+
+<!-- ======================= CAPÍTULO 2 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 2</div>
+  <h1 class="cap" data-num="2">Fundamentação teórica</h1>
+  <p class="cap-intro">Os conceitos sobre os quais o trabalho se apoia: agentes de programação, harness, paradigma orientado a eventos, programação reativa, RxJS, NestJS, verificação estática e as medidas usadas na análise.</p>
+</section>
+
+<h2 class="sec">2.1 Agentes de IA para programação</h2>
+<p>Um agente de programação é um modelo de linguagem conectado a ferramentas que lhe permitem agir sobre um projeto: ler e escrever arquivos, executar comandos no terminal, rodar testes e inspecionar a saída. O agente recebe uma tarefa em linguagem natural e decide, em ciclos, qual ferramenta usar a seguir, até considerar a tarefa concluída.</p>
+<p>Neste trabalho o agente avaliado é o <b>Claude Code</b> (versão 2.1.300), executado em modo não interativo com o modelo <code>claude-sonnet-5-5</code> e esforço <i>medium</i>. Três características dele são relevantes:</p>
+<ul>
+  <li><b>Arquivos de instruções.</b> Ao iniciar, o Claude Code lê o arquivo <code>CLAUDE.md</code> do projeto (e também das pastas-pai). Esse arquivo pode importar outros, como o <code>AGENTS.md</code> — uma convenção de arquivo de instruções lida por vários agentes.</li>
+  <li><b>Ferramentas.</b> O agente dispõe de ferramentas para ler (<i>Read</i>), editar (<i>Edit</i>), escrever arquivos (<i>Write</i>) e executar comandos (<i>Bash</i>), entre outras. Um mesmo efeito — criar um arquivo — pode ser obtido por ferramentas diferentes, por exemplo com <i>Write</i> ou com um comando <code>cat &gt; arquivo &lt;&lt;EOF</code> no <i>Bash</i>. Esse detalhe se mostrou importante nos resultados (Seção 9.7).</li>
+  <li><b>Hooks.</b> O projeto pode configurar comandos que o Claude Code executa automaticamente em certos eventos: depois do uso de uma ferramenta (<code>PostToolUse</code>), quando o agente tenta encerrar (<code>Stop</code>) ou quando um novo prompt chega (<code>UserPromptSubmit</code>). Um hook pode devolver mensagens ao agente e, no caso do <code>Stop</code>, impedir o encerramento.</li>
+</ul>
+
+<h2 class="sec">2.2 O conceito de harness</h2>
+<p>A palavra <i>harness</i> designa, originalmente, o arreio — o equipamento que conduz e contém. No contexto de agentes de IA, o harness é o conjunto de artefatos do repositório que <b>guia</b> e <b>verifica</b> o agente. Ele responde a três perguntas que o agente faria se pudesse perguntar a um colega experiente:</p>
+<table>
+  <caption>Tabela 2 — Os três papéis de um harness</caption>
+  <tr><th>Papel</th><th>Pergunta que responde</th><th>Neste projeto</th></tr>
+  <tr><td><b>Guiar</b> (antes de escrever)</td><td>“Como este projeto quer que eu trabalhe?”</td><td><code>AGENTS.md</code>, <code>CLAUDE.md</code>, <code>docs/arquitetura.md</code>, <code>docs/regras-reativas.md</code></td></tr>
+  <tr><td><b>Verificar</b> (depois de escrever)</td><td>“O que eu fiz está certo e dentro das regras?”</td><td>testes de contrato, lint, verificador de regras reativas, dependency-cruiser, verificador de estrutura, <code>npm run validate</code></td></tr>
+  <tr><td><b>Forçar o ciclo</b> (durante)</td><td>“Posso declarar que terminei?”</td><td>hooks: verificação a cada edição e bloqueio do encerramento enquanto a validação falhar</td></tr>
+</table>
+<p>A ideia central é que o agente receba <b>feedback automático e objetivo</b> do próprio repositório, em vez de depender de um humano que revise o código e peça correções. A Figura 1 resume os três papéis.</p>
+<figure><img src="../imagens/figuras/harness-papeis.png" alt=""><figcaption><b>Figura 1</b> — Os três papéis de um harness: guiar, verificar e forçar o ciclo, com os artefatos correspondentes deste trabalho.</figcaption></figure>
+<p>Um achado do próprio trabalho mostra que a ideia já chegou ao ecossistema: o gerador oficial de projetos do NestJS 12 já cria arquivos <code>AGENTS.md</code>, <code>CLAUDE.md</code> e <i>skills</i> para agentes, além de um módulo de telemetria (Seção 11.1). Ou seja, frameworks já começam a entregar pequenos harnesses prontos.</p>
+
+<h2 class="sec">2.3 O paradigma orientado a eventos e a programação reativa</h2>
+<p>Esta seção retoma os conceitos dos slides <i>Paradigma Orientado a Eventos — Programação Reativa</i> da disciplina e mostra onde cada um aparece no trabalho.</p>
+<h3>Do imperativo ao reativo</h3>
+<p>Os slides partem do caso <b>Carrinho → Fatura</b>. No estilo imperativo, ou passivo, o carrinho é <i>proativo</i>: quando muda, ele chama métodos da fatura e altera o seu estado (“este muda esse”). A fatura é <i>passiva</i> e nem sabe que depende do carrinho. Gerenciar esse estado espalhado torna-se “exponencialmente complexo”: cada variável booleana a mais dobra o número de estados possíveis, e cada novo interessado obriga a modificar o módulo que muda.</p>
+<p>No estilo <b>reativo</b>, o módulo que muda apenas <b>emite eventos</b>; quem depende dele <b>observa</b> esses eventos e se atualiza sozinho. Como resumem os slides, “o módulo que está sendo alterado é o responsável por definir a mudança”. Neste trabalho, o par equivalente é <b>Leilões → Notificações</b> (e também Leilões → estado, histórico e stream SSE), como mostra a Figura 2.</p>
+<figure><img src="../imagens/figuras/imperativo-reativo.png" alt=""><figcaption><b>Figura 2</b> — À esquerda, o estilo imperativo: o serviço de leilões chama diretamente o de notificações. À direita, o estilo reativo: leilões emite eventos em um fluxo e vários observadores reagem a ele.</figcaption></figure>
+<table>
+  <caption>Tabela 3 — Imperativo × reativo no domínio dos leilões</caption>
+  <tr><th>Imperativo (anti-gabarito)</th><th>Reativo (gabarito / harness)</th></tr>
+  <tr><td><code>LeiloesService</code> guarda <code>Map&lt;string, Leilao&gt;</code> e altera campos (<code>leilao.maiorLance = ...</code>)</td><td>o estado é <b>derivado</b> do fluxo de eventos com <code>scan</code></td></tr>
+  <tr><td>ao aceitar um lance, chama <code>notificacoesService.adicionar(...)</code></td><td>notificações <b>assinam</b> <code>eventos$</code> e reagem sozinhas</td></tr>
+  <tr><td><code>setTimeout</code> para encerrar; <code>clearTimeout</code> ao prorrogar</td><td>o tempo é um fluxo: <code>switchMap(prazo =&gt; timer(prazo))</code></td></tr>
+  <tr><td><code>Subject</code> público usado como barramento</td><td><code>Subject</code> privado (Sink); só <code>Observable</code> é exposto</td></tr>
+  <tr><td>controller assina o <code>Subject</code> manualmente para o SSE</td><td>controller <b>devolve</b> um <code>Observable</code> (o NestJS assina)</td></tr>
+</table>
+
+<h3>O padrão Observer</h3>
+<p>O padrão Observer (Gamma et al., 1994) define uma relação de um para muitos entre um <b>sujeito</b> (observável) e seus <b>observadores</b>: quando o sujeito muda, todos os observadores são notificados, sem que o sujeito precise conhecê-los. Aqui, o sujeito é o <b>log de eventos dos leilões</b> (<code>eventos$</code>) e os observadores são a projeção de estado, o temporizador de encerramento, o módulo de notificações e cada cliente conectado ao stream SSE.</p>
+
+<h3>Data streams: Sink, Stream, Controller e Listeners</h3>
+<p>Os slides descrevem um fluxo de dados (<i>data stream</i>) por quatro elementos. A Tabela 4 mostra a correspondência com o projeto.</p>
+<table>
+  <caption>Tabela 4 — Vocabulário de streams da disciplina aplicado ao projeto</caption>
+  <tr><th>Conceito dos slides</th><th>Neste projeto</th></tr>
+  <tr><td><b>Sink</b> (entrada: valores, eventos, objetos, erros)</td><td><code>private readonly entrada$ = new Subject&lt;Entrada&gt;()</code> — comandos vindos do HTTP e do temporizador</td></tr>
+  <tr><td><b>Controller</b> do stream</td><td><code>LeiloesService</code>, o único que chama <code>entrada$.next(...)</code></td></tr>
+  <tr><td><b>Stream</b></td><td><code>processamento$</code> → <code>eventos$</code> (log de eventos com replay)</td></tr>
+  <tr><td><b>Listeners</b></td><td><code>estado$</code>, notificações, temporizador, SSE</td></tr>
+  <tr><td><b>Filter</b> (operadores)</td><td><code>filter(e =&gt; e.leilaoId === id)</code>, <code>takeWhile(...)</code></td></tr>
+  <tr><td><b>Transforms</b> (operadores)</td><td><code>scan(processar)</code>, <code>map</code>, <code>concatMap</code>, <code>groupBy</code>, <code>switchMap</code></td></tr>
+  <tr><td><code>StreamBuilder</code> (Flutter)</td><td>o endpoint SSE <code>GET /leiloes/:id/stream</code>: a “view” que reage a cada evento</td></tr>
+</table>
+
+<h3>Crie · Combine · Ouça</h3>
+<p>O resumo da aula — <b>crie</b> streams de eventos e dados, <b>combine</b> com operadores, <b>ouça</b> para efeitos colaterais — vira o esqueleto da arquitetura exigida pelo harness (Figura 3). Comandos entram pelo Sink; o processamento com <code>scan</code> os transforma em eventos; e os ouvintes produzem efeitos: notificações, stream SSE e o temporizador, que realimenta o Sink com o comando de encerramento.</p>
+<figure><img src="../imagens/figuras/crie-combine-ouca.png" alt=""><figcaption><b>Figura 3</b> — Crie · Combine · Ouça no sistema de leilões, em notação de diagrama de bolinhas (<i>marble diagram</i>): cada linha é um fluxo no tempo e cada bolinha, um valor emitido.</figcaption></figure>
+
+<h3>Características principais</h3>
+<p>Os slides destacam quatro características da programação reativa. A Tabela 5 mostra como o harness as transforma em exigências.</p>
+<table>
+  <caption>Tabela 5 — Características da programação reativa e como o harness as exige</caption>
+  <tr><th>Característica</th><th>Regra ou artefato do harness</th></tr>
+  <tr><td><b>Funcional</b>: evitar estado; funções de entrada e saída sobre streams</td><td>RX04 (estado mutável), RX08 (redutor puro), camada <code>dominio/</code> pura</td></tr>
+  <tr><td><b>Menos é mais</b>: operadores fazem muito com pouco código</td><td>padrões de código em <code>docs/arquitetura.md</code></td></tr>
+  <tr><td><b>Tratamento de erros assíncronos</b></td><td>controllers devolvem <code>Observable</code>; erros viram respostas HTTP</td></tr>
+  <tr><td><b>Concorrência fácil</b></td><td><code>scan</code> processa um comando por vez — o teste de 20 lances simultâneos verifica</td></tr>
+</table>
+
+<h2 class="sec">2.4 RxJS</h2>
+<p>RxJS é a biblioteca de programação reativa para JavaScript e TypeScript da família ReactiveX. Seus conceitos centrais são: o <b>Observable</b>, uma fonte de valores ao longo do tempo; o <b>Observer</b>, que consome esses valores; a <b>Subscription</b>, o vínculo entre os dois, que pode ser cancelado; e o <b>Subject</b>, que é ao mesmo tempo Observable e Observer — por isso serve de porta de entrada (Sink) para um fluxo. Por convenção, variáveis que guardam Observables terminam com <code>$</code>.</p>
+<p>A transformação dos fluxos é feita por <b>operadores</b>, funções puras encadeadas com <code>pipe</code>. A Tabela 6 lista os operadores que aparecem na arquitetura do projeto.</p>
+<table>
+  <caption>Tabela 6 — Operadores RxJS usados na arquitetura reativa do projeto</caption>
+  <tr><th>Operador</th><th>O que faz</th><th>Papel no projeto</th></tr>
+  <tr><td><code>scan</code></td><td>acumula valores, emitindo o acumulado a cada novo valor (como um <code>reduce</code> contínuo)</td><td>processa um comando por vez sobre o estado anterior; deriva estado e notificações</td></tr>
+  <tr><td><code>shareReplay</code></td><td>compartilha uma única execução entre vários assinantes e repete os últimos valores para quem chega depois</td><td>log de eventos com replay completo; estado atual (último valor)</td></tr>
+  <tr><td><code>concatMap</code></td><td>mapeia cada valor para um Observable e os executa em sequência</td><td>“desdobra” a lista de eventos de cada comando; executa os comandos do temporizador em ordem</td></tr>
+  <tr><td><code>groupBy</code></td><td>divide um fluxo em sub-fluxos por chave</td><td>um sub-fluxo de prazos por leilão</td></tr>
+  <tr><td><code>switchMap</code></td><td>mapeia para um novo Observable e cancela o anterior</td><td>cada novo prazo cancela o temporizador anterior (prorrogação)</td></tr>
+  <tr><td><code>timer</code></td><td>emite após um intervalo ou em uma data</td><td>agenda o encerramento no instante <code>encerraEm</code></td></tr>
+  <tr><td><code>filter</code> / <code>takeWhile</code></td><td>seleciona valores / completa o fluxo quando a condição deixa de valer</td><td>stream SSE de um único leilão, que termina após <code>LeilaoEncerrado</code></td></tr>
+  <tr><td><code>takeUntil</code></td><td>completa o fluxo quando outro emite</td><td>encerra as assinaturas permanentes quando o módulo é destruído</td></tr>
+</table>
+
+<h2 class="sec">2.5 NestJS</h2>
+<p>NestJS é um framework para servidores Node.js escrito em TypeScript, organizado em <b>módulos</b>, <b>controllers</b> (que tratam as rotas HTTP) e <b>providers</b> (serviços injetados por injeção de dependência). Três recursos dele são usados diretamente pela arquitetura reativa: controllers podem <b>devolver um <code>Observable</code></b>, que o próprio framework assina e cancela; o decorador de <b>Server-Sent Events</b> transforma um Observable em um stream <code>text/event-stream</code>; e os <b>ganchos de ciclo de vida</b> <code>onModuleInit</code> e <code>onModuleDestroy</code> são o lugar certo para criar e encerrar assinaturas permanentes. O projeto usa NestJS 12 com TypeScript em módulos ESM, o que exige imports relativos terminados em <code>.js</code>.</p>
+<p><b>Server-Sent Events (SSE)</b> é um mecanismo da plataforma web em que o servidor mantém uma resposta HTTP aberta e envia mensagens de texto à medida que elas ocorrem. É o canal “em tempo real” da API de leilões.</p>
+
+<h2 class="sec">2.6 Verificação estática e de arquitetura</h2>
+<p>Um <b>linter</b> analisa o código sem executá-lo, procurando padrões problemáticos. Linters genéricos (como o oxlint, usado no projeto) cobrem erros comuns, mas não conhecem as regras de um paradigma ou de uma arquitetura específica. Para isso o trabalho usa duas abordagens complementares:</p>
+<ul>
+  <li><b>Análise da árvore sintática.</b> A API do compilador TypeScript permite percorrer a árvore sintática abstrata (AST) de cada arquivo e identificar construções como “chamada a <code>subscribe</code> dentro de um controller” ou “atribuição a um campo da classe fora do construtor”. O verificador de regras reativas (Seção 4.5) é construído assim.</li>
+  <li><b>Regras de dependência.</b> O dependency-cruiser analisa o grafo de imports entre arquivos e verifica regras do tipo “arquivos de <code>dominio/</code> só importam outros de <code>dominio/</code>” ou “não há ciclos”.</li>
+</ul>
+
+<h2 class="sec">2.7 Medidas usadas na análise</h2>
+<p>Com três observações por condição, testes de significância têm pouco poder. Para duas amostras de três valores, há C(6,3) = 20 maneiras de dividir os seis valores entre os grupos; a separação mais extrema tem probabilidade 1/20 = 0,05 em cada cauda, de modo que o <b>menor p bilateral possível no teste de Mann–Whitney</b> (Mann; Whitney, 1947) é 0,1. Por isso a análise é descritiva: média, desvio-padrão amostral, mediana, intervalo, diferença entre médias e variação percentual.</p>
+<p>Como medida de tamanho de efeito foi usado o <b>delta de Cliff</b> (Cliff, 1993), uma estatística não paramétrica que não supõe normalidade. Para duas amostras A e B, ele compara todos os pares (a, b):</p>
+<div class="destaque"><p style="text-align:center;font-family:var(--sans)">δ = [ #(a &gt; b) − #(a &lt; b) ] / (n<sub>A</sub> · n<sub>B</sub>)</p></div>
+<p>O resultado varia de −1 a +1. Um δ = 1 significa que todo valor de A é maior que todo valor de B (as distribuições não se sobrepõem); δ = 0, que nenhuma tende a ser maior. Neste trabalho δ positivo indica valores maiores em A (sem harness). A magnitude segue os limiares de Romano et al. (2006): |δ| &lt; 0,147 desprezível; &lt; 0,33 pequeno; &lt; 0,474 médio; ≥ 0,474 grande.</p>
+
+<h2 class="sec">2.8 Relação com a disciplina</h2>
+<p>A Aula 1 de Paradigmas de Linguagens de Programação lista, entre as categorias especiais de linguagens e paradigmas, a <b>programação orientada a agentes</b> e a <b>manipulação de eventos</b>. Este trabalho combina as duas: um agente de IA programando no paradigma orientado a eventos, e o harness como forma de impor esse paradigma ao agente.</p>
+
+<!-- ======================= CAPÍTULO 3 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 3</div>
+  <h1 class="cap" data-num="3">O sistema: API de leilões em tempo real</h1>
+  <p class="cap-intro">A funcionalidade que o agente implementou nas seis execuções, por que ela foi escolhida e as duas implementações de referência que validaram o instrumento.</p>
+</section>
+
+<h2 class="sec">3.1 Por que um leilão</h2>
+<p>Foram avaliadas cinco alternativas de domínio: carrinho e fatura (o exemplo dos slides), status de pedido de delivery (o caso PedeAiVai dos slides), monitor de sensores, placar ao vivo e leilão em tempo real. O leilão foi escolhido (ADR-002) porque reúne, num tamanho que cabe em uma sessão de agente, todos os ingredientes que diferenciam o estilo reativo do imperativo:</p>
+<ul>
+  <li><b>Tudo é evento</b>: lance recebido, aceito, rejeitado, prorrogação, encerramento.</li>
+  <li><b>Tem tempo</b>: encerramento automático e prorrogação. É onde o estilo imperativo mais se complica (<code>setTimeout</code> e <code>clearTimeout</code>) e onde os operadores reativos se destacam (<code>switchMap(timer)</code>).</li>
+  <li><b>Tem observadores naturais</b>: notificações e stream SSE — o caso Carrinho → Fatura dos slides.</li>
+  <li><b>Tem concorrência</b>: lances simultâneos mostram a vantagem de processar comandos em fluxo.</li>
+  <li><b>É testável de fora</b>: tudo pode ser verificado por HTTP, sem depender de como o código foi escrito.</li>
+  <li><b>Tem o tamanho certo</b>: cerca de 800 linhas no gabarito, com regras de negócio suficientes para o agente errar.</li>
+</ul>
+<p>A especificação completa, com cerca de 150 linhas, está em <code>experimento/prompts/tarefa.md</code> e foi entregue ao agente, palavra por palavra, nas duas condições. Ela pede explicitamente o uso de programação reativa com RxJS — o que torna a comparação mais rigorosa: o agente sem harness também sabia qual paradigma era esperado.</p>
+
+<h2 class="sec">3.2 O recurso Leilao</h2>
+<p>Sempre que a API devolve um leilão, ele tem exatamente este formato:</p>
+<pre class="codigo">{
+  <span class="s">"id"</span>: <span class="s">"string única gerada pela API"</span>,
+  <span class="s">"titulo"</span>: <span class="s">"Bicicleta aro 29"</span>,
+  <span class="s">"lanceInicial"</span>: 100, <span class="s">"incrementoMinimo"</span>: 10, <span class="s">"prorrogacaoSegundos"</span>: 5,
+  <span class="s">"status"</span>: <span class="s">"ABERTO"</span>,
+  <span class="s">"maiorLance"</span>: { <span class="s">"participante"</span>: <span class="s">"ana"</span>, <span class="s">"valor"</span>: 150, <span class="s">"ocorridoEm"</span>: <span class="s">"2026-11-23T13:00:05.000Z"</span> },
+  <span class="s">"totalLances"</span>: 1,
+  <span class="s">"encerraEm"</span>: <span class="s">"2026-11-23T13:01:00.000Z"</span>,
+  <span class="s">"vencedor"</span>: <span class="k">null</span>
+}</pre>
+<p><code>status</code> é <code>"ABERTO"</code> ou <code>"ENCERRADO"</code>; <code>maiorLance</code> é <code>null</code> enquanto não houver lance aceito; <code>totalLances</code> conta apenas lances aceitos; <code>encerraEm</code> pode mudar com a prorrogação; e <code>vencedor</code> fica <code>null</code> enquanto o leilão está aberto e, depois, recebe o participante do maior lance (ou continua <code>null</code> se não houve lances). Os dados ficam apenas em memória e o servidor deve funcionar com <code>npm run build</code> seguido de <code>npm run start:prod</code>.</p>
+
+<h2 class="sec">3.3 Endpoints</h2>
+<table>
+  <caption>Tabela 7 — Funcionalidades, rotas e o aspecto reativo que cada uma exercita</caption>
+  <tr><th>Funcionalidade</th><th>Rota</th><th>Aspecto reativo exercitado</th></tr>
+  <tr><td>Criar, listar e consultar leilões</td><td><code>POST /leiloes</code>, <code>GET /leiloes</code>, <code>GET /leiloes/:id</code></td><td>estado como projeção do log</td></tr>
+  <tr><td>Dar lance (com validações em ordem)</td><td><code>POST /leiloes/:id/lances</code></td><td>comandos → eventos; processamento sequencial</td></tr>
+  <tr><td>Histórico de eventos</td><td><code>GET /leiloes/:id/eventos</code></td><td>log de eventos como fonte da verdade</td></tr>
+  <tr><td>Acompanhar em tempo real</td><td><code>GET /leiloes/:id/stream</code> (SSE)</td><td>stream com replay que termina sozinho</td></tr>
+  <tr><td>Notificações por participante</td><td><code>GET /participantes/:nome/notificacoes</code></td><td>observador independente (Observer)</td></tr>
+  <tr><td>Encerramento automático</td><td>—</td><td>o tempo como fluxo (<code>timer</code>)</td></tr>
+  <tr><td>Prorrogação anti-sniping</td><td>—</td><td>prazo que muda: <code>switchMap</code> cancela o temporizador anterior</td></tr>
+  <tr><td>Lances simultâneos</td><td>—</td><td>consistência sob concorrência</td></tr>
+</table>
+<p>A criação valida o corpo: <code>titulo</code> é obrigatório e não vazio; <code>lanceInicial</code> e <code>incrementoMinimo</code> são números maiores que zero; <code>duracaoSegundos</code> é inteiro de 1 a 86 400; <code>prorrogacaoSegundos</code> é inteiro opcional de 0 a 3 600 (padrão 0). Sucesso devolve 201; corpo inválido, 400. A listagem devolve os leilões na ordem de criação.</p>
+
+<h2 class="sec">3.4 As regras do lance</h2>
+<p>As regras do lance são verificadas <b>nesta ordem</b>, e a ordem importa (a suíte oculta testa, por exemplo, que um leilão inexistente responde 404 antes de validar o corpo):</p>
+<ol>
+  <li>Leilão inexistente: <b>404</b>.</li>
+  <li>Corpo inválido (<code>participante</code> string não vazia; <code>valor</code> número maior que zero): <b>400</b>.</li>
+  <li>Leilão encerrado (status <code>ENCERRADO</code> ou instante atual ≥ <code>encerraEm</code>): <b>409</b> com <code>{ "aceito": false, "motivo": "LEILAO_ENCERRADO" }</code>.</li>
+  <li>O participante já é o autor do maior lance: <b>422</b> com motivo <code>PARTICIPANTE_JA_LIDERA</code>.</li>
+  <li>Valor abaixo do mínimo: <b>422</b> com motivo <code>VALOR_ABAIXO_DO_MINIMO</code> e o campo <code>valorMinimo</code>. O mínimo é o <code>lanceInicial</code> enquanto não há lances e, depois, <code>maiorLance.valor + incrementoMinimo</code>. Um lance igual ao mínimo é aceito.</li>
+  <li>Caso contrário, o lance é aceito: <b>201</b> com <code>{ "aceito": true, "leilao": … }</code>.</li>
+</ol>
+<p>Lances simultâneos devem ser processados um de cada vez, na ordem de chegada, sem perder nem duplicar eventos.</p>
+
+<h2 class="sec">3.5 Eventos do domínio</h2>
+<p>Todo evento tem o formato <code>{ sequencia, tipo, leilaoId, ocorridoEm, dados }</code>. A <code>sequencia</code> começa em 1 em cada leilão e cresce de 1 em 1, sem buracos; <code>LeilaoEncerrado</code> é sempre o último evento de um leilão. Respostas 400, 404 e 409 <b>não</b> geram eventos.</p>
+<table>
+  <caption>Tabela 8 — Eventos do domínio</caption>
+  <tr><th>Tipo</th><th>Quando</th><th>Dados</th></tr>
+  <tr><td><code>LeilaoCriado</code></td><td>leilão criado</td><td><code>titulo</code>, <code>lanceInicial</code>, <code>incrementoMinimo</code>, <code>prorrogacaoSegundos</code>, <code>encerraEm</code></td></tr>
+  <tr><td><code>LanceAceito</code></td><td>lance aceito</td><td><code>participante</code>, <code>valor</code></td></tr>
+  <tr><td><code>LanceRejeitado</code></td><td>lance recusado com 422</td><td><code>participante</code>, <code>valor</code>, <code>motivo</code></td></tr>
+  <tr><td><code>LeilaoProrrogado</code></td><td>prorrogação</td><td><code>encerraEmAnterior</code>, <code>encerraEm</code></td></tr>
+  <tr><td><code>LeilaoEncerrado</code></td><td>encerramento</td><td><code>vencedor</code> (ou <code>null</code>), <code>valor</code> (ou <code>null</code>)</td></tr>
+</table>
+
+<h2 class="sec">3.6 Regras de tempo</h2>
+<p><b>Encerramento automático.</b> Quando o instante <code>encerraEm</code> é atingido, o leilão deve ser encerrado sozinho, sem nenhuma requisição, em até 500 ms: o status passa a <code>ENCERRADO</code>, o vencedor é definido e o evento <code>LeilaoEncerrado</code> é emitido.</p>
+<p><b>Prorrogação (anti-sniping).</b> Se um lance for aceito quando faltar menos de <code>prorrogacaoSegundos</code> para <code>encerraEm</code>, o leilão é prorrogado: <code>encerraEm</code> passa a ser o instante do lance mais <code>prorrogacaoSegundos</code>, e o evento <code>LeilaoProrrogado</code> é emitido logo após o <code>LanceAceito</code>. Com <code>prorrogacaoSegundos</code> igual a zero nunca há prorrogação; pode haver várias prorrogações seguidas. A Figura 4 ilustra a vida de um leilão com uma prorrogação.</p>
+<figure style="width:78%;margin-left:auto;margin-right:auto"><img src="../imagens/figuras/vida-leilao.png" alt=""><figcaption><b>Figura 4</b> — Vida de um leilão com anti-sniping: um lance dentro da janela final (evento 4) gera a prorrogação (evento 5), e o encerramento (evento 6) ocorre no novo prazo.</figcaption></figure>
+
+<h2 class="sec">3.7 Notificações e stream em tempo real</h2>
+<p>A rota de notificações devolve, em ordem cronológica, dois tipos de aviso: <code>LANCE_SUPERADO</code>, quando o participante tinha o maior lance de um leilão e outro participante teve um lance aceito nesse leilão (com <code>valorAnterior</code> e <code>novoValor</code>); e <code>LEILAO_VENCIDO</code>, quando o leilão é encerrado e o participante é o vencedor.</p>
+<p>O stream SSE, ao conectar, envia todos os eventos já ocorridos do leilão, em ordem, e depois cada novo evento assim que ele acontece. Depois do <code>LeilaoEncerrado</code>, o servidor fecha a conexão; se o leilão já estiver encerrado ao conectar, o cliente recebe o histórico completo e a conexão é finalizada.</p>
+
+<h2 class="sec">3.8 As duas implementações de referência</h2>
+<p>Antes de qualquer execução com agentes, foram escritas duas implementações completas da especificação, guardadas no kit de avaliação oculto (<code>avaliacao/</code>). Elas não foram mostradas aos agentes; servem para validar o instrumento de medida (Seção 5.7).</p>
+<h3>O gabarito (reativo)</h3>
+<p>Segue a arquitetura que o harness pede e prova que ela é implementável. O domínio é puro: <code>decidir(estado, comando, instante)</code> devolve os eventos que um comando gera e <code>evoluir(estado, evento)</code> aplica um evento ao estado; nenhuma função do domínio lê o relógio, gera identificadores ou faz entrada e saída — tudo chega por parâmetro. O serviço de aplicação monta os fluxos:</p>
+<div class="rotulo-cod">avaliacao/referencia/src/leiloes/aplicacao/leiloes.service.ts (trecho)</div>
+<pre class="codigo"><span class="c">/** Sink: única porta de entrada de mudanças. Privado (nunca exposto). */</span>
+<span class="k">private readonly</span> entrada$ = <span class="k">new</span> <span class="t">Subject</span>&lt;<span class="t">Entrada</span>&gt;();
+
+<span class="c">/** Processa um comando por vez, na ordem de chegada (scan é sequencial). */</span>
+<span class="k">private readonly</span> processamento$ = <span class="k">this</span>.entrada$.<span class="t">pipe</span>(
+  <span class="o">scan</span>((anterior, entrada) =&gt; <span class="t">processar</span>(anterior.estado, entrada), <span class="t">PROCESSAMENTO_INICIAL</span>),
+  <span class="o">share</span>({ resetOnRefCountZero: <span class="k">false</span> }),
+);
+
+<span class="c">/** Log de eventos de todos os leilões; novos assinantes recebem o histórico completo. */</span>
+<span class="k">readonly</span> eventos$ = <span class="k">this</span>.processamento$.<span class="t">pipe</span>(
+  <span class="o">concatMap</span>((p) =&gt; <span class="t">from</span>(p.eventos)),
+  <span class="o">shareReplay</span>({ bufferSize: <span class="t">Infinity</span>, refCount: <span class="k">false</span> }),
+);
+
+<span class="c">/** Comandos de encerramento gerados pelo tempo (reagendados a cada prorrogação). */</span>
+<span class="k">private readonly</span> encerramentos$ = <span class="k">this</span>.eventos$.<span class="t">pipe</span>(
+  <span class="o">groupBy</span>((e) =&gt; e.leilaoId),
+  <span class="o">mergeMap</span>((eventosDoLeilao$) =&gt; eventosDoLeilao$.<span class="t">pipe</span>(
+    <span class="o">takeWhile</span>((e) =&gt; e.tipo !== <span class="s">'LeilaoEncerrado'</span>),
+    <span class="o">filter</span>(ehPrazo),
+    <span class="o">switchMap</span>((e) =&gt; <span class="o">timer</span>(<span class="k">new</span> <span class="t">Date</span>(e.dados.encerraEm)).<span class="t">pipe</span>(
+      <span class="o">map</span>(() =&gt; ({ tipo: <span class="s">'EncerrarLeilao'</span>, leilaoId: eventosDoLeilao$.key, prazo: e.dados.encerraEm })),
+    )),
+  )),
+);
+
+<span class="t">onModuleInit</span>(): <span class="k">void</span> {
+  <span class="c">// Conecta as projeções desde o início e liga a realimentação do temporizador.</span>
+  <span class="t">merge</span>(<span class="k">this</span>.eventos$, <span class="k">this</span>.estado$).<span class="t">pipe</span>(<span class="o">takeUntil</span>(<span class="k">this</span>.destruir$)).<span class="t">subscribe</span>();
+  <span class="k">this</span>.encerramentos$.<span class="t">pipe</span>(<span class="o">concatMap</span>((c) =&gt; <span class="k">this</span>.<span class="t">executar</span>(c)), <span class="o">takeUntil</span>(<span class="k">this</span>.destruir$)).<span class="t">subscribe</span>();
+}</pre>
+<p>Um detalhe merece atenção: o método <code>executar(comando)</code> implementa requisição e resposta sobre o fluxo. Ele gera um identificador para a entrada, assina o fluxo de processamento esperando o resultado daquele identificador e só então envia o comando ao Sink — com <code>merge</code>, a assinatura acontece antes do envio, e a resposta não se perde. Assim um controller HTTP pode devolver o resultado de um comando como um <code>Observable</code>.</p>
+<p>O gabarito é organizado em módulos e camadas: <code>leiloes/dominio/</code> (tipos e regras puras, com testes), <code>leiloes/aplicacao/</code> (Sink, <code>scan</code>, log, projeções, temporizador), <code>leiloes/http/</code> (controller e validação), e o mesmo para <code>notificacoes/</code>, cujo serviço apenas observa <code>eventos$</code> com um redutor puro.</p>
+
+<h3>O anti-gabarito (imperativo)</h3>
+<p>É uma implementação imperativa típica, escrita de propósito para funcionar e violar as regras: estado em <code>Map</code> alterado diretamente, <code>Subject</code> público, o serviço de leilões chamando o de notificações e temporizadores com <code>setTimeout</code>.</p>
+<div class="rotulo-cod">avaliacao/anti-gabarito/src/leiloes/leiloes.service.ts (trechos)</div>
+<pre class="codigo"><span class="k">private</span> leiloes = <span class="k">new</span> <span class="t">Map</span>&lt;<span class="t">string</span>, <span class="t">Leilao</span>&gt;();
+<span class="k">private</span> timers = <span class="k">new</span> <span class="t">Map</span>&lt;<span class="t">string</span>, <span class="t">NodeJS.Timeout</span>&gt;();
+<span class="k">readonly</span> eventos$ = <span class="k">new</span> <span class="t">Subject</span>&lt;<span class="t">Evento</span>&gt;();
+<span class="k">constructor</span>(<span class="k">private readonly</span> notificacoes: <span class="t">NotificacoesService</span>) {}
+
+<span class="c">// em darLance(...)</span>
+leilao.maiorLance = { participante, valor, ocorridoEm: <span class="k">new</span> <span class="t">Date</span>(agora).<span class="t">toISOString</span>() };
+leilao.totalLances++;
+<span class="k">this</span>.notificacoes.<span class="t">adicionar</span>(anterior.participante, { tipo: <span class="s">'LANCE_SUPERADO'</span>, … });
+
+<span class="k">private</span> <span class="t">agendarEncerramento</span>(id: <span class="t">string</span>): <span class="k">void</span> {
+  <span class="t">clearTimeout</span>(<span class="k">this</span>.timers.<span class="t">get</span>(id));
+  <span class="k">const</span> ms = <span class="t">Math</span>.<span class="t">max</span>(0, <span class="t">Date</span>.<span class="t">parse</span>(leilao.encerraEm) - <span class="t">Date</span>.<span class="t">now</span>());
+  <span class="k">this</span>.timers.<span class="t">set</span>(id, <span class="t">setTimeout</span>(() =&gt; <span class="k">this</span>.<span class="t">encerrar</span>(id), ms));
+}</pre>
+<p>A Figura 5 coloca as duas implementações lado a lado, com as linhas que violam as regras destacadas. As duas passam nos mesmos 41 testes de aceitação; só o verificador de regras as distingue.</p>
+<figure><img src="../imagens/figuras/codigo-comparado.png" alt=""><figcaption><b>Figura 5</b> — Mesmo comportamento, paradigmas opostos: o anti-gabarito (41/41 testes, 12 violações) e o gabarito (41/41 testes, 0 violações).</figcaption></figure>
+
+<!-- ======================= CAPÍTULO 4 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 4</div>
+  <h1 class="cap" data-num="4">O harness</h1>
+  <p class="cap-intro">Cada item do enunciado transformado em um artefato concreto: instruções, regras, verificadores, testes, script de validação e hooks.</p>
+</section>
+
+<h2 class="sec">4.1 Visão geral</h2>
+<p>O harness fica em <code>projetos/harness/</code> e é uma <b>camada</b>: nas execuções B ele é copiado por cima do projeto base (<code>scripts/lib/montar-projeto.sh &lt;destino&gt; harness</code>). A base é um projeto NestJS 12 limpo; o harness acrescenta 16 arquivos. A Tabela 9 mostra como cada item do enunciado virou um componente.</p>
+<table>
+  <caption>Tabela 9 — Itens do enunciado e componentes do harness</caption>
+  <tr><th>Enunciado</th><th>Componente</th><th>Arquivo(s)</th></tr>
+  <tr><td><b>Instruções para agentes</b></td><td>regra de ouro, comandos, ambiente (ESM), arquitetura resumida, tabela de regras, testes, hooks</td><td><code>AGENTS.md</code>, <code>CLAUDE.md</code></td></tr>
+  <tr><td><b>Regras arquiteturais</b></td><td>arquitetura orientada a eventos (Sink → scan → log → projeções), camadas, direção emissor → observador, 9 regras reativas com exemplos</td><td><code>docs/arquitetura.md</code>, <code>docs/regras-reativas.md</code>, <code>.dependency-cruiser.cjs</code></td></tr>
+  <tr><td><b>Testes</b></td><td>11 testes de contrato da API + exigência de teste unitário para cada arquivo do domínio</td><td><code>test/contrato/</code>, <code>scripts/verificar-estrutura.mjs</code></td></tr>
+  <tr><td><b>Lint</b></td><td>lint genérico (oxlint) + lint arquitetural (RX01–RX09) + camadas + estrutura de pastas</td><td><code>.oxlintrc.json</code>, <code>scripts/verificar-reatividade.mjs</code>, <code>.dependency-cruiser.cjs</code>, <code>scripts/verificar-estrutura.mjs</code></td></tr>
+  <tr><td><b>Scripts de validação</b></td><td><code>npm run validate</code>: 7 etapas, resumo e saída enxuta para o agente</td><td><code>scripts/validar.sh</code></td></tr>
+  <tr><td><i>Além do enunciado:</i> <b>hooks</b></td><td>verificação a cada edição e bloqueio do encerramento enquanto a validação falhar</td><td><code>.claude/settings.json</code>, <code>scripts/hooks/</code></td></tr>
+</table>
+
+<h2 class="sec">4.2 Instruções para agentes</h2>
+<p>O <code>AGENTS.md</code> é o primeiro arquivo que o agente lê. Ele começa por uma <b>regra de ouro</b>:</p>
+<div class="destaque"><p>“Uma tarefa só está concluída quando <code>npm run validate</code> termina com <code>VALIDAÇÃO OK</code>. Rode <code>npm run validate</code> antes de dizer que terminou e corrija tudo o que ele apontar. Nunca desative, apague ou afrouxe testes, regras de lint, o verificador, a configuração do dependency-cruiser ou os hooks para ‘fazer passar’. Se achar que uma regra ou um teste está errado, pare e explique ao usuário.”</p></div>
+<p>Em seguida vêm: a tabela de comandos (<code>validate</code>, <code>build</code>, <code>test</code>, <code>test:e2e</code>, <code>lint</code>, <code>regras</code>, <code>dependencias</code>, <code>estrutura</code>); as particularidades do ambiente (TypeScript ESM com imports terminados em <code>.js</code>, Vitest em vez de Jest, dados só em memória, nenhuma biblioteca de eventos além do RxJS); a arquitetura resumida em árvore de pastas; o fluxo reativo esperado em seis passos; a tabela das nove regras com “nunca” e “em vez disso”; as regras de testes; e a descrição dos hooks.</p>
+<p>O <code>CLAUDE.md</code> tem seis linhas: importa o <code>AGENTS.md</code> (<code>@AGENTS.md</code>) e acrescenta duas instruções específicas do Claude Code — não alterar os hooks e, se um hook bloquear o encerramento, ler a saída, corrigir e validar de novo.</p>
+
+<h2 class="sec">4.3 Regras arquiteturais</h2>
+<p>O documento <code>docs/arquitetura.md</code> descreve o fluxo da Figura 6 e a correspondência com os conceitos da disciplina (Sink, Stream, Controller, Listeners, operadores e propagação de mudança).</p>
+<figure><img src="../imagens/figuras/arquitetura.png" alt=""><figcaption><b>Figura 6</b> — A arquitetura exigida pelo harness. Comandos vindos do HTTP entram pelo Sink; <code>scan</code> aplica as funções puras do domínio; o log <code>eventos$</code> alimenta o estado, o stream SSE, o temporizador (que realimenta o Sink) e o módulo observador de notificações.</figcaption></figure>
+<p>Cada módulo (<code>leiloes</code>, <code>notificacoes</code>) tem três camadas, com dependências permitidas bem definidas:</p>
+<table>
+  <caption>Tabela 10 — Camadas e dependências permitidas</caption>
+  <tr><th>Camada</th><th>Contém</th><th>Pode importar</th></tr>
+  <tr><td><code>dominio/</code></td><td>tipos, eventos, comandos e funções puras: <code>decidir</code>, <code>evoluir</code>, redutores de projeções</td><td>apenas outros arquivos de <code>dominio/</code></td></tr>
+  <tr><td><code>aplicacao/</code></td><td>serviços <code>@Injectable()</code> com os fluxos RxJS: Sink, log, projeções, temporizadores</td><td><code>dominio/</code>, RxJS, NestJS e a API pública de <code>aplicacao/</code> de outro módulo</td></tr>
+  <tr><td><code>http/</code></td><td>controllers e validação de entrada</td><td><code>aplicacao/</code> e tipos de <code>dominio/</code></td></tr>
+</table>
+<p>O documento traz ainda cinco <b>padrões de código genéricos</b> — com nomes como <code>Comando</code>, <code>Evento</code> e <code>Estado</code>, sem nada do domínio de leilões: (1) Sink privado com processamento sequencial por <code>scan</code>; (2) requisição e resposta sobre o fluxo de comandos; (3) tempo como fluxo, para prazos que podem mudar; (4) stream SSE como projeção filtrada do log; e (5) observador em outro módulo. A decisão de incluir esses padrões (ADR-011) foi deliberada: é o conhecimento que um time real colocaria em seu repositório, e sem exemplos regras como “derive o estado do fluxo” ficam abstratas demais. O custo é aumentar a vantagem de B — exatamente o efeito que o experimento quer medir — e isso é declarado como ameaça à validade. O padrão 3 inclui também a armadilha do temporizador descoberta durante a validação (Seção 5.8).</p>
+
+<h2 class="sec">4.4 As regras reativas RX01–RX09</h2>
+<p>O paradigma foi operacionalizado em nove regras verificáveis por máquina, documentadas em <code>docs/regras-reativas.md</code> com exemplos de código errado e certo.</p>
+<table>
+  <caption>Tabela 11 — As nove regras reativas</caption>
+  <tr><th>Regra</th><th>O que proíbe</th><th>Em vez disso</th><th>Princípio</th></tr>
+  <tr><td>RX01 subscribe-aninhado</td><td><code>subscribe</code> dentro de <code>subscribe</code> ou de operador</td><td><code>switchMap</code>, <code>mergeMap</code>, <code>concatMap</code>, <code>exhaustMap</code></td><td>composição com operadores de achatamento</td></tr>
+  <tr><td>RX02 subscribe-fora-do-ciclo-de-vida</td><td><code>subscribe</code> em controller ou método chamado por requisição</td><td>controllers devolvem <code>Observable</code>; assinaturas só no <code>onModuleInit</code>, com <code>takeUntil(destruir$)</code></td><td>assinaturas permanentes têm dono e fim</td></tr>
+  <tr><td>RX03 subject-exposto</td><td><code>Subject</code> público, exportado ou devolvido</td><td>Sink privado + <code>asObservable()</code></td><td>só o dono do Sink emite</td></tr>
+  <tr><td>RX04 estado-mutavel</td><td>campos de classe ou variáveis de módulo alterados por métodos</td><td><code>eventos$.pipe(scan(evoluir, inicial), shareReplay(1))</code></td><td>estado derivado do fluxo</td></tr>
+  <tr><td>RX05 temporizador-imperativo</td><td><code>setTimeout</code>, <code>setInterval</code>, <code>node:timers</code></td><td><code>timer</code>, <code>interval</code>, <code>delay</code>, <code>switchMap(() =&gt; timer(…))</code></td><td>tempo como fluxo</td></tr>
+  <tr><td>RX06 eventos-fora-do-rxjs</td><td><code>EventEmitter</code>, <code>@nestjs/event-emitter</code>, <code>EventTarget</code></td><td><code>Subject</code> / <code>Observable</code></td><td>um único modelo de eventos</td></tr>
+  <tr><td>RX07 emissor-conhece-observador</td><td>leilões importando notificações</td><td>notificações assinam <code>eventos$</code></td><td>Observer: quem muda não conhece quem reage</td></tr>
+  <tr><td>RX08 acumulador-mutado</td><td>redutor do <code>scan</code> que altera o acumulador</td><td><code>scan((acc, e) =&gt; [...acc, e])</code></td><td>redutores puros</td></tr>
+  <tr><td>RX09 dependencia-circular</td><td>ciclos de import</td><td>tipos compartilhados em <code>dominio/tipos.ts</code></td><td>dependências em uma direção</td></tr>
+</table>
+<p>Dois exemplos do documento ilustram o estilo. Para a RX04:</p>
+<pre class="codigo"><span class="c">// ❌</span>
+<span class="k">private</span> leiloes = <span class="k">new</span> <span class="t">Map</span>&lt;<span class="t">string</span>, <span class="t">Leilao</span>&gt;();
+<span class="t">darLance</span>(...) { <span class="k">this</span>.leiloes.<span class="t">get</span>(id)!.maiorLance = lance; <span class="k">this</span>.total++; }
+<span class="c">// ✅</span>
+<span class="k">readonly</span> estado$ = <span class="k">this</span>.eventos$.<span class="t">pipe</span>(<span class="o">scan</span>(evoluir, <span class="t">ESTADO_INICIAL</span>), <span class="o">shareReplay</span>(1));</pre>
+<p>E para a RX05, em que a troca de prazo cancela o temporizador anterior sem nenhum <code>clearTimeout</code>:</p>
+<pre class="codigo"><span class="c">// ❌</span>
+<span class="t">clearTimeout</span>(<span class="k">this</span>.timers.<span class="t">get</span>(id));
+<span class="k">this</span>.timers.<span class="t">set</span>(id, <span class="t">setTimeout</span>(() =&gt; <span class="k">this</span>.<span class="t">encerrar</span>(id), ms));
+<span class="c">// ✅</span>
+prazos$.<span class="t">pipe</span>(<span class="o">switchMap</span>((prazo) =&gt; <span class="o">timer</span>(<span class="k">new</span> <span class="t">Date</span>(prazo))))   <span class="c">// novo prazo cancela o anterior</span></pre>
+
+<h2 class="sec">4.5 O verificador de regras reativas</h2>
+<p>O script <code>scripts/verificar-reatividade.mjs</code> usa a API do compilador TypeScript para percorrer a árvore sintática de cada arquivo <code>.ts</code> de <code>src/</code>, exceto testes, e reportar as ocorrências de cada regra com arquivo, linha, trecho, descrição e “como corrigir”. Ele não depende da estrutura de pastas — vale igualmente para um projeto que não conhece a arquitetura do harness —, o que permitiu usar o <b>mesmo</b> verificador como instrumento de medida nas duas condições (Capítulo 5). Há um modo <code>--hook</code>, que verifica apenas o arquivo recém-editado e devolve o resultado no formato esperado pelo Claude Code.</p>
+<p>Por ser estático e heurístico, ele tem limitações conhecidas e documentadas: não segue apelidos (<code>const l = this.mapa.get(id); l.x = 1</code> não é detectado) e a RX07 baseia-se em nomes de arquivos e caminhos (<code>leil|lance|auction|bid</code> × <code>notif</code>). O verificador tem 10 casos de teste próprios — um por regra e um de código correto —, todos aprovados.</p>
+
+<h2 class="sec">4.6 Regras de camadas e de estrutura</h2>
+<p>O dependency-cruiser (versão 18.9.0) verifica seis regras sobre o grafo de imports: <code>sem-ciclos</code>, <code>dominio-puro</code>, <code>aplicacao-nao-conhece-http</code>, <code>emissor-nao-conhece-observadores</code>, <code>observador-usa-api-publica</code> e <code>sem-event-emitter</code>. O verificador de estrutura (<code>scripts/verificar-estrutura.mjs</code>) completa o quadro com três regras próprias:</p>
+<ul>
+  <li><b>E01 arquivo-fora-da-estrutura</b>: todo <code>.ts</code> de <code>src/</code> fica em <code>src/&lt;modulo&gt;/{dominio,aplicacao,http}/</code> (na raiz do módulo, só o <code>&lt;modulo&gt;.module.ts</code>).</li>
+  <li><b>E02 dominio-sem-teste</b>: todo arquivo de <code>dominio/</code> com código (não só tipos) tem um <code>.spec.ts</code> ao lado.</li>
+  <li><b>E03 papel-na-camada-errada</b>: <code>*.controller.ts</code> só em <code>http/</code>; <code>*.service.ts</code> só em <code>aplicacao/</code>.</li>
+</ul>
+<p>A regra E02 é a origem provável de um dos efeitos mais visíveis do harness: o número de testes escritos pelo agente (Seção 9.6).</p>
+
+<h2 class="sec">4.7 Testes de contrato</h2>
+<p>O harness traz 11 testes de contrato em <code>test/contrato/leiloes.e2e-spec.ts</code>, que sobem o <code>AppModule</code> e exercitam a API por HTTP: criação no formato do recurso; corpo inválido (400); leilão inexistente (404); lance aceito atualizando <code>maiorLance</code> e <code>totalLances</code>; lance abaixo do mínimo (422 com <code>valorMinimo</code>); participante que já lidera (422); histórico em ordem com sequência 1..n; encerramento automático com vencedor; lance após o encerramento (409); stream SSE que envia o histórico e fecha após o encerramento; e notificação <code>LANCE_SUPERADO</code>.</p>
+<p>Esses testes cobrem só o essencial, de propósito (ADR-013). O <code>AGENTS.md</code> avisa: “implemente a especificação inteira da tarefa, não apenas o que os testes verificam”. A suíte de avaliação tem 41 testes, dos quais 27 não têm nenhum correspondente no harness (Seção 5.4).</p>
+
+<h2 class="sec">4.8 O script de validação</h2>
+<p><code>npm run validate</code> (<code>scripts/validar.sh</code>) roda sete etapas, sempre todas — mesmo que uma falhe —, imprime uma linha por etapa com ✔ ou ✖ e o tempo, mostra as últimas 80 linhas da saída das etapas que falharam e termina com <code>VALIDAÇÃO OK</code> ou <code>VALIDAÇÃO FALHOU: &lt;etapas&gt;</code>. A saída foi desenhada para ser lida por um agente: curta, previsível e com os erros em destaque. Cada execução registra uma linha no log do harness.</p>
+<figure><img src="../imagens/figuras/validate-etapas.png" alt=""><figcaption><b>Figura 7</b> — As sete etapas do <code>npm run validate</code>. As etapas 3 a 5 verificam o paradigma e a arquitetura.</figcaption></figure>
+<table>
+  <caption>Tabela 12 — As sete etapas da validação</caption>
+  <tr><th>#</th><th>Etapa</th><th>Ferramenta</th><th>Pega…</th></tr>
+  <tr><td>1</td><td>tipos</td><td><code>tsc --noEmit</code></td><td>erros de compilação (por exemplo, imports ESM sem <code>.js</code>)</td></tr>
+  <tr><td>2</td><td>lint</td><td>oxlint</td><td>problemas genéricos de código</td></tr>
+  <tr><td>3</td><td>regras-reativas</td><td><code>verificar-reatividade.mjs</code></td><td>RX01–RX09 (paradigma)</td></tr>
+  <tr><td>4</td><td>dependencias</td><td>dependency-cruiser</td><td>camadas, ciclos, emissor importando observador</td></tr>
+  <tr><td>5</td><td>estrutura</td><td><code>verificar-estrutura.mjs</code></td><td>arquivos fora das camadas, domínio sem teste</td></tr>
+  <tr><td>6</td><td>testes-unitarios</td><td>Vitest</td><td>testes do domínio escritos pelo agente</td></tr>
+  <tr><td>7</td><td>testes-contrato</td><td>Vitest + servidor em porta livre</td><td>contrato HTTP essencial</td></tr>
+</table>
+
+<h2 class="sec">4.9 Os hooks</h2>
+<p>O arquivo <code>.claude/settings.json</code> configura três hooks (ADR-010), cujo formato foi conferido na documentação oficial da versão 2.1.x do Claude Code antes da implementação:</p>
+<ul>
+  <li><b>PostToolUse</b>, com o filtro <code>Edit|Write|MultiEdit</code>: depois de cada edição, roda o verificador de regras no arquivo editado e, se houver violações, as mostra ao agente.</li>
+  <li><b>Stop</b>: quando o agente tenta encerrar, roda o <code>npm run validate</code>. Se a validação falhar, bloqueia o encerramento e devolve os erros ao agente — no máximo três vezes por pedido do usuário, para evitar laços infinitos (além do limite nativo de continuações do próprio Claude Code).</li>
+  <li><b>UserPromptSubmit</b>: a cada novo prompt, zera o contador de bloqueios.</li>
+</ul>
+<div class="rotulo-cod">projetos/harness/scripts/hooks/ao-parar.sh (trecho)</div>
+<pre class="codigo">saida=<span class="s">"$(bash scripts/validar.sh 2&gt;&amp;1)"</span>; status=$?
+<span class="k">if</span> [ $status -eq 0 ]; <span class="k">then</span>
+  rm -f <span class="s">"$CONTADOR"</span>; registrar <span class="s">"stop liberado (validação ok)"</span>; exit 0
+<span class="k">fi</span>
+n=$(cat <span class="s">"$CONTADOR"</span> 2&gt;/dev/null || echo 0)
+<span class="k">if</span> [ <span class="s">"$n"</span> -ge <span class="s">"$LIMITE"</span> ]; <span class="k">then</span>
+  rm -f <span class="s">"$CONTADOR"</span>; registrar <span class="s">"stop liberado (limite de $LIMITE bloqueios atingido)"</span>; exit 0
+<span class="k">fi</span>
+n=$((n + 1)); echo <span class="s">"$n"</span> &gt; <span class="s">"$CONTADOR"</span>; registrar <span class="s">"stop bloqueado $n/$LIMITE"</span>
+<span class="c"># devolve ao Claude Code: { "decision": "block", "reason": "&lt;erros da validação&gt;" }</span></pre>
+<p>Cada hook e cada validação acrescentam uma linha a <code>.harness/hooks.log</code>, que é copiado para <code>experimento/execucoes/B*/harness-hooks.log</code> ao final de cada execução. Esse registro é a evidência de como o harness atuou (Seção 9.7).</p>
+
+<h2 class="sec">4.10 O que o harness não contém</h2>
+<p>O harness não traz a implementação da funcionalidade: nenhum arquivo do domínio de leilões é entregue pronto. Também não traz todos os testes: os 11 testes de contrato cobrem o essencial, e a suíte de avaliação, com 41, fica fora do alcance do agente. Ele contém regras, verificadores, padrões genéricos e o ciclo de validação.</p>
+
+<h2 class="sec">4.11 Validação do harness</h2>
+<p>Antes do experimento, o gabarito foi montado com o harness e passou nas sete etapas do <code>npm run validate</code>, em cerca de 13 segundos. Os hooks foram testados com entradas simuladas: uma edição com violação fez o hook terminar com código 2, que leva as violações ao agente; um <code>Stop</code> com validação falhando foi bloqueado três vezes e depois liberado; um novo prompt zerou o contador; e um <code>Stop</code> com validação correta foi liberado de imediato.</p>
+
+<!-- ======================= CAPÍTULO 5 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 5</div>
+  <h1 class="cap" data-num="5">O instrumento de avaliação</h1>
+  <p class="cap-intro">O kit oculto que mediu erros e violações em cada entrega, o mesmo para as duas condições, e como ele foi validado antes de qualquer execução.</p>
+</section>
+
+<h2 class="sec">5.1 Componentes</h2>
+<p>O instrumento fica na pasta <code>avaliacao/</code> do repositório principal. Os agentes nunca tiveram acesso a ela: as execuções rodaram em pastas fora do repositório (Seção 6.6).</p>
+<table>
+  <caption>Tabela 13 — Componentes do kit de avaliação</caption>
+  <tr><th>Componente</th><th>Arquivo</th><th>Mede</th></tr>
+  <tr><td>Suíte de aceitação</td><td><code>aceitacao/*.test.ts</code> (41 testes)</td><td><b>erros</b> funcionais, caixa-preta via HTTP contra <code>npm run start:prod</code></td></tr>
+  <tr><td>Verificador de regras</td><td>cópia de <code>verificar-reatividade.mjs</code> do repositório principal</td><td><b>violações arquiteturais</b> RX01–RX09</td></tr>
+  <tr><td>Avaliador</td><td><code>avaliar.mjs</code></td><td>orquestra tudo e gera <code>metricas.json</code>, <code>avaliacao.md</code> e o prompt de intervenção</td></tr>
+  <tr><td>Gabarito</td><td><code>referencia/src/</code></td><td>implementação reativa correta (valida o instrumento)</td></tr>
+  <tr><td>Anti-gabarito</td><td><code>anti-gabarito/src/</code></td><td>implementação imperativa correta (valida o instrumento)</td></tr>
+  <tr><td>Testes do verificador</td><td><code>verificador/</code> (10 casos)</td><td>o próprio verificador</td></tr>
+</table>
+<p>A escolha de testes caixa-preta e de um verificador independente da estrutura de pastas (ADR-007) garante justiça entre as condições: os testes valem para qualquer implementação, e o verificador não penaliza A por não conhecer a organização em camadas exigida pelo harness. Subir o servidor real, em vez de instanciar o módulo nos testes, evita falsos negativos causados por configurações feitas no <code>main.ts</code>.</p>
+
+<h2 class="sec">5.2 O que o avaliador faz em cada checkpoint</h2>
+<ol>
+  <li>Instala as dependências, se faltarem (o agente pode ter adicionado pacotes).</li>
+  <li>Roda <code>tsc --noEmit</code> e conta os erros de tipo, incluindo os dos testes escritos pelo agente.</li>
+  <li>Roda <code>npm run build</code> e registra se o build passou.</li>
+  <li>Roda o oxlint com a <b>configuração fixa da base</b> — igual para A e B, mesmo que o agente altere a configuração do projeto.</li>
+  <li>Roda o verificador RX01–RX09 na versão do repositório principal, imune a alterações do agente.</li>
+  <li>Sobe o servidor com <code>npm run start:prod</code> em uma porta livre e roda a suíte de aceitação <b>duas vezes</b>; um teste conta como falho se falhar em qualquer repetição e é marcado <i>instável</i> se oscilar.</li>
+  <li>Calcula métricas de código: arquivos e linhas, testes escritos pelo agente (excluindo os herdados da base ou do harness), chamadas a <code>subscribe</code>, imports do RxJS e dependências adicionadas.</li>
+  <li>Verifica a integridade do harness nas execuções B: quais arquivos do harness o agente alterou ou apagou.</li>
+  <li>Gera o <b>prompt de intervenção padronizado</b>, o único feedback que o “humano” envia ao agente.</li>
+</ol>
+<p>O critério de <b>aprovação</b> é: build ok, 41/41 testes e zero violações.</p>
+
+<h2 class="sec">5.3 A suíte de aceitação</h2>
+<table>
+  <caption>Tabela 14 — Os 41 testes de aceitação por arquivo</caption>
+  <tr><th>Arquivo</th><th class="n">Testes</th><th>Cobre</th></tr>
+  <tr><td><code>01-criacao</code></td><td class="n">12</td><td>formato do recurso, padrão de <code>prorrogacaoSegundos</code>, ids únicos, 6 validações 400, GET 200/404, ordem da listagem</td></tr>
+  <tr><td><code>02-lances</code></td><td class="n">10</td><td>lance inicial, mínimo com incremento, limite exato, participante que já lidera, 404 antes do 400, 3 validações 400, recusas não alteram estado</td></tr>
+  <tr><td><code>03-eventos</code></td><td class="n">3</td><td>sequência e dados de cada evento, 400/404 não geram eventos, 404 do histórico</td></tr>
+  <tr><td><code>04-tempo</code></td><td class="n">7</td><td>encerramento automático, sem lances, 409 após encerrar, prorrogação, fora da janela, prorrogação 0, várias prorrogações</td></tr>
+  <tr><td><code>05-notificacoes</code></td><td class="n">3</td><td><code>LANCE_SUPERADO</code> em ordem, <code>LEILAO_VENCIDO</code>, lista vazia</td></tr>
+  <tr><td><code>06-stream</code></td><td class="n">4</td><td><code>text/event-stream</code> + histórico, tempo real, fecha após o encerramento, leilão já encerrado</td></tr>
+  <tr><td><code>07-concorrencia</code></td><td class="n">2</td><td>20 lances simultâneos sem perder nem duplicar eventos; leilões independentes</td></tr>
+</table>
+
+<h2 class="sec">5.4 Sobreposição com os testes do harness</h2>
+<p>Para cada um dos 41 testes ocultos, verificou-se se havia um teste equivalente entre os 11 do harness. O resultado: <b>7 cobertos</b> (✓), <b>7 parcialmente</b> (◐) e <b>27 sem correspondente</b> (✗). Entre os não cobertos estão as cinco validações numéricas da criação, a ordem da listagem, o lance exatamente igual ao mínimo, o 404 antes do 400, os quatro testes de prorrogação, o <code>LEILAO_VENCIDO</code>, o stream em tempo real e os dois testes de concorrência. Dois terços da suíte, portanto, medem se o agente implementou a especificação — e não se ele “decorou” os testes do harness.</p>
+
+<h2 class="sec">5.5 O prompt de intervenção padronizado</h2>
+<p>Quando um checkpoint não é aprovado, o avaliador escreve o texto da revisão: build quebrado (com a saída do compilador), testes que falharam (com a mensagem de erro) e violações agrupadas por regra, com arquivo, linha, trecho e “como corrigir”. O condutor apenas envia esse texto ao agente. Padronizar o conteúdo da intervenção (ADR-006) remove a subjetividade da revisão humana e torna a contagem replicável. O Apêndice C reproduz, na íntegra, a intervenção enviada na execução A1.</p>
+
+<h2 class="sec">5.6 O verificador como instrumento</h2>
+<p>O verificador usado na avaliação é o mesmo descrito na Seção 4.5, mas na versão do repositório principal: mesmo que um agente B alterasse o verificador do seu projeto, a medida não mudaria. Por não depender da estrutura de pastas, ele mede a condição A — que não conhece as camadas exigidas pelo harness — com o mesmo critério da condição B.</p>
+
+<h2 class="sec">5.7 Validação do instrumento</h2>
+<table>
+  <caption>Tabela 15 — Validação do instrumento, feita antes das execuções</caption>
+  <tr><th>Verificação</th><th>Resultado</th></tr>
+  <tr><td>Gabarito (reativo) na suíte de aceitação</td><td><b>41/41</b></td></tr>
+  <tr><td>Gabarito no verificador</td><td><b>0 violações</b></td></tr>
+  <tr><td>Gabarito + harness no <code>npm run validate</code></td><td><b>7/7 etapas</b></td></tr>
+  <tr><td>Anti-gabarito (imperativo) na suíte de aceitação</td><td><b>41/41</b> — os testes não penalizam o estilo</td></tr>
+  <tr><td>Anti-gabarito no verificador</td><td><b>12 violações</b> (RX02, RX03, RX04 ×5, RX05 ×3, RX07 ×2) — o verificador discrimina o paradigma</td></tr>
+  <tr><td>Casos de teste do verificador</td><td><b>10/10</b></td></tr>
+  <tr><td>Estresse: 10 rodadas seguidas da suíte contra o mesmo servidor (gabarito corrigido)</td><td><b>410/410</b> execuções verdes</td></tr>
+  <tr><td>Projeto com erro de compilação</td><td>build falhou, 0/41, prompt com o erro do compilador</td></tr>
+</table>
+<div class="destaque"><p>O par gabarito/anti-gabarito é a demonstração central do instrumento: <b>mesma funcionalidade, mesmos 41 testes passando, paradigmas opostos</b>. Os testes medem comportamento; o verificador mede paradigma; um não substitui o outro.</p></div>
+
+<h2 class="sec">5.8 O bug que o instrumento encontrou no próprio gabarito</h2>
+<p>A primeira bateria de estresse mostrou falhas intermitentes nos testes de tempo. A investigação revelou a causa: em cerca de 8% dos casos (24 de 300 medidos), o temporizador do Node dispara <b>1 milissegundo antes</b> de <code>Date.now()</code> alcançar o prazo. O gabarito decidia o encerramento comparando o relógio (<code>agora &gt;= encerraEm</code>), concluía “ainda não venceu” e, como nenhum novo temporizador era agendado, o leilão nunca encerrava (Figura 8).</p>
+<figure style="width:80%;margin-left:auto;margin-right:auto"><img src="../imagens/figuras/bug-temporizador.png" alt=""><figcaption><b>Figura 8</b> — O disparo adiantado do temporizador: a comparação com o relógio falha e nenhum novo encerramento é agendado.</figcaption></figure>
+<p>A correção (ADR-008) foi fazer o comando <code>EncerrarLeilao</code> carregar o prazo para o qual foi agendado: o domínio encerra se esse prazo ainda é o vigente e ignora o comando se houve prorrogação. Depois disso, dez rodadas seguidas produziram 410 de 410 execuções verdes. Três lições ficaram:</p>
+<ol>
+  <li>É um erro realista de sistemas reativos com tempo — as implementações dos agentes poderiam tê-lo.</li>
+  <li>Por isso a suíte passou a rodar duas vezes por checkpoint e a reportar testes instáveis (ADR-009), ao custo de cerca de 10 segundos por avaliação.</li>
+  <li>A armadilha foi documentada no harness (padrão 3 de <code>docs/arquitetura.md</code>), como faria um time real.</li>
+</ol>
+
+<!-- ======================= CAPÍTULO 6 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 6</div>
+  <h1 class="cap" data-num="6">Metodologia</h1>
+  <p class="cap-intro">O desenho do experimento, o que foi mantido igual entre as condições, como cada medida foi definida, o procedimento de cada execução e as ameaças à validade.</p>
+</section>
+
+<h2 class="sec">6.1 Desenho</h2>
+<p>O experimento tem <b>uma variável independente</b> — a presença do harness — em <b>duas condições</b>, com <b>três repetições</b> cada (ADR-003):</p>
+<table>
+  <caption>Tabela 16 — Condições do experimento</caption>
+  <tr><th>Condição</th><th>Projeto entregue ao agente</th><th>Execuções</th></tr>
+  <tr><td><span class="pill A">A — sem harness</span></td><td><code>projetos/base</code></td><td>A1, A2, A3</td></tr>
+  <tr><td><span class="pill B">B — com harness</span></td><td><code>projetos/base</code> + <code>projetos/harness</code></td><td>B1, B2, B3</td></tr>
+</table>
+<p>A ordem foi contrabalançada: <b>A1 → B1 → B2 → A2 → A3 → B3</b>. Assim, efeitos de ordem — aprendizado do condutor ou variações do serviço do modelo ao longo do dia — não favorecem nenhuma condição. As repetições capturam o não determinismo do modelo: a mesma entrada pode gerar soluções diferentes.</p>
+
+<h2 class="sec">6.2 Controles</h2>
+<ul>
+  <li><b>Mesma tarefa</b>, palavra por palavra (<code>experimento/prompts/tarefa.md</code>), incluindo o pedido de usar programação reativa com RxJS.</li>
+  <li><b>Mesma base</b>: NestJS 12 limpo, sem os arquivos de agente que o gerador oficial cria (ADR-004).</li>
+  <li><b>Mesmo agente e configuração</b>: Claude Code 2.1.300, modelo <code>claude-sonnet-5-5</code>, esforço <i>medium</i>, modo de permissão <code>acceptEdits</code>, limite de 3 600 s por chamada; conversa nova a cada execução; sem instruções globais do usuário (verificado no passo 0).</li>
+  <li><b>Isolamento</b>: cada execução numa pasta nova fora do repositório principal, com histórico git próprio (ADR-005). O agente não vê o kit, o gabarito nem outras execuções — o que importa também porque o Claude Code lê <code>CLAUDE.md</code> das pastas-pai.</li>
+  <li><b>Mesmas intervenções</b>: só o prompt inicial, os prompts de intervenção gerados pelo kit e duas respostas padronizadas (“Siga a especificação…” e “Continue até concluir…”).</li>
+  <li><b>Mesmo avaliador</b> em todos os checkpoints.</li>
+  <li><b>Mesmos critérios de parada</b>: aprovado, 8 rodadas de correção ou 120 minutos.</li>
+</ul>
+
+<h2 class="sec">6.3 Variáveis dependentes</h2>
+<table>
+  <caption>Tabela 17 — Definições operacionais das medidas</caption>
+  <tr><th>Medida</th><th>Definição</th><th>Fonte</th></tr>
+  <tr><td><b>Erros</b></td><td>build quebrado (0/1) + testes de aceitação ocultos falhando (de 41), na primeira entrega e no final; um teste que falha em qualquer das 2 repetições conta como falha. Complementares: erros de tipo e de lint genérico</td><td><code>checkpoints/*/metricas.json</code></td></tr>
+  <tr><td><b>Violações arquiteturais</b></td><td>ocorrências de RX01–RX09 detectadas pelo verificador, na primeira entrega e no final</td><td>idem</td></tr>
+  <tr><td><b>Intervenções humanas</b></td><td>prompts de correção (rodadas) + edições manuais de código + outras mensagens humanas após o prompt inicial</td><td><code>execucao.json</code> + registro do implementador</td></tr>
+  <tr><td>Tempo</td><td>minutos entre a primeira mensagem humana e o último checkpoint</td><td>transcrição + <code>execucao.json</code></td></tr>
+  <tr><td>Esforço do agente</td><td>chamadas de ferramenta, erros de ferramenta, tokens</td><td>transcrição (<code>resumo-sessao.json</code>)</td></tr>
+  <tr><td>Produto</td><td>linhas de código, casos de teste escritos pelo agente, dependências adicionadas</td><td><code>metricas.json</code></td></tr>
+  <tr><td>Atuação do harness</td><td>edições verificadas / com violação, bloqueios do Stop, validações</td><td><code>harness-hooks.log</code></td></tr>
+</table>
+<p><b>Primeira entrega</b> é o estado do código quando o agente diz que terminou o prompt inicial, antes de qualquer intervenção. É a medida mais limpa do efeito do harness (H1 e H2). O número de intervenções mede o custo humano para chegar a uma solução correta e conforme (H3).</p>
+
+<h2 class="sec">6.4 Procedimento de uma execução</h2>
+<p>Cada execução segue o mesmo ciclo, automatizado por scripts:</p>
+<figure style="break-inside:avoid">
+<svg viewBox="0 0 660 190" width="100%" style="display:block;background:#fbfaf7;border:.6pt solid #e3e1da;border-radius:6pt">
+  <defs><marker id="sp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0L10,5L0,10z" fill="#364152"/></marker></defs>
+  <g font-family="Inter" font-size="11" text-anchor="middle">
+    <rect x="14" y="40" width="104" height="54" rx="8" fill="#fff" stroke="#c9c6bb"/><text x="66" y="62" font-weight="700" fill="#0e1726">1 · preparar</text><text x="66" y="79" font-size="9.5" fill="#6a7282">pasta isolada + git</text>
+    <rect x="140" y="40" width="104" height="54" rx="8" fill="#fff" stroke="#c9c6bb"/><text x="192" y="62" font-weight="700" fill="#0e1726">2 · prompt inicial</text><text x="192" y="79" font-size="9.5" fill="#6a7282">tarefa.md</text>
+    <rect x="266" y="40" width="114" height="54" rx="8" fill="#0e1726"/><text x="323" y="62" font-weight="700" fill="#fff">3 · checkpoint</text><text x="323" y="79" font-size="9.5" fill="#aab6c8">commit + avaliação</text>
+    <rect x="420" y="10" width="110" height="46" rx="8" fill="#e3f4ec" stroke="#1e8e5a"/><text x="475" y="30" font-weight="700" fill="#166d45">aprovado</text><text x="475" y="45" font-size="9.5" fill="#166d45">41/41 · 0 violações</text>
+    <rect x="420" y="104" width="110" height="54" rx="8" fill="#fdeee6" stroke="#eb6834"/><text x="475" y="126" font-weight="700" fill="#b2481c">4 · intervenção</text><text x="475" y="143" font-size="9.5" fill="#b2481c">prompt gerado pelo kit</text>
+    <rect x="552" y="10" width="96" height="46" rx="8" fill="#fff" stroke="#c9c6bb"/><text x="600" y="30" font-weight="700" fill="#0e1726">5 · finalizar</text><text x="600" y="45" font-size="9.5" fill="#6a7282">ramo + resumo</text>
+  </g>
+  <line x1="118" y1="67" x2="138" y2="67" stroke="#364152" stroke-width="1.5" marker-end="url(#sp)"/>
+  <line x1="244" y1="67" x2="264" y2="67" stroke="#364152" stroke-width="1.5" marker-end="url(#sp)"/>
+  <path d="M380 60 L418 36" stroke="#364152" stroke-width="1.5" fill="none" marker-end="url(#sp)"/>
+  <path d="M380 76 L418 126" stroke="#364152" stroke-width="1.5" fill="none" marker-end="url(#sp)"/>
+  <line x1="530" y1="33" x2="550" y2="33" stroke="#364152" stroke-width="1.5" marker-end="url(#sp)"/>
+  <path d="M420 140 C340 175 323 150 323 98" stroke="#eb6834" stroke-width="1.5" fill="none" marker-end="url(#sp)"/>
+  <text x="300" y="178" font-family="Inter" font-size="9.5" fill="#b2481c" text-anchor="middle">nova rodada do agente → checkpoint “correção”</text>
+</svg>
+<figcaption><b>Figura 9</b> — Ciclo de uma execução: preparar, enviar a tarefa, avaliar no checkpoint e, enquanto houver problemas, enviar a intervenção gerada pelo kit e avaliar de novo; ao final, importar o histórico e gerar o resumo.</figcaption>
+</figure>
+<ol>
+  <li><b>Preparar</b> (<code>scripts/preparar-execucao.sh &lt;ID&gt;</code>): cria a pasta <code>~/projetos-leilao/&lt;ID&gt;</code> a partir da base (mais o harness, em B), inicializa um repositório git próprio com o commit inicial e registra a configuração em <code>execucao.json</code>.</li>
+  <li><b>Prompt inicial</b> (<code>scripts/rodar-implementador.sh &lt;ID&gt; inicial</code>): abre uma sessão nova do Claude Code dentro da pasta e envia a tarefa.</li>
+  <li><b>Checkpoint de entrega</b> (<code>scripts/checkpoint.sh &lt;ID&gt; entrega</code>): faz o commit do estado atual com autor “Agente de IA”, roda o avaliador completo e, se reprovado, gera o prompt de intervenção.</li>
+  <li><b>Intervenção</b> (<code>rodar-implementador.sh &lt;ID&gt; intervencao</code>) seguida de <b>checkpoint de correção</b>, repetidos enquanto houver problemas e os critérios de parada permitirem.</li>
+  <li><b>Finalizar</b> (<code>scripts/finalizar-execucao.sh &lt;ID&gt;</code>): importa o histórico como ramo <code>execucoes/&lt;ID&gt;</code> do repositório principal (com as tags <code>entrega</code> e <code>final</code>), copia a transcrição da sessão e o log dos hooks, gera o resumo automático e apaga a pasta de trabalho.</li>
+</ol>
+
+<h2 class="sec">6.5 A condução por um agente</h2>
+<p>O protocolo previa, inicialmente, que o próprio aluno conduzisse as execuções. Depois de uma primeira tentativa descartada (Seção 8.4), a condução foi delegada a <b>outro agente de IA</b> — o Antigravity, com o modelo Gemini 4 —, seguindo um roteiro fechado (<code>experimento/ROTEIRO-CONDUTOR.md</code>). Os papéis ficaram assim separados:</p>
+<ul>
+  <li><b>Implementador</b>: uma sessão nova e isolada do Claude Code, disparada exclusivamente por <code>scripts/rodar-implementador.sh</code>, em modo não interativo, com parâmetros fixos em <code>experimento/config-implementador.env</code> (<code>MODELO=claude-sonnet-5-5</code>, <code>ESFORCO=medium</code>, <code>LIMITE_SEGUNDOS=3600</code>). O script salva o texto exato de cada prompt enviado, a saída bruta e o identificador da sessão.</li>
+  <li><b>Condutor</b>: executa os scripts, classifica as respostas do implementador, registra cada ação e decisão no diário <code>experimento/auditoria/log-condutor.md</code> e escreve os relatórios. Ele faz o papel do “humano” do protocolo.</li>
+  <li><b>Avaliador</b>: o kit oculto, acionado pelo script de checkpoint.</li>
+</ul>
+<p>O roteiro do condutor lista o que ele <b>pode</b> fazer — rodar apenas os scripts do experimento e comandos de leitura do git, ler os registros, editar só os arquivos de log e relatório — e o que ele <b>não pode</b>: escrever ou editar código na pasta de uma execução; mandar ao implementador qualquer texto que não seja gerado pelos scripts; abrir o gabarito, o anti-gabarito ou os testes ocultos; alterar a infraestrutura; mudar a ordem, pular ou repetir execuções; rodar o Claude Code diretamente; apagar ramos ou resultados; interromper uma chamada antes do limite; e “arredondar” ou omitir resultados ruins. Uma seção de exceções define o que fazer em caso de falha técnica, tempo esgotado ou limite de uso da conta.</p>
+
+<h2 class="sec">6.6 Registro e rastreabilidade</h2>
+<p>Cada execução deixa um conjunto completo de evidências em <code>experimento/execucoes/&lt;ID&gt;/</code>: <code>execucao.json</code> (configuração e checkpoints), <code>registro.md</code> (preenchido pelo condutor), um diretório por checkpoint com <code>metricas.json</code>, <code>avaliacao.md</code>, o prompt de intervenção e os logs de cada etapa, a transcrição completa da sessão do agente, o resumo da sessão (<code>resumo-sessao.json</code>, produzido por <code>scripts/analisar-sessao.mjs</code>), o registro das chamadas do implementador, o log dos hooks (em B), o resumo automático e o relatório da execução.</p>
+<p>No git, cada checkpoint é um commit e cada execução vira um ramo <code>execucoes/&lt;ID&gt;</code> com as tags <code>execucoes/&lt;ID&gt;/entrega</code> e <code>execucoes/&lt;ID&gt;/final</code>; assim, <code>git diff execucoes/A1/entrega execucoes/A1/final</code> mostra exatamente o que mudou depois das intervenções. Ao final de cada execução, o condutor faz uma auditoria de isolamento: procura o nome do repositório principal na transcrição da sessão — uma ocorrência indicaria que o agente leu arquivos fora da sua pasta.</p>
+
+<h2 class="sec">6.7 Análise dos dados</h2>
+<p>O script <code>scripts/consolidar-resultados.mjs</code> lê todas as execuções e produz as tabelas (<code>resultados.md</code>, <code>resultados.csv</code>) e seis gráficos SVG com paleta validada para daltonismo. Como discutido na Seção 2.7, a análise é descritiva (ADR-012): média ± desvio-padrão amostral, mediana, intervalo, diferença B − A, variação percentual e delta de Cliff. A análise quantitativa é complementada pela qualitativa: relatórios das execuções, diffs entre entrega e final e exemplos de violações.</p>
+
+<h2 class="sec">6.8 Ameaças à validade</h2>
+<h3>Validade interna</h3>
+<ul>
+  <li><b>Não determinismo do modelo</b>: a mesma entrada pode gerar soluções diferentes. Mitigação: três repetições por condição e relato da variabilidade.</li>
+  <li><b>Condutor</b>: quem conduz conhece as hipóteses. Mitigação: intervenções geradas pelo kit, respostas padronizadas, regras de conduta fixas e condução por um agente com roteiro fechado e log auditável.</li>
+  <li><b>Ordem e tempo</b>: mitigados pela ordem contrabalançada.</li>
+  <li><b>Vazamento</b>: o agente poderia ler arquivos fora da pasta. Mitigação: pastas isoladas fora do repositório e auditoria das transcrições.</li>
+</ul>
+<h3>Validade de construto</h3>
+<ul>
+  <li>As regras RX são uma <b>operacionalização</b> do paradigma reativo; o verificador é estático e heurístico, com as limitações da Seção 4.5.</li>
+  <li>Como o harness ensina exatamente as regras medidas, a vantagem de B em violações é em parte <b>por construção</b>: o que se mede é justamente se o harness consegue fazer o agente seguir as regras do projeto. Para os erros, a suíte oculta é independente e maior que os testes do harness.</li>
+  <li>A “intervenção” foi padronizada: o kit escreve a revisão. Numa equipe real a revisão humana seria mais lenta e menos completa, de modo que o custo humano de A tende a estar <b>subestimado</b>.</li>
+</ul>
+<h3>Validade externa</h3>
+<ul>
+  <li>Uma tarefa, uma stack (NestJS/RxJS), um agente e um modelo: os resultados não se generalizam automaticamente.</li>
+  <li>O harness e o kit foram construídos com o auxílio de um modelo da mesma família do agente avaliado, o que pode favorecer a “compreensão” das instruções.</li>
+</ul>
+<h3>Validade de conclusão</h3>
+<ul>
+  <li>Com n = 3 por condição, efeitos pequenos não são detectáveis e o relato é descritivo.</li>
+  <li>Instabilidade do instrumento: testes dependentes de tempo foram estabilizados (ADR-008) e a suíte roda duas vezes por checkpoint (ADR-009).</li>
+</ul>
+
+<!-- ======================= CAPÍTULO 7 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 7</div>
+  <h1 class="cap" data-num="7">Ferramentas, tecnologias e recursos</h1>
+  <p class="cap-intro">O que foi usado para construir o sistema, o harness, o instrumento e a condução do experimento.</p>
+</section>
+
+<h2 class="sec">7.1 Plataforma e bibliotecas</h2>
+<table>
+  <caption>Tabela 18 — Plataforma e bibliotecas (versões fixadas nos <code>package-lock.json</code>)</caption>
+  <tr><th>Ferramenta</th><th>Versão</th><th>Uso</th></tr>
+  <tr><td>Node.js</td><td>24.9.0</td><td>ambiente de execução de tudo</td></tr>
+  <tr><td>NestJS (<code>@nestjs/core</code>, <code>common</code>, <code>platform-express</code>, CLI)</td><td>12.x (CLI 12.0.15 na geração)</td><td>framework do backend; projeto base</td></tr>
+  <tr><td>RxJS</td><td>7.8.x</td><td>programação reativa</td></tr>
+  <tr><td>TypeScript</td><td>6.0.x</td><td>linguagem; API do compilador usada pelo verificador</td></tr>
+  <tr><td>Vitest</td><td>4.1.x</td><td>testes unitários, de contrato e a suíte de aceitação</td></tr>
+  <tr><td>Supertest</td><td>7.x</td><td>requisições HTTP nos testes de contrato</td></tr>
+  <tr><td>oxlint (+ oxlint-tsgolint)</td><td>1.58.x</td><td>lint genérico</td></tr>
+  <tr><td>dependency-cruiser</td><td>18.9.0</td><td>regras de camadas e ciclos</td></tr>
+  <tr><td>Prettier</td><td>3.4.x</td><td>formatação (herdado da base)</td></tr>
+</table>
+
+<h2 class="sec">7.2 Agentes e modelos</h2>
+<table>
+  <caption>Tabela 19 — Agentes de IA envolvidos no trabalho</caption>
+  <tr><th>Papel</th><th>Ferramenta</th><th>Observação</th></tr>
+  <tr><td>Implementador (avaliado)</td><td>Claude Code 2.1.300, modelo <code>claude-sonnet-5-5</code>, esforço <i>medium</i></td><td>modo não interativo, <code>acceptEdits</code>, sessão nova por execução</td></tr>
+  <tr><td>Condutor das execuções</td><td>Antigravity, modelo Gemini 4</td><td>seguiu <code>ROTEIRO-CONDUTOR.md</code>; não escreveu código</td></tr>
+  <tr><td>Apoio à construção da infraestrutura</td><td>Claude Code, modelo da mesma família do implementador</td><td>declarado como ameaça à validade externa (Seção 6.8)</td></tr>
+</table>
+
+<h2 class="sec">7.3 Scripts do experimento</h2>
+<table>
+  <caption>Tabela 20 — Scripts de condução, avaliação e consolidação</caption>
+  <tr><th>Script</th><th>Função</th></tr>
+  <tr><td><code>scripts/verificar-ambiente.sh</code></td><td>checklist do ambiente (Node no PATH, versão do CLI, ausência de instruções globais, git, pastas livres, dependências do kit)</td></tr>
+  <tr><td><code>scripts/lib/montar-projeto.sh</code></td><td>monta um projeto a partir da base, com ou sem harness, opcionalmente com um overlay (gabarito, anti-gabarito)</td></tr>
+  <tr><td><code>scripts/preparar-execucao.sh</code></td><td>cria a pasta isolada e o repositório git da execução</td></tr>
+  <tr><td><code>scripts/rodar-implementador.sh</code></td><td>dispara o Claude Code com a configuração fixa e salva prompts, saídas e sessão</td></tr>
+  <tr><td><code>scripts/checkpoint.sh</code></td><td>commit + avaliação completa + prompt de intervenção</td></tr>
+  <tr><td><code>scripts/finalizar-execucao.sh</code></td><td>importa o histórico como ramo, copia transcrição e logs, gera o resumo</td></tr>
+  <tr><td><code>scripts/status-execucoes.sh</code></td><td>andamento das execuções</td></tr>
+  <tr><td><code>scripts/analisar-sessao.mjs</code></td><td>extrai da transcrição: mensagens humanas, ferramentas, erros, comandos, tokens, modelo</td></tr>
+  <tr><td><code>scripts/consolidar-resultados.mjs</code></td><td>tabelas, estatística descritiva, delta de Cliff e gráficos</td></tr>
+  <tr><td><code>scripts/gerar-historico-git.sh</code></td><td>gera <code>docs/historico-git.md</code></td></tr>
+  <tr><td><code>avaliacao/avaliar.mjs</code></td><td>o avaliador de checkpoints (Seção 5.2)</td></tr>
+</table>
+
+<h2 class="sec">7.4 Recursos de documentação e versionamento</h2>
+<p>Todo o trabalho foi versionado em um repositório git local, com 62 commits no ramo principal até a consolidação dos resultados e um ramo por execução (além do ramo da execução descartada e dos dois ramos do ensaio). A documentação está em <code>docs/</code>: visão geral, fundamentação, sistema, harness, metodologia, instrumento, registro de decisões (ADR-001 a ADR-013), linha do tempo e histórico git. Os slides da disciplina sobre programação reativa serviram de referência conceitual.</p>
+
+<!-- ======================= CAPÍTULO 8 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 8</div>
+  <h1 class="cap" data-num="8">Desenvolvimento do trabalho</h1>
+  <p class="cap-intro">A sequência real das atividades em 23 de novembro de 2026 — do enunciado aos resultados —, com horários no fuso de Brasília (UTC−3).</p>
+</section>
+
+<h2 class="sec">8.1 Entendimento e planejamento</h2>
+<p>O trabalho começou às 9h47, com o enunciado e os slides da disciplina colocados na pasta do projeto. Entre 10h01 e 10h19 foram tomadas as decisões de base: stack Node.js; somente backend com NestJS e RxJS (ADR-001); domínio de leilão em tempo real (ADR-002); um projeto completo, focado no enunciado, documentado, replicável e com uso de git para rastrear acertos, erros e correções; git apenas local; três repetições por condição; documentação com linha do tempo; e, inicialmente, condução das execuções pelo próprio aluno (ADR-006).</p>
+
+<h2 class="sec">8.2 Construção da infraestrutura</h2>
+<table>
+  <caption>Tabela 21 — Construção da infraestrutura (23/11/2026)</caption>
+  <tr><th>Hora</th><th>Atividade</th></tr>
+  <tr><td>10:28</td><td>Repositório criado; enunciado versionado.</td></tr>
+  <tr><td>10:30</td><td>Projeto base gerado com <code>@nestjs/cli</code> 12.0.15. Achado: o gerador já cria arquivos de agente e telemetria — removidos (ADR-004).</td></tr>
+  <tr><td>10:33</td><td>Especificação da tarefa escrita: contrato HTTP completo, idêntico para A e B.</td></tr>
+  <tr><td>10:35</td><td>Gabarito reativo escrito.</td></tr>
+  <tr><td>10:38</td><td>Suíte de aceitação oculta (41 testes); problema com a variável <code>BASE_URL</code> resolvido; gabarito 41/41.</td></tr>
+  <tr><td>10:40</td><td>Verificador RX01–RX09 com a API do compilador TypeScript; gabarito com 0 violações.</td></tr>
+  <tr><td>10:41</td><td>Anti-gabarito imperativo: 41/41 testes e 12 violações.</td></tr>
+  <tr><td>10:42</td><td>10 casos de teste do verificador, todos passando.</td></tr>
+  <tr><td>10:44</td><td>Harness montado: instruções, documentos, dependency-cruiser, estrutura, testes de contrato, validate e hooks.</td></tr>
+  <tr><td>10:46–10:51</td><td>Problemas com o dependency-cruiser e com o oxlint, resolvidos (Capítulo 11).</td></tr>
+  <tr><td>10:52</td><td>Gabarito + harness: validate 7/7 (~13 s); hooks testados com entradas simuladas.</td></tr>
+  <tr><td>10:56–11:00</td><td>Avaliador de checkpoints; descoberta e correção do bug do temporizador; suíte 2× por checkpoint (ADR-008, ADR-009).</td></tr>
+  <tr><td>11:03–11:05</td><td>Analisador de transcrições; scripts de condução.</td></tr>
+  <tr><td>11:06</td><td>Primeiro ensaio do protocolo com dados sintéticos.</td></tr>
+  <tr><td>11:10–11:12</td><td>Consolidação com estatística e gráficos; correção da métrica de testes do agente; checklist de ambiente; histórico git.</td></tr>
+  <tr><td>11:14</td><td>Documentação completa.</td></tr>
+  <tr><td>11:20–11:22</td><td>Ensaio refeito com a versão definitiva; verificação final. Infraestrutura pronta.</td></tr>
+</table>
+
+<h2 class="sec">8.3 O ensaio do protocolo</h2>
+<p>Antes de gastar execuções reais, o protocolo inteiro foi ensaiado com dados sintéticos. Na ENSAIO-A, a “entrega” foi o anti-gabarito (12 violações): o checkpoint reprovou e gerou o prompt de intervenção; a “correção” foi o gabarito, aprovado; a execução foi finalizada e o histórico importado como ramo. Na ENSAIO-B, com harness e hooks simulados, a entrega foi aprovada de primeira. O ensaio foi refeito às 11h20 com a versão definitiva dos scripts, incluindo o caminho de edição manual: ENSAIO-A aprovada com 2 intervenções e ENSAIO-B sem intervenções. Os ramos <code>ensaio/ENSAIO-A</code> e <code>ensaio/ENSAIO-B</code> preservam esse ensaio.</p>
+
+<h2 class="sec">8.4 A primeira tentativa e a mudança na condução</h2>
+<p>Às 11h35, uma execução B1 foi conduzida e implementada pelo mesmo agente que havia construído o harness, o gabarito e o kit. Ela foi aprovada de primeira — 41/41 e 0 violações, com o harness pegando uma falha (faltavam testes unitários do domínio) —, mas foi <b>descartada</b> por falta de independência: o agente tinha a solução de referência em contexto e não havia transcrição própria da implementação. Ela foi movida para <code>experimento/descartadas/</code>, junto com uma A1 que havia sido preparada e não usada, e não entra na consolidação.</p>
+<p>Às 11h45 o aluno decidiu delegar a condução a outro agente. Foram criados o roteiro fechado do condutor, o script do implementador isolado e o arquivo de configuração fixa do modelo (Seção 6.5).</p>
+
+<h2 class="sec">8.5 A condução das execuções</h2>
+<p>O condutor começou às 11h52 com as verificações do passo 0 — repositório limpo, nenhuma execução iniciada, pasta de trabalho livre e ambiente com 8 itens ok, 0 avisos e 0 erros — e conduziu as seis execuções na ordem prevista. A Tabela 22 resume a sequência a partir do registro automático.</p>
+<table>
+  <caption>Tabela 22 — Linha do tempo das execuções (23/11/2026)</caption>
+  <tr><th>Execução</th><th>Preparada</th><th>Checkpoint 1 (entrega)</th><th>Checkpoint 2 (correção)</th><th>Finalizada</th></tr>
+  <tr><td><span class="pill A">A1</span></td><td>12:04</td><td>12:07 · 0/41 falhando, 4 violações</td><td>12:09 · aprovado</td><td>12:10 · 1 intervenção, 4 min</td></tr>
+  <tr><td><span class="pill B">B1</span></td><td>12:11</td><td>12:16 · aprovado</td><td>—</td><td>12:16 · 0 intervenções, 4 min</td></tr>
+  <tr><td><span class="pill B">B2</span></td><td>12:17</td><td>12:21 · aprovado</td><td>—</td><td>12:22 · 0 intervenções, 3 min</td></tr>
+  <tr><td><span class="pill A">A2</span></td><td>12:23</td><td>12:25 · 0/41 falhando, 7 violações</td><td>20:10 · aprovado</td><td>20:11 · 1 intervenção, 467 min</td></tr>
+  <tr><td><span class="pill A">A3</span></td><td>20:13</td><td>20:17 · 0/41 falhando, 3 violações</td><td>20:21 · aprovado</td><td>20:22 · 1 intervenção, 6 min</td></tr>
+  <tr><td><span class="pill B">B3</span></td><td>20:23</td><td>20:27 · aprovado</td><td>—</td><td>20:28 · 0 intervenções, 4 min</td></tr>
+</table>
+<p>Durante a intervenção da A2, às 12h25–12h28, a chamada do implementador terminou com erro de limite de uso da conta (<code>429 usage_limit_reached</code>). Seguindo a seção de exceções do roteiro, o condutor pausou e aguardou a liberação pelo usuário, às 20h08; a chamada foi então repetida tecnicamente, sem contar como nova intervenção. Isso explica os 467 minutos de relógio da A2, cujo trabalho ativo do implementador somou 255 segundos.</p>
+<p>Cada execução terminou com o preenchimento do registro e do relatório pelo condutor e com a auditoria de isolamento, que não encontrou nenhuma referência ao repositório principal nas transcrições.</p>
+
+<h2 class="sec">8.6 Consolidação</h2>
+<p>Às 20h29, com as seis execuções finalizadas e aprovadas, o condutor rodou a consolidação, gerou o histórico git e escreveu o relatório final (<code>experimento/resultados/relatorio-final.md</code>). Os resultados são apresentados no próximo capítulo.</p>
+
+<!-- ======================= CAPÍTULO 9 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 9</div>
+  <h1 class="cap" data-num="9">Resultados</h1>
+  <p class="cap-intro">O que as seis execuções produziram: erros, violações, intervenções, esforço, organização do código e o registro da atuação do harness.</p>
+</section>
+
+<div class="cifras">
+  <div><b style="color:var(--tinta)">41/41</b>testes de aceitação passando nas seis execuções, já na primeira entrega</div>
+  <div><b><span style="color:var(--A)">14</span> <span style="color:#c9c6bb;font-weight:400">×</span> <span style="color:var(--B)">0</span></b>violações arquiteturais na primeira entrega (soma de A × soma de B)</div>
+  <div><b><span style="color:var(--A)">1</span> <span style="color:#c9c6bb;font-weight:400">×</span> <span style="color:var(--B)">0</span></b>intervenções humanas por execução</div>
+</div>
+
+<h2 class="sec">9.1 Visão geral por execução</h2>
+<p>Todas as seis execuções terminaram <b>aprovadas</b>: no estado final, as seis tinham build ok, 41 de 41 testes de aceitação e zero violações. A diferença entre as condições está no caminho até lá.</p>
+<table>
+  <caption>Tabela 23 — Resultados por execução</caption>
+  <tr><th>Exec.</th><th>Condição</th><th>Testes falhando (1ª)</th><th class="n">Violações (1ª)</th><th>Build (1ª)</th><th class="n">Intervenções</th><th class="n">Tempo (min)</th><th>Testes falhando (final)</th><th class="n">Violações (final)</th><th class="n">Custo (US$)</th></tr>
+  <tr><td>A1</td><td>sem harness</td><td>0/41</td><td class="n">4</td><td>ok</td><td class="n">1</td><td class="n">4</td><td>0/41</td><td class="n">0</td><td class="n">0,68</td></tr>
+  <tr><td>A2</td><td>sem harness</td><td>0/41</td><td class="n">7</td><td>ok</td><td class="n">1</td><td class="n">467*</td><td>0/41</td><td class="n">0</td><td class="n">1,50**</td></tr>
+  <tr><td>A3</td><td>sem harness</td><td>0/41</td><td class="n">3</td><td>ok</td><td class="n">1</td><td class="n">6</td><td>0/41</td><td class="n">0</td><td class="n">0,76</td></tr>
+  <tr><td>B1</td><td>com harness</td><td>0/41</td><td class="n">0</td><td>ok</td><td class="n">0</td><td class="n">4</td><td>0/41</td><td class="n">0</td><td class="n">0,47</td></tr>
+  <tr><td>B2</td><td>com harness</td><td>0/41</td><td class="n">0</td><td>ok</td><td class="n">0</td><td class="n">3</td><td>0/41</td><td class="n">0</td><td class="n">0,47</td></tr>
+  <tr><td>B3</td><td>com harness</td><td>0/41</td><td class="n">0</td><td>ok</td><td class="n">0</td><td class="n">4</td><td>0/41</td><td class="n">0</td><td class="n">0,49</td></tr>
+</table>
+<p class="nota-rodape">* Inclui a pausa de cerca de 7 h 40 min por limite de uso da conta; o trabalho ativo do implementador na A2 somou 255 s. ** Inclui US$ 0,51 da chamada interrompida pelo limite.</p>
+<p>Em todas as execuções e em todos os checkpoints: zero erros de tipo, zero erros e avisos de lint genérico e nenhum teste instável. Nenhuma execução precisou de edição manual de código nem de mensagens extras ao agente (perguntas ou “continue”).</p>
+
+<h2 class="sec">9.2 Comparação entre as condições</h2>
+<p>A Tabela 24 reproduz a comparação gerada pelo script de consolidação. O delta de Cliff positivo indica valores maiores em A (sem harness).</p>
+<table style="font-size:7.8pt">
+  <caption>Tabela 24 — Estatística descritiva por condição (média ± DP; mediana; mín–máx)</caption>
+  <tr><th>Medida</th><th>Sem harness (A)</th><th>Com harness (B)</th><th class="n">B − A</th><th class="n">Variação</th><th>Delta de Cliff</th></tr>
+  <tr><td>Testes falhando na 1ª entrega</td><td>0 ± 0 (0; 0–0)</td><td>0 ± 0 (0; 0–0)</td><td class="n">0</td><td class="n">—</td><td>0 (desprezível)</td></tr>
+  <tr><td><b>Violações na 1ª entrega</b></td><td>4,7 ± 2,1 (4; 3–7)</td><td>0 ± 0 (0; 0–0)</td><td class="n">−4,7</td><td class="n">−100%</td><td><b>1 (grande)</b></td></tr>
+  <tr><td>Problemas na 1ª entrega (build + testes + violações)</td><td>4,7 ± 2,1 (4; 3–7)</td><td>0 ± 0 (0; 0–0)</td><td class="n">−4,7</td><td class="n">−100%</td><td>1 (grande)</td></tr>
+  <tr><td>Erros de tipo na 1ª entrega</td><td>0 ± 0</td><td>0 ± 0</td><td class="n">0</td><td class="n">—</td><td>0 (desprezível)</td></tr>
+  <tr><td><b>Intervenções humanas</b></td><td>1 ± 0 (1; 1–1)</td><td>0 ± 0 (0; 0–0)</td><td class="n">−1</td><td class="n">−100%</td><td><b>1 (grande)</b></td></tr>
+  <tr><td>Rodadas de correção</td><td>1 ± 0</td><td>0 ± 0</td><td class="n">−1</td><td class="n">−100%</td><td>1 (grande)</td></tr>
+  <tr><td>Edições manuais / outras mensagens</td><td>0 ± 0</td><td>0 ± 0</td><td class="n">0</td><td class="n">—</td><td>0 (desprezível)</td></tr>
+  <tr><td>Tempo até o fim (min)</td><td>159 ± 266,7 (6; 4–467)</td><td>3,7 ± 0,6 (4; 3–4)</td><td class="n">−155,3</td><td class="n">−98%</td><td>0,78 (grande)</td></tr>
+  <tr><td>Testes falhando / violações no final</td><td>0 ± 0</td><td>0 ± 0</td><td class="n">0</td><td class="n">—</td><td>0 (desprezível)</td></tr>
+  <tr><td>Chamadas de ferramenta do agente</td><td>11,3 ± 3,8 (13; 7–14)</td><td>8 ± 1 (8; 7–9)</td><td class="n">−3,3</td><td class="n">−29%</td><td>0,44 (médio)</td></tr>
+  <tr><td>Erros de ferramenta do agente</td><td>2,7 ± 1,2 (2; 2–4)</td><td>1 ± 1 (1; 0–2)</td><td class="n">−1,7</td><td class="n">−63%</td><td>0,78 (grande)</td></tr>
+  <tr><td>Tokens de saída do modelo</td><td>26 759 ± 3 905,8 (28 128; 22 353–29 796)</td><td>24 094 ± 237,9 (24 070; 23 869–24 343)</td><td class="n">−2 665</td><td class="n">−10%</td><td>0,33 (médio)</td></tr>
+  <tr><td>Linhas de código (final)</td><td>523,3 ± 88 (522; 436–612)</td><td>730,7 ± 132,8 (795; 578–819)</td><td class="n">+207,3</td><td class="n">+40%</td><td>−0,78 (grande)</td></tr>
+  <tr><td>Casos de teste escritos pelo agente (final)</td><td>1,3 ± 2,3 (0; 0–4)</td><td>20 ± 2,6 (19; 18–23)</td><td class="n">+18,7</td><td class="n">+1 400%</td><td>−1 (grande)</td></tr>
+</table>
+
+<h2 class="sec">9.3 Erros (H1)</h2>
+<p>Nas seis execuções, a primeira entrega teve build ok, zero erros de tipo e <b>0 de 41</b> testes de aceitação falhando — nenhum teste instável nas duas repetições da suíte. Os sete grupos de testes (criação, lances, eventos, tempo, notificações, stream e concorrência) passaram integralmente em todas as entregas. Não houve, portanto, diferença entre as condições quanto a erros funcionais: <b>a hipótese H1 não foi confirmada</b>.</p>
+
+<h2 class="sec">9.4 Violações arquiteturais (H2)</h2>
+<p>As três execuções sem harness entregaram código com violações das regras reativas — 4, 7 e 3, num total de 14 —, enquanto as três com harness entregaram zero (Figura 10). A média caiu de 4,7 ± 2,1 para 0, com delta de Cliff igual a 1: as distribuições não se sobrepõem. <b>A hipótese H2 foi confirmada.</b></p>
+<figure style="width:62%;margin-left:auto;margin-right:auto"><img src="../imagens/figuras/violacoes-execucao.png" alt=""><figcaption><b>Figura 10</b> — Violações arquiteturais na primeira entrega, por execução (azul: sem harness; laranja: com harness).</figcaption></figure>
+<p>A distribuição por regra (Figura 11) mostra que o problema dominante foi o <b>estado mutável</b> (RX04, 9 ocorrências), seguido do <b>subscribe fora do ciclo de vida</b> (RX02, 3 ocorrências, uma em cada execução A). A A2 teve ainda um <code>Subject</code> exposto (RX03) e um controller de leilões importando o serviço de notificações (RX07). As regras RX01, RX05, RX06, RX08 e RX09 não foram violadas em nenhuma execução.</p>
+<figure style="width:62%;margin-left:auto;margin-right:auto"><img src="../imagens/figuras/violacoes-regra.png" alt=""><figcaption><b>Figura 11</b> — Violações por regra na primeira entrega, somadas nas execuções sem harness. As execuções com harness não tiveram nenhuma.</figcaption></figure>
+<table>
+  <caption>Tabela 25 — As 14 violações das execuções sem harness</caption>
+  <tr><th>Exec.</th><th>Regra</th><th>Local</th><th>Trecho</th></tr>
+  <tr><td rowspan="4">A1</td><td>RX04</td><td><code>src/leilao.service.ts:95</code></td><td><code>this.registros.set(leilao.id, r)</code></td></tr>
+  <tr><td>RX04</td><td><code>src/leilao.service.ts:98</code></td><td><code>this.subs.add(</code></td></tr>
+  <tr><td>RX02</td><td><code>src/leilao.service.ts:99</code></td><td><code>r.agendar$</code> (assinado ao criar cada leilão)</td></tr>
+  <tr><td>RX04</td><td><code>src/leilao.service.ts:285</code></td><td><code>this.notificacoes.set(nome, lista)</code></td></tr>
+  <tr><td rowspan="7">A2</td><td>RX03</td><td><code>src/leilao.service.ts:34</code></td><td><code>readonly todosEventos$ = new Subject&lt;EventoLeilao&gt;()</code></td></tr>
+  <tr><td>RX04</td><td><code>src/leilao.service.ts:135</code></td><td><code>this.leiloes.set(...)</code></td></tr>
+  <tr><td>RX02</td><td><code>src/leilao.service.ts:137</code></td><td><code>estado.prazo$</code></td></tr>
+  <tr><td>RX04</td><td><code>src/notificacoes.service.ts:22</code></td><td><code>this.titulos.set(...)</code></td></tr>
+  <tr><td>RX04</td><td><code>src/notificacoes.service.ts:38</code></td><td><code>this.lideres.set(...)</code></td></tr>
+  <tr><td>RX04</td><td><code>src/notificacoes.service.ts:63</code></td><td><code>this.porParticipante.set(...)</code></td></tr>
+  <tr><td>RX07</td><td><code>src/leiloes.controller.ts:14</code></td><td><code>import { NotificacoesService } from './notificacoes.service.js'</code></td></tr>
+  <tr><td rowspan="3">A3</td><td>RX04</td><td><code>src/leiloes/leiloes.service.ts:112</code></td><td><code>this.leiloes.set(leilao.id, reg)</code></td></tr>
+  <tr><td>RX02</td><td><code>src/leiloes/leiloes.service.ts:209</code></td><td><code>timer(delay).subscribe(() =&gt; {</code></td></tr>
+  <tr><td>RX04</td><td><code>src/leiloes/leiloes.service.ts:251</code></td><td><code>this.notificacoes.set(nome, lista)</code></td></tr>
+</table>
+<p>Os relatórios das execuções descrevem a arquitetura entregue sem harness como <b>mista</b>: o agente usou RxJS — fila de comandos com <code>Subject</code> e <code>concatMap</code>, <code>switchMap(timer)</code> por leilão —, mas guardou o estado em <code>Map</code> mutável nos campos da classe e criou assinaturas a cada leilão. Ou seja, o agente conhecia os operadores; o que faltou foi a arquitetura reativa.</p>
+
+<h2 class="sec">9.5 Intervenções humanas (H3)</h2>
+<p>Cada execução sem harness precisou de <b>exatamente uma</b> rodada de correção — o prompt de intervenção gerado pelo kit — para ser aprovada; nenhuma das execuções com harness precisou de qualquer intervenção. Não houve edições manuais nem outras mensagens humanas em nenhuma execução. A média caiu de 1 para 0, com delta de Cliff igual a 1. <b>A hipótese H3 foi confirmada.</b> A Figura 12 mostra a evolução das violações a cada checkpoint.</p>
+<figure style="break-inside:avoid">
+<svg viewBox="0 0 620 270" width="100%" style="display:block;background:#fbfaf7;border:.6pt solid #e3e1da;border-radius:6pt" font-family="Inter">
+  <g font-size="10" fill="#6a7282" text-anchor="end"><text x="96" y="217.5">0</text><line x1="104" x2="560" y1="214" y2="214" stroke="#c9c6bb"/><text x="96" y="173.5">2</text><line x1="104" x2="560" y1="170" y2="170" stroke="#e3e1da"/><text x="96" y="129.5">4</text><line x1="104" x2="560" y1="126" y2="126" stroke="#e3e1da"/><text x="96" y="85.5">6</text><line x1="104" x2="560" y1="82" y2="82" stroke="#e3e1da"/><text x="96" y="41.5">8</text><line x1="104" x2="560" y1="38" y2="38" stroke="#e3e1da"/></g>
+  <text x="20" y="24" font-size="11" font-weight="700" fill="#0e1726">Violações arquiteturais por checkpoint</text>
+  <g font-size="10.5" font-weight="600" fill="#0e1726" text-anchor="middle"><text x="200" y="258">Entrega (E)</text><text x="460" y="258">Após a 1ª intervenção (C1)</text></g>
+  <line x1="200" x2="200" y1="38" y2="214" stroke="#e3e1da"/><line x1="460" x2="460" y1="38" y2="214" stroke="#e3e1da"/>
+  <g stroke="#2a78d6" stroke-width="2" fill="none"><line x1="200" y1="126" x2="460" y2="214"/><line x1="200" y1="60" x2="460" y2="214"/><line x1="200" y1="148" x2="460" y2="214"/></g>
+  <g fill="#2a78d6" stroke="#fbfaf7" stroke-width="2"><circle cx="200" cy="126" r="5"/><circle cx="200" cy="60" r="5"/><circle cx="200" cy="148" r="5"/><circle cx="460" cy="214" r="5"/></g>
+  <g font-size="10.5" fill="#0e1726" text-anchor="end"><text x="190" y="64"><tspan font-weight="700">A2</tspan> · 7</text><text x="190" y="130"><tspan font-weight="700">A1</tspan> · 4</text><text x="190" y="152"><tspan font-weight="700">A3</tspan> · 3</text></g>
+  <g fill="#eb6834" stroke="#fbfaf7" stroke-width="2"><circle cx="188" cy="214" r="5"/><circle cx="200" cy="214" r="5"/><circle cx="212" cy="214" r="5"/></g>
+  <text x="200" y="232" font-size="10" fill="#364152" text-anchor="middle"><tspan font-weight="700">B1 · B2 · B3</tspan> = 0, aprovadas</text>
+  <text x="470" y="206" font-size="10" fill="#364152"><tspan font-weight="700">A1 · A2 · A3</tspan> = 0, aprovadas</text>
+  <g font-size="10" fill="#364152"><rect x="380" y="16" width="10" height="10" rx="2" fill="#2a78d6"/><text x="395" y="25">sem harness (A)</text><rect x="480" y="16" width="10" height="10" rx="2" fill="#eb6834"/><text x="495" y="25">com harness (B)</text></g>
+</svg>
+<figcaption><b>Figura 12</b> — Violações arquiteturais a cada checkpoint. As execuções sem harness precisaram de uma intervenção para zerar as violações; as com harness foram aprovadas já na entrega. Os testes de aceitação estiveram em 41/41 em todos os pontos.</figcaption>
+</figure>
+<p>Em todas as execuções A, a única intervenção foi suficiente para zerar as violações sem quebrar nenhum teste. O que cada agente fez ao receber a revisão:</p>
+<ul>
+  <li><b>A1</b> (+355/−245 linhas em 2 arquivos): reescreveu <code>leilao.service.ts</code> para derivar todo o estado de <code>comandos$.pipe(scan(reduzir, ESTADO_INICIAL))</code> sobre cópias imutáveis (<code>ReadonlyMap</code>) e passou o agendamento de prazos para uma única assinatura em <code>onModuleInit</code>, com <code>takeUntil(destruir$)</code>, <code>distinctUntilChanged</code> e <code>switchMap(timer)</code>; o controller passou a devolver <code>Observable</code>.</li>
+  <li><b>A2</b> (+493/−280 linhas): tornou <code>comando$</code> e <code>destruir$</code> privados, derivou o estado de leilões e de notificações com <code>scan</code> puro sobre cópias imutáveis de <code>Map</code>, moveu as assinaturas para <code>onModuleInit</code> (com <code>groupBy</code> + <code>switchMap(timer)</code> nos prazos) e separou a rota de participantes em um novo <code>ParticipantesController</code>, deixando o serviço de notificações observar <code>eventos$</code>.</li>
+  <li><b>A3</b> (+345/−240 linhas): criou um arquivo de domínio puro (<code>leiloes.dominio.ts</code>, 215 linhas) com a função <code>decidir(estado, comando)</code>, derivou o estado com <code>scan</code> + <code>shareReplay(1)</code> e moveu as assinaturas para <code>onModuleInit</code>, com o encerramento via <code>groupBy</code> + <code>switchMap(timer)</code> e o prazo carregado no comando de encerramento.</li>
+</ul>
+<p>Esse comportamento reforça a leitura da Seção 9.4: o agente sabe escrever a versão reativa; sem o harness, ele só o faz quando é cobrado.</p>
+
+<h2 class="sec">9.6 Medidas exploratórias</h2>
+<h3>Tempo e custo</h3>
+<p>A mediana do tempo até o fim foi de 6 minutos em A e 4 em B. A média de A (159 min) é dominada pela pausa da A2 e não deve ser usada como medida de esforço. O custo do implementador foi, em média, US$ 0,98 por execução em A e US$ 0,48 em B; somadas, as três execuções A custaram US$ 2,94 e as três B, US$ 1,43.</p>
+<h3>Esforço do agente</h3>
+<p>Com harness, o agente usou menos chamadas de ferramenta (8 contra 11,3 em média), cometeu menos erros de ferramenta (1 contra 2,7) e gerou cerca de 10% menos tokens de saída. Chama atenção a <b>estabilidade</b> de B: o desvio-padrão dos tokens foi de 238 em B, contra 3 906 em A.</p>
+<h3>O produto</h3>
+<table>
+  <caption>Tabela 26 — O código na primeira entrega</caption>
+  <tr><th>Exec.</th><th class="n">Arquivos de código</th><th class="n">Linhas</th><th class="n">Arquivos de teste</th><th class="n">Casos de teste do agente</th><th class="n">Imports do RxJS</th><th class="n">Chamadas a <code>subscribe</code></th></tr>
+  <tr><td>A1</td><td class="n">5</td><td class="n">421</td><td class="n">0</td><td class="n">0</td><td class="n">12</td><td class="n">2</td></tr>
+  <tr><td>A2</td><td class="n">6</td><td class="n">429</td><td class="n">0</td><td class="n">0</td><td class="n">9</td><td class="n">3</td></tr>
+  <tr><td>A3</td><td class="n">5</td><td class="n">351</td><td class="n">1</td><td class="n">4</td><td class="n">10</td><td class="n">3</td></tr>
+  <tr><td>B1</td><td class="n">13</td><td class="n">819</td><td class="n">2</td><td class="n">19</td><td class="n">21</td><td class="n">3</td></tr>
+  <tr><td>B2</td><td class="n">13</td><td class="n">578</td><td class="n">3</td><td class="n">23</td><td class="n">23</td><td class="n">3</td></tr>
+  <tr><td>B3</td><td class="n">13</td><td class="n">795</td><td class="n">3</td><td class="n">18</td><td class="n">22</td><td class="n">3</td></tr>
+</table>
+<p>As execuções B produziram mais código (13 arquivos e 578 a 819 linhas) organizado nos dois módulos e três camadas pedidos pelo harness, enquanto as A entregaram 5 ou 6 arquivos “achatados” (Figura 13). Em B, os casos de teste não incluem os 11 testes de contrato herdados do harness. Sem harness, A1 e A2 não escreveram nenhum teste e removeram os testes de exemplo da base; A3 escreveu 4 casos de teste ponta a ponta. Com harness, os agentes escreveram de 18 a 23 casos de teste unitários do domínio — efeito direto da regra E02.</p>
+<figure><img src="../imagens/figuras/estrutura-src.png" alt=""><figcaption><b>Figura 13</b> — Estrutura de <code>src/</code> na primeira entrega da A1 (sem harness) e da B2 (com harness), com as violações apontadas pelo kit na A1.</figcaption></figure>
+
+<h2 class="sec">9.7 A atuação do harness</h2>
+<p>O log dos hooks registra o que o harness fez em cada execução B:</p>
+<table>
+  <caption>Tabela 27 — Registro dos hooks nas execuções com harness</caption>
+  <tr><th>Exec.</th><th class="n">Edições verificadas pelo hook</th><th class="n">Edições com violação</th><th class="n">Encerramentos bloqueados</th><th class="n">Validações ok</th><th class="n">Validações com falha</th></tr>
+  <tr><td>B1</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">2</td><td class="n">0</td></tr>
+  <tr><td>B2</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">2</td><td class="n">1</td></tr>
+  <tr><td>B3</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">3</td><td class="n">0</td></tr>
+</table>
+<p>Em cada execução B, o agente rodou a validação por conta própria (como manda a regra de ouro) e, ao tentar encerrar, o hook <code>Stop</code> rodou a validação de novo, obteve <code>VALIDAÇÃO OK</code> e liberou o encerramento — a última validação de cada linha da tabela é a do hook. Nenhum encerramento foi bloqueado. O caso mais ilustrativo é o da B2 (Figura 14): a primeira validação do agente falhou na etapa de testes unitários porque um teste escrito pelo próprio agente esperava a notificação errada (a participante que venceu o leilão também havia sido superada antes, e portanto devia receber <code>LANCE_SUPERADO</code> e <code>LEILAO_VENCIDO</code>); 13 segundos depois o agente corrigiu a expectativa e a validação passou.</p>
+<figure style="width:80%;margin-left:auto;margin-right:auto"><img src="../imagens/figuras/hooks-b2.png" alt=""><figcaption><b>Figura 14</b> — Linha do tempo do log de hooks da execução B2.</figcaption></figure>
+<h3>Um achado: o hook pós-edição nunca disparou</h3>
+<p>A coluna “edições verificadas pelo hook” é zero nas três execuções. A explicação está nas transcrições: em <b>todas</b> as seis execuções, A e B, o agente usou apenas a ferramenta <i>Bash</i> — criou e alterou os arquivos com comandos como <code>cat &gt; src/... &lt;&lt;'EOF'</code> e pequenos scripts —, e o hook <code>PostToolUse</code> do harness observava apenas as ferramentas <code>Edit</code>, <code>Write</code> e <code>MultiEdit</code>.</p>
+<table>
+  <caption>Tabela 28 — Ferramentas usadas pelo agente (transcrições das sessões)</caption>
+  <tr><th>Exec.</th><th>Ferramentas</th><th class="n">Chamadas</th></tr>
+  <tr><td>A1</td><td>Bash</td><td class="n">7</td></tr>
+  <tr><td>A2</td><td>Bash</td><td class="n">13</td></tr>
+  <tr><td>A3</td><td>Bash</td><td class="n">14</td></tr>
+  <tr><td>B1</td><td>Bash</td><td class="n">7</td></tr>
+  <tr><td>B2</td><td>Bash</td><td class="n">8</td></tr>
+  <tr><td>B3</td><td>Bash</td><td class="n">9</td></tr>
+</table>
+<p>Portanto, o efeito medido do harness veio das <b>instruções</b> (o agente organizou o código nas camadas pedidas e seguiu os padrões desde a primeira escrita) e da <b>validação</b> (rodada pelo agente e pelo hook <code>Stop</code>), não da verificação a cada edição.</p>
+
+<h2 class="sec">9.8 Auditoria e integridade</h2>
+<ul>
+  <li><b>Isolamento</b>: a busca pelo nome do repositório principal nas transcrições das seis sessões não encontrou nenhuma ocorrência.</li>
+  <li><b>Integridade do harness</b>: nas três execuções B, o avaliador verificou os 16 arquivos do harness — nenhum foi alterado nem apagado pelo agente.</li>
+  <li><b>Conduta</b>: nenhum commit de edição humana de código; nenhuma alteração da infraestrutura protegida; o log do condutor registra cada ação, inclusive os comandos que precisaram ser repetidos fora do ambiente isolado do próprio condutor.</li>
+  <li><b>Autoria</b>: os commits de checkpoint dos ramos <code>execucoes/*</code> têm como autor “Agente de IA”.</li>
+</ul>
+
+<!-- ======================= CAPÍTULO 10 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 10</div>
+  <h1 class="cap" data-num="10">Discussão</h1>
+  <p class="cap-intro">O que os resultados significam, o que eles não permitem concluir e o que eles revelam sobre como o harness atua.</p>
+</section>
+
+<h2 class="sec">10.1 Erros: por que não houve diferença</h2>
+<p>A H1 esperava menos erros funcionais com harness, e o resultado foi um empate em zero. A explicação mais simples é que, para esse modelo, a especificação foi clara e completa o bastante: o contrato HTTP descreve formatos, códigos de resposta, ordem das validações, eventos e regras de tempo, e o agente conseguiu implementá-lo corretamente nas seis tentativas — inclusive as partes que os testes do harness não cobrem, como as prorrogações e a concorrência. Uma tarefa mais difícil, uma especificação mais ambígua ou um modelo menos capaz poderiam separar as condições; isso fica como trabalho futuro.</p>
+<p>O empate, porém, não é um resultado vazio. Ele isola o efeito do harness: as duas condições entregaram código <b>igualmente correto</b> do ponto de vista do comportamento, e a diferença apareceu exclusivamente na dimensão que testes funcionais não enxergam.</p>
+
+<h2 class="sec">10.2 Violações: o padrão “misto” e a prevenção</h2>
+<p>Sem harness, o agente produziu sempre o mesmo tipo de código: reativo na superfície, imperativo no núcleo. Esse resultado confirma, com dados das próprias execuções, a premissa do trabalho — o agente tende ao estilo mais comum, mesmo quando a tarefa pede explicitamente programação reativa. Com harness, o agente já escreveu a primeira versão na arquitetura exigida. O harness agiu de forma <b>preventiva</b>, e não corretiva: nenhum encerramento foi bloqueado e nenhuma violação apareceu em nenhum momento registrado.</p>
+<p>É preciso, contudo, lembrar a ressalva de construto: o harness ensina exatamente as regras que o verificador mede, e traz padrões de código genéricos que mostram como cumpri-las. A vantagem em violações é, em parte, <b>por construção</b>. O que o experimento demonstra é que colocar essas regras e padrões no repositório foi suficiente para que o agente as seguisse sem nenhuma cobrança humana — e isso é precisamente o que um time que adota um paradigma gostaria de obter.</p>
+
+<h2 class="sec">10.3 Intervenções: o custo humano</h2>
+<p>Cada execução A precisou de uma intervenção; nenhuma B. Uma intervenção parece pouco, mas aqui ela foi a forma mais barata possível de revisão: um texto escrito automaticamente pelo kit, com arquivo, linha, regra e como corrigir. Numa equipe real, alguém teria de ler 350 a 430 linhas de código, perceber que o estado mutável contraria a arquitetura e explicar a correção. Por isso o custo humano de A medido aqui é um limite inferior do custo real.</p>
+
+<h2 class="sec">10.4 Efeitos que não estavam nas hipóteses</h2>
+<ul>
+  <li><b>Testes.</b> Com harness, o agente escreveu em média 20 casos de teste próprios; sem, 1,3. A regra E02 — todo arquivo do domínio precisa de teste ao lado — transformou um hábito desejável em requisito verificável, e o agente o cumpriu.</li>
+  <li><b>Organização.</b> As execuções B produziram o domínio puro separado da aplicação e do HTTP, com o instante recebido por parâmetro. Isso tornou as regras de tempo testáveis com instantes fixos, como recomenda o <code>AGENTS.md</code>.</li>
+  <li><b>Custo e estabilidade.</b> Mesmo gerando mais código, as execuções B custaram menos e variaram muito menos em tokens. Uma interpretação plausível é que instruções claras reduzem a exploração e a necessidade de uma segunda rodada.</li>
+</ul>
+
+<h2 class="sec">10.5 Qual parte do harness agiu?</h2>
+<p>O registro dos hooks permite separar as peças. O hook pós-edição não disparou em nenhuma execução, porque os agentes escreveram arquivos por meio do terminal. O hook <code>Stop</code> rodou nas três execuções B, mas sempre encontrou a validação já correta. O efeito, portanto, veio da combinação de <b>instruções</b> (que moldaram o código desde a primeira escrita) e <b>validação</b> (que o agente rodou por conta própria e que, na B2, pegou um erro antes da entrega).</p>
+<p>Isso tem duas consequências práticas. Primeiro, um harness que dependa de hooks de edição precisa observar também os comandos de terminal, ou eles podem ser contornados sem que ninguém perceba. Segundo, para atribuir o efeito a cada peça seria preciso um experimento de <b>ablação</b> — só instruções, só validação, só hooks —, que este trabalho não fez.</p>
+
+<h2 class="sec">10.6 O que não se pode concluir</h2>
+<p>Com três execuções por condição, uma tarefa, uma stack, um agente e um modelo, os números descrevem este experimento e não permitem generalização estatística. A consistência ajuda — as três A tiveram violações e as três B nenhuma —, mas não substitui uma amostra maior. Também não é possível afirmar que o harness funcionaria igualmente com outros agentes, ou com um modelo de outra família: o harness e o kit foram construídos com o auxílio de um modelo da mesma família do agente avaliado.</p>
+
+<!-- ======================= CAPÍTULO 11 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 11</div>
+  <h1 class="cap" data-num="11">Dificuldades encontradas e soluções adotadas</h1>
+  <p class="cap-intro">Os problemas que surgiram na construção e na condução do experimento, como foram percebidos e o que foi feito em cada caso.</p>
+</section>
+
+<h2 class="sec">11.1 O gerador do NestJS já traz um “mini-harness”</h2>
+<p><b>Problema.</b> Ao gerar o projeto base com <code>@nestjs/cli</code> 12.0.15, o gerador criou <code>AGENTS.md</code>, <code>CLAUDE.md</code>, pastas de <i>skills</i> para agentes e o módulo de telemetria <code>@nestjs/observe</code>, com instruções para o agente sugerir a criação de conta. <b>Risco.</b> A condição A deixaria de ser “sem harness”. <b>Solução.</b> Tudo foi removido da base (ADR-004), com a evidência guardada em <code>docs/evidencias/</code>. O episódio virou também um achado: o próprio ecossistema já entrega harnesses prontos.</p>
+
+<h2 class="sec">11.2 Colisão de nome no Vitest</h2>
+<p><b>Problema.</b> A variável <code>BASE_URL</code>, usada pela suíte de aceitação para apontar o servidor, colidia com <code>import.meta.env.BASE_URL</code> do Vite. <b>Solução.</b> A variável foi renomeada para <code>URL_ALVO</code>; o gabarito passou a 41/41.</p>
+
+<h2 class="sec">11.3 dependency-cruiser e imports ESM</h2>
+<p><b>Problema.</b> O dependency-cruiser 18.9 não aceitava a opção <code>extensionAlias</code>, necessária para resolver imports <code>.js</code> que apontam para arquivos <code>.ts</code>. <b>Solução.</b> A resolução passou a usar o <code>tsConfig</code> do projeto, e os imports <code>.js</code> passaram a resolver para os arquivos <code>.ts</code>.</p>
+
+<h2 class="sec">11.4 oxlint e o <code>.gitignore</code> do repositório pai</h2>
+<p><b>Problema.</b> O oxlint respeita o <code>.gitignore</code> do repositório que contém a pasta; nos projetos de teste montados dentro do repositório principal, ele não encontrava os arquivos. <b>Solução.</b> Cada projeto montado passou a ser um repositório git próprio — o que, de quebra, já era o desenho exigido para as execuções isoladas.</p>
+
+<h2 class="sec">11.5 O temporizador que dispara 1 ms antes</h2>
+<p><b>Problema.</b> Falhas intermitentes nos testes de tempo do gabarito (Seção 5.8). <b>Solução.</b> O comando de encerramento passou a carregar o prazo agendado (ADR-008), a suíte passou a rodar duas vezes por checkpoint com marcação de testes instáveis (ADR-009) e a armadilha foi documentada no harness. Resultado: 410/410 execuções verdes no estresse.</p>
+
+<h2 class="sec">11.6 Uma métrica que contava testes que não eram do agente</h2>
+<p><b>Problema.</b> No ensaio, a medida “casos de teste escritos pelo agente” contava os 11 testes de contrato do harness como se fossem do agente B. <b>Solução.</b> A medida passou a excluir os testes herdados da base e do harness, que são reportados à parte. O ensaio foi refeito com a versão corrigida.</p>
+
+<h2 class="sec">11.7 Gráficos com cortes</h2>
+<p><b>Problema.</b> Na revisão visual dos gráficos renderizados, um subtítulo aparecia cortado, um rótulo encostava na margem e a escala não tinha folga no topo. <b>Solução.</b> Os três pontos foram corrigidos no script de consolidação antes das execuções.</p>
+
+<h2 class="sec">11.8 Node fora do PATH de processos não interativos</h2>
+<p><b>Problema.</b> O checklist de ambiente detectou que o Node só estava no PATH de shells interativos, carregado pelo <code>~/.bashrc</code>; o agente e os hooks, que rodam em processos não interativos, não o encontrariam. <b>Solução.</b> A correção foi documentada no protocolo (passo 0) e, antes da condução, o Node passou a ser encontrado em <code>~/.local/bin</code> — a verificação inicial do condutor registrou 8 itens ok, 0 avisos e 0 erros. O script do implementador também coloca o Node 24 no PATH herdado pelo agente e pelos hooks.</p>
+
+<h2 class="sec">11.9 A primeira B1 não era independente</h2>
+<p><b>Problema.</b> A primeira execução B1 foi feita pelo mesmo agente que construiu o gabarito e o kit, com a solução em contexto e sem transcrição própria. <b>Solução.</b> A execução foi descartada e preservada em <code>experimento/descartadas/</code> (assim como uma A1 preparada e não usada); a condução passou a outro agente, com roteiro fechado, e a implementação a uma sessão isolada disparada por script (Seção 6.5).</p>
+
+<h2 class="sec">11.10 Restrições do ambiente do condutor</h2>
+<p><b>Problema.</b> Alguns comandos do condutor falharam no ambiente isolado (<i>sandbox</i>) em que ele rodava: criação da pasta de trabalho, acesso a <code>~/.local/bin</code> e escrita em <code>.git/FETCH_HEAD</code>. <b>Solução.</b> Os mesmos comandos foram reexecutados fora do sandbox, e cada caso ficou registrado no log do condutor, sem alteração no conteúdo das execuções.</p>
+
+<h2 class="sec">11.11 Limite de uso da conta durante a A2</h2>
+<p><b>Problema.</b> Durante a intervenção da A2, a chamada do implementador terminou com <code>429 usage_limit_reached</code>. <b>Solução.</b> Seguindo a seção de exceções do roteiro, o condutor pausou e aguardou a autorização do usuário; às 20h08 a chamada foi repetida tecnicamente, sem contar como nova intervenção. Na análise, o tempo é relatado pela mediana e a ocorrência é explicitada em todos os materiais.</p>
+
+<h2 class="sec">11.12 O hook que o agente contornou sem querer</h2>
+<p><b>Problema.</b> O hook <code>PostToolUse</code> nunca disparou, porque os agentes escreveram os arquivos por meio do terminal (Seção 9.7). <b>Solução adotada.</b> O achado foi registrado e discutido, e não houve alteração do harness após as execuções — isso mudaria a condição B no meio do experimento. <b>Solução proposta.</b> Incluir o <code>Bash</code> no filtro do hook e, nesse caso, verificar todos os arquivos de <code>src/</code> alterados desde a última verificação.</p>
+
+<!-- ======================= CAPÍTULO 12 ======================= -->
+<section class="abertura">
+  <div class="cap-num">Capítulo 12</div>
+  <h1 class="cap" data-num="12">Considerações finais</h1>
+  <p class="cap-intro">O que o trabalho entregou, o que ele mostrou e para onde ele pode seguir.</p>
+</section>
+
+<h2 class="sec">12.1 O que foi entregue</h2>
+<p>O trabalho cumpriu as duas metades do enunciado. Na primeira, construiu um harness completo para programação reativa: instruções para agentes, regras arquiteturais documentadas e verificadas por ferramentas (nove regras reativas, seis regras de camadas, três de estrutura), testes de contrato, lint genérico e arquitetural, um script de validação em sete etapas e hooks que fecham o ciclo de feedback. Na segunda, comparou a mesma funcionalidade implementada pelo mesmo agente com e sem o harness, por meio de um experimento controlado, com instrumento validado, condução padronizada e registro completo — 62 commits no ramo principal, um ramo por execução e um relatório por execução.</p>
+
+<h2 class="sec">12.2 O que os resultados mostraram</h2>
+<p>Três lições resumem o experimento:</p>
+<ol>
+  <li><b>Testes funcionais não bastam.</b> Código imperativo passa nos 41 testes de aceitação; se um projeto adota um paradigma, ele precisa de verificação própria para esse paradigma.</li>
+  <li><b>Um harness troca a revisão humana por feedback automático.</b> Com harness, o agente entregou zero violações e não precisou de nenhuma intervenção, nas três execuções; sem harness, entregou de 3 a 7 violações e precisou de uma rodada de correção em cada uma.</li>
+  <li><b>O efeito vai além das regras.</b> Com harness, o agente organizou o código em camadas, escreveu cerca de quinze vezes mais testes e custou menos.</li>
+</ol>
+<p>A hipótese sobre erros funcionais (H1) não foi confirmada — as duas condições acertaram todo o comportamento —, e as hipóteses sobre violações (H2) e intervenções (H3) foram confirmadas, com efeito máximo pelo delta de Cliff. Todas essas conclusões valem para o escopo do experimento e devem ser lidas à luz das ameaças discutidas na Seção 6.8.</p>
+
+<h2 class="sec">12.3 Possíveis melhorias e trabalhos futuros</h2>
+<ul>
+  <li><b>Mais repetições</b> por condição, para estimar melhor a variabilidade e permitir testes de significância.</li>
+  <li><b>Uma tarefa mais difícil</b> (ou especificações mais ambíguas), para testar de novo a H1.</li>
+  <li><b>Outros agentes e modelos</b>, incluindo modelos menores e de outras famílias.</li>
+  <li><b>Ablação do harness</b>: só instruções, só validação, só hooks e combinações, para medir a contribuição de cada peça.</li>
+  <li><b>Hook também para comandos de terminal</b>, verificando os arquivos alterados por <code>Bash</code>.</li>
+  <li><b>Revisão humana real</b> na condição A, medindo o tempo de revisão, em vez da intervenção padronizada.</li>
+  <li><b>Versão frontend</b> com RxJS, para verificar se o efeito se mantém em outro contexto.</li>
+  <li><b>Verificador mais robusto</b>, que siga apelidos e use análise de tipos na RX04 e na RX07.</li>
+</ul>
+
+<!-- ======================= REFERÊNCIAS ======================= -->
+<section class="abertura">
+  <div class="cap-num">Referências</div>
+  <h1 class="cap">Referências</h1>
+</section>
+<div class="refs">
+<p>CLIFF, N. Dominance statistics: ordinal analyses to answer ordinal questions. <i>Psychological Bulletin</i>, v. 114, n. 3, p. 494–509, 1993.</p>
+<p>GAMMA, E.; HELM, R.; JOHNSON, R.; VLISSIDES, J. <i>Design Patterns: Elements of Reusable Object-Oriented Software</i>. Reading: Addison-Wesley, 1994.</p>
+<p>MANN, H. B.; WHITNEY, D. R. On a test of whether one of two random variables is stochastically larger than the other. <i>The Annals of Mathematical Statistics</i>, v. 18, n. 1, p. 50–60, 1947.</p>
+<p>ROMANO, J.; KROMREY, J. D.; CORAGGIO, J.; SKOWRONEK, J. Appropriate statistics for ordinal level data: should we really be using t-test and Cohen’s d for evaluating group differences on the NSSE and other surveys? In: ANNUAL MEETING OF THE FLORIDA ASSOCIATION OF INSTITUTIONAL RESEARCH, 2006.</p>
+<p>SALES, T. de. <i>Paradigma orientado a eventos — programação reativa</i>. Slides da disciplina Paradigmas de Linguagens de Programação. Arapiraca: UFAL, [s.d.].</p>
+<p>SALES, T. de. <i>PLP — Aula 1: introdução e avaliação de linguagens</i>. Slides da disciplina Paradigmas de Linguagens de Programação. Arapiraca: UFAL, [s.d.].</p>
+<p>ANTHROPIC. <i>Claude Code</i>: documentação (memória com CLAUDE.md, ferramentas, modo não interativo e hooks), versão 2.1.x. Consultada em nov. 2026.</p>
+<p>NESTJS. <i>NestJS Documentation</i>. Disponível em: https://docs.nestjs.com. Consultada em nov. 2026.</p>
+<p>RXJS. <i>RxJS Documentation</i>. Disponível em: https://rxjs.dev. Consultada em nov. 2026.</p>
+<p>REACTIVEX. <i>ReactiveX: an API for asynchronous programming with observable streams</i>. Disponível em: https://reactivex.io. Consultada em nov. 2026.</p>
+<p>WHATWG. <i>HTML Living Standard</i> — Server-sent events. Disponível em: https://html.spec.whatwg.org. Consultada em nov. 2026.</p>
+<p>VERWEIJ, S. <i>dependency-cruiser</i>, versão 18.9.0. Disponível em: https://github.com/sverweij/dependency-cruiser.</p>
+<p>OXC. <i>oxlint</i>. Disponível em: https://oxc.rs. Consultada em nov. 2026.</p>
+<p>VITEST. <i>Vitest Documentation</i>. Disponível em: https://vitest.dev. Consultada em nov. 2026.</p>
+<p>Documentação deste trabalho, no repositório: <code>docs/01-visao-geral.md</code> a <code>docs/06-instrumento-de-avaliacao.md</code>, <code>docs/decisoes.md</code>, <code>docs/linha-do-tempo.md</code>, <code>docs/historico-git.md</code>, <code>experimento/protocolo.md</code>, <code>experimento/ROTEIRO-CONDUTOR.md</code>, <code>experimento/resultados/</code> e <code>experimento/auditoria/log-condutor.md</code>.</p>
+</div>
+
+<!-- ======================= APÊNDICES ======================= -->
+<section class="abertura">
+  <div class="cap-num">Apêndice A</div>
+  <h1 class="cap">Glossário</h1>
+</section>
+<dl class="glossario">
+  <dt>ADR (Architecture Decision Record)</dt><dd>Registro curto de uma decisão: contexto, decisão, motivos e consequências. O trabalho tem 13 (Apêndice B).</dd>
+  <dt>Agente de IA (de programação)</dt><dd>Modelo de linguagem com ferramentas para ler e editar arquivos e executar comandos em um projeto.</dd>
+  <dt>Anti-gabarito</dt><dd>Implementação imperativa correta da tarefa, usada para provar que os testes não penalizam o estilo e que o verificador detecta o paradigma.</dd>
+  <dt>Checkpoint</dt><dd>Momento de avaliação de uma execução: commit do código e avaliação completa pelo kit.</dd>
+  <dt>Condutor</dt><dd>Quem executa o protocolo (aqui, um agente de IA com roteiro fechado); faz o papel do “humano”.</dd>
+  <dt>Delta de Cliff</dt><dd>Tamanho de efeito não paramétrico, de −1 a +1, baseado na comparação de todos os pares entre duas amostras.</dd>
+  <dt>Gabarito</dt><dd>Implementação reativa de referência, que segue a arquitetura do harness.</dd>
+  <dt>Harness</dt><dd>Conjunto de artefatos do repositório que guia e verifica o agente: instruções, regras, testes, lint, validação e hooks.</dd>
+  <dt>Hook</dt><dd>Comando que o Claude Code executa automaticamente em certos eventos (após uma ferramenta, ao encerrar, ao receber um prompt).</dd>
+  <dt>Implementador</dt><dd>A sessão do Claude Code que escreveu o código em cada execução.</dd>
+  <dt>Intervenção</dt><dd>Qualquer ação humana após o prompt inicial: prompt de correção, edição manual ou outra mensagem.</dd>
+  <dt>Marble diagram</dt><dd>Diagrama de bolinhas: notação para fluxos reativos, em que cada linha é um fluxo no tempo e cada bolinha um valor emitido.</dd>
+  <dt>Observable / Subject</dt><dd>Fonte de valores ao longo do tempo / Observable que também recebe valores — usado como Sink.</dd>
+  <dt>Primeira entrega</dt><dd>Código no momento em que o agente diz ter concluído o prompt inicial, antes de qualquer intervenção.</dd>
+  <dt>Sink</dt><dd>Porta de entrada de um fluxo; aqui, o <code>Subject</code> privado de comandos.</dd>
+  <dt>SSE (Server-Sent Events)</dt><dd>Resposta HTTP mantida aberta pela qual o servidor envia eventos ao cliente.</dd>
+  <dt>Violação arquitetural</dt><dd>Ocorrência de uma das regras RX01–RX09 detectada pelo verificador estático.</dd>
+</dl>
+
+<section class="abertura">
+  <div class="cap-num">Apêndice B</div>
+  <h1 class="cap">Registro de decisões</h1>
+</section>
+<table>
+  <caption>Tabela 29 — As 13 decisões registradas em <code>docs/decisoes.md</code></caption>
+  <tr><th>ADR</th><th>Decisão</th><th>Motivo principal</th></tr>
+  <tr><td>001</td><td>Somente backend, com NestJS + RxJS</td><td>testes de API estáveis; RxJS nativo; regras verificáveis; métricas objetivas</td></tr>
+  <tr><td>002</td><td>Domínio: leilão em tempo real</td><td>eventos, tempo, observadores, concorrência; testável por HTTP</td></tr>
+  <tr><td>003</td><td>2 condições × 3 repetições, ordem ABBAAB</td><td>capturar o não determinismo; equilibrar efeitos de ordem</td></tr>
+  <tr><td>004</td><td>Base sem os arquivos de agente do scaffold</td><td>evitar um “mini-harness” do fabricante na condição A</td></tr>
+  <tr><td>005</td><td>Execuções em pastas isoladas, histórico importado como ramo</td><td>o agente não pode ver kit, gabarito nem outras execuções</td></tr>
+  <tr><td>006</td><td>Condução com intervenções padronizadas</td><td>remover a subjetividade e tornar a contagem replicável</td></tr>
+  <tr><td>007</td><td>Testes caixa-preta + verificador estático, iguais para A e B</td><td>valer para qualquer implementação; ser justo com A</td></tr>
+  <tr><td>008</td><td>Encerramento guiado pelo prazo agendado</td><td>temporizador do Node dispara até 1 ms antes</td></tr>
+  <tr><td>009</td><td>Suíte de aceitação 2× por checkpoint</td><td>falhas intermitentes de tempo e concorrência</td></tr>
+  <tr><td>010</td><td>Hooks PostToolUse, Stop (até 3 bloqueios) e UserPromptSubmit</td><td>fechar o ciclo de feedback sem laços infinitos</td></tr>
+  <tr><td>011</td><td>Harness com padrões genéricos, sem a solução</td><td>conhecimento que um time real teria; declarado como ameaça</td></tr>
+  <tr><td>012</td><td>Análise descritiva com delta de Cliff</td><td>com 3 × 3, nenhum teste atinge p &lt; 0,05</td></tr>
+  <tr><td>013</td><td>Testes do harness como subconjunto da especificação</td><td>evitar que B passe “por construção”</td></tr>
+</table>
+
+<section class="abertura">
+  <div class="cap-num">Apêndice C</div>
+  <h1 class="cap">Exemplo de intervenção</h1>
+</section>
+<p>Texto integral do prompt de intervenção gerado pelo kit no checkpoint de entrega da execução A1 (<code>experimento/execucoes/A1/checkpoints/01-entrega/intervencao.md</code>) — o único feedback que o agente recebeu nessa execução.</p>
+<pre class="codigo">Revisei a implementação e encontrei os problemas abaixo. Corrija todos eles, mantendo os
+requisitos da tarefa original.
+
+## Violações das regras de arquitetura reativa (4)
+
+O projeto deve seguir o paradigma reativo/orientado a eventos com RxJS. Estas ocorrências
+violam as regras:
+
+### RX04 — estado-mutavel
+
+Problema: Estado mutado de forma imperativa (campo da classe ou variável de módulo).
+
+- `src/leilao.service.ts:95` — `this.registros.set(leilao.id, r)`
+- `src/leilao.service.ts:98` — `this.subs.add(`
+- `src/leilao.service.ts:285` — `this.notificacoes.set(nome, lista)`
+
+Como corrigir: Não guarde estado em campos/variáveis alterados por métodos. Derive o estado
+do fluxo de eventos com scan()/reduce puros e exponha-o como Observable (ex.: estado$ =
+eventos$.pipe(scan(evoluir, inicial), shareReplay(1))).
+
+### RX02 — subscribe-fora-do-ciclo-de-vida
+
+Problema: subscribe() fora do construtor/onModuleInit/onApplicationBootstrap (ou dentro de
+um controller).
+
+- `src/leilao.service.ts:99` — `r.agendar$`
+
+Como corrigir: Controllers e métodos chamados por requisição devem DEVOLVER um Observable
+(o NestJS assina). Assinaturas permanentes (efeitos colaterais, projeções) ficam no
+onModuleInit, com takeUntil(destruir$) liberado no onModuleDestroy.</pre>
+
+<section class="abertura">
+  <div class="cap-num">Apêndice D</div>
+  <h1 class="cap">Como reproduzir</h1>
+</section>
+<p>Requisitos: Linux ou macOS, Node.js 24, git e Claude Code. As versões de todas as dependências estão fixadas nos <code>package-lock.json</code>.</p>
+<h3>Validar o instrumento e o harness</h3>
+<pre class="codigo">(cd avaliacao &amp;&amp; npm ci)                              <span class="c"># dependências do kit</span>
+(cd avaliacao &amp;&amp; npm run test:verificador)            <span class="c"># testes do verificador (10/10)</span>
+scripts/lib/montar-projeto.sh /tmp/ref harness --overlay avaliacao/referencia
+(cd /tmp/ref &amp;&amp; npm run validate)                     <span class="c"># gabarito passa no harness</span>
+node avaliacao/avaliar.mjs --projeto /tmp/ref --saida /tmp/aval   <span class="c"># gabarito aprovado</span>
+
+scripts/lib/montar-projeto.sh /tmp/anti base --overlay avaliacao/anti-gabarito
+node avaliacao/avaliar.mjs --projeto /tmp/anti --saida /tmp/aval-anti   <span class="c"># 41/41, 12 violações</span></pre>
+<h3>Conduzir uma execução</h3>
+<pre class="codigo">scripts/verificar-ambiente.sh             <span class="c"># checklist do ambiente</span>
+scripts/preparar-execucao.sh A1           <span class="c"># pasta isolada + git</span>
+scripts/rodar-implementador.sh A1 inicial <span class="c"># envia a tarefa ao agente</span>
+scripts/checkpoint.sh A1 entrega          <span class="c"># avalia a primeira entrega</span>
+scripts/rodar-implementador.sh A1 intervencao   <span class="c"># se reprovado</span>
+scripts/checkpoint.sh A1 correcao
+scripts/finalizar-execucao.sh A1          <span class="c"># importa o histórico e gera o resumo</span>
+node scripts/consolidar-resultados.mjs    <span class="c"># depois das seis execuções</span></pre>
+<h3>Consultar o que aconteceu em uma execução</h3>
+<pre class="codigo">git diff execucoes/A1/entrega execucoes/A1/final -- src/    <span class="c"># o que mudou após a intervenção</span>
+git log --format='%h %an | %s' execucoes/B1                  <span class="c"># commits do agente</span>
+cat experimento/execucoes/A1/checkpoints/01-entrega/intervencao.md
+cat experimento/execucoes/B2/harness-hooks.log               <span class="c"># o harness trabalhando</span></pre>
+
+<section class="abertura">
+  <div class="cap-num">Apêndice E</div>
+  <h1 class="cap">Estrutura do repositório</h1>
+</section>
+<pre class="codigo">├── Instruções.txt              enunciado original
+├── docs/                       documentação: visão geral, fundamentação, sistema, harness,
+│                               metodologia, instrumento, decisões, linha do tempo, histórico git
+├── projetos/
+│   ├── base/                   NestJS 12 limpo — o que a condição A recebe
+│   └── harness/                camada de harness — somada à base na condição B
+│       ├── AGENTS.md · CLAUDE.md
+│       ├── docs/               arquitetura.md · regras-reativas.md
+│       ├── scripts/            validar.sh · verificar-reatividade.mjs · verificar-estrutura.mjs
+│       │   └── hooks/          apos-editar.sh · ao-parar.sh · ao-receber-prompt.sh
+│       ├── test/contrato/      11 testes de contrato
+│       ├── .claude/settings.json · .dependency-cruiser.cjs
+├── avaliacao/                  kit OCULTO: 41 testes, avaliador, gabarito, anti-gabarito,
+│                               testes do verificador
+├── experimento/
+│   ├── prompts/tarefa.md       a especificação entregue ao agente (idêntica em A e B)
+│   ├── protocolo.md · ROTEIRO-CONDUTOR.md · config-implementador.env
+│   ├── execucoes/&lt;ID&gt;/        registros, checkpoints, sessão, hooks, resumo e relatório
+│   ├── resultados/             tabelas, CSV, gráficos e relatório final
+│   ├── auditoria/              log do condutor
+│   └── descartadas/            execuções descartadas, preservadas para auditoria
+├── scripts/                    condução do experimento, consolidação e utilitários
+└── materiais/                  slides, roteiro e este livro (fontes HTML e PDFs)</pre>
+
+</body>
+
+</html>

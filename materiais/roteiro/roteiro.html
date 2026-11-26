@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Roteiro de apresentação — Harness para agentes de IA</title>
+<link rel="stylesheet" href="../fontes/identidade.css">
+<link rel="stylesheet" href="../fontes/impresso.css">
+<style>
+body { font-family: var(--sans); font-size: 11pt; line-height: 1.55; }
+h1, h2, h3 { color: var(--tinta); font-family: var(--sans); }
+.parte { string-set: capitulo content(text); font: 800 9pt var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--B); margin: 0 0 2pt; }
+.parte-titulo { font: 800 22pt/1.15 var(--sans); color: var(--tinta); margin: 0 0 6pt; letter-spacing: -.01em; }
+.parte-intro { color: var(--suave); font-size: 10.5pt; margin: 0 0 16pt; }
+
+.slide-bloco { break-inside: avoid; margin: 0 0 24pt; padding-top: 4pt; }
+.cabeca { display: flex; gap: 12pt; align-items: flex-start; break-inside: avoid; break-after: avoid; margin-bottom: 8pt; }
+.cabeca img { width: 78mm; border-radius: 4pt; border: .6pt solid var(--linha); flex: none; }
+.cabeca .meta { flex: 1; }
+.num { font: 700 8pt var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--suave); }
+.cabeca h2 { font: 750 16pt/1.2 var(--sans); margin: 2pt 0 6pt; }
+.tempo { display: inline-block; font: 600 8pt var(--sans); background: #eef0f4; color: var(--tinta); border-radius: 99px; padding: 1.5pt 8pt; margin-right: 6pt; }
+.objetivo { font-size: 10.5pt; color: var(--tinta-2); margin-top: 6pt; }
+.objetivo b { color: var(--tinta); }
+
+.rot { font: 700 8pt var(--sans); letter-spacing: .12em; text-transform: uppercase; margin: 10pt 0 3pt; color: var(--suave); }
+.fala { font-family: var(--serif); font-size: 12pt; line-height: 1.6; color: #1f2a3b; background: var(--papel); border-radius: 6pt; padding: 9pt 13pt; margin: 0; }
+.fala p { margin: 0 0 6pt; } .fala p:last-child { margin: 0; }
+.mostre { margin: 0; padding-left: 14pt; } .mostre li { margin-bottom: 2pt; }
+.atencao { border-left: 3pt solid var(--B); background: var(--B-claro); padding: 8pt 12pt; border-radius: 0 6pt 6pt 0; font-size: 10.2pt; break-inside: avoid; }
+.atencao p { margin: 0 0 4pt; } .atencao p:last-child { margin: 0; }
+.transicao { font-size: 10.2pt; color: var(--suave); margin-top: 8pt; }
+.transicao::before { content: "→ Transição: "; font-weight: 700; color: var(--tinta); }
+
+.capa-in { position: absolute; left: 22mm; right: 22mm; top: 48mm; }
+.capa h1 { font: 800 38pt/1.05 var(--sans); color: #fff; margin: 10pt 0 14pt; letter-spacing: -.02em; }
+.capa .k { font: 700 9pt var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #f08a5d; }
+.capa p { font: 400 13pt/1.5 var(--sans); color: #aab6c8; margin: 0; max-width: 140mm; }
+.capa .rodape { position: absolute; left: 22mm; bottom: 26mm; font: 500 10pt/1.7 var(--sans); color: #8f9db3; }
+
+.quadro { background: var(--papel); border: .6pt solid var(--linha); border-radius: 8pt; padding: 10pt 14pt; margin: 10pt 0; break-inside: avoid; }
+.quadro h3 { font: 700 11pt var(--sans); margin: 0 0 6pt; }
+.quadro ul { margin: 0; padding-left: 14pt; }
+.faq h3 { font: 700 10.5pt var(--sans); margin: 14pt 0 4pt; break-after: avoid; }
+.faq p { margin: 0 0 4pt; }
+.nova-pagina { break-before: page; }
+.tabela-tempo td:first-child { width: 22mm; }
+</style>
+</head>
+<body>
+
+<!-- ================= CAPA ================= -->
+<section class="capa">
+  <svg width="794" height="1123" viewBox="0 0 794 1123" style="position:absolute;inset:0" aria-hidden="true">
+    <g transform="translate(0,900)">
+      <line x1="0" y1="0" x2="700" y2="0" stroke="#2b3a55" stroke-width="3"/>
+      <polygon points="700,-8 716,0 700,8" fill="#2b3a55"/>
+      <circle cx="230" cy="0" r="12" fill="#2a78d6"/><circle cx="330" cy="0" r="12" fill="#eb6834"/>
+      <circle cx="410" cy="0" r="12" fill="#eb6834"/><circle cx="530" cy="0" r="12" fill="#fff"/>
+      <line x1="630" y1="-18" x2="630" y2="18" stroke="#fff" stroke-width="3"/>
+    </g>
+  </svg>
+  <div class="capa-in">
+    <div class="k">Roteiro de apresentação</div>
+    <h1>Harness para<br>agentes de <span style="color:#eb6834">IA</span></h1>
+    <p>O que dizer, o que mostrar e onde ter cuidado em cada um dos 21 slides — para apresentar com segurança, sem ler a tela.</p>
+  </div>
+  <div class="rodape">
+    Paradigmas de Linguagens de Programação · UFAL — Campus Arapiraca<br>
+    Prof. Thiago de Sales · <span style="color:#dfe5ee">Thalia Oliveira</span> · novembro de 2026
+  </div>
+</section>
+
+<!-- ================= COMO USAR ================= -->
+<span class="titulo-doc">Roteiro de apresentação · Harness para agentes de IA</span>
+<div class="parte">Antes de começar</div>
+<h1 class="parte-titulo">Como usar este roteiro</h1>
+<p class="parte-intro">Ele acompanha a apresentação slide a slide, na mesma ordem. As falas são sugestões: leia-as antes, entenda a ideia e diga com as suas palavras.</p>
+
+<p>Cada slide tem cinco partes:</p>
+<ul>
+  <li><b>Objetivo</b>: a única ideia que a turma precisa levar daquele slide.</li>
+  <li><b>Fala sugerida</b>: um texto natural, em primeira pessoa, que cobre o slide em cerca do tempo indicado.</li>
+  <li><b>O que mostrar</b>: para onde apontar na tela enquanto fala.</li>
+  <li><b>Atenção técnica</b>: os detalhes que o professor pode perguntar e que vale ter claros na cabeça.</li>
+  <li><b>Transição</b>: a frase que liga ao próximo slide e mantém o fio da história.</li>
+</ul>
+
+<div class="quadro">
+  <h3>A história em uma frase</h3>
+  <p style="margin:0">Construímos um harness que ensina e cobra programação reativa de um agente de IA; o mesmo agente implementou a mesma API três vezes sem e três vezes com o harness; sem harness ele sempre acertou o comportamento mas errou o paradigma (14 violações, 1 correção por execução); com harness acertou os dois de primeira (0 violações, 0 correções).</p>
+</div>
+
+<table class="tabela-tempo">
+  <caption>Tempo sugerido (≈ 19 minutos + perguntas)</caption>
+  <tr><th>Slides</th><th>Parte</th><th class="n">Tempo</th></tr>
+  <tr><td>1–2</td><td>Abertura e roteiro</td><td class="n">1 min</td></tr>
+  <tr><td>3–4</td><td>01 · O problema e o desafio</td><td class="n">2 min</td></tr>
+  <tr><td>5–7</td><td>02 · Fundamentos: harness e programação reativa</td><td class="n">3 min 30 s</td></tr>
+  <tr><td>8–13</td><td>03 · O que construímos: tarefa, arquitetura e harness</td><td class="n">5 min 30 s</td></tr>
+  <tr><td>14–15</td><td>04 · O experimento e o instrumento de medida</td><td class="n">2 min 15 s</td></tr>
+  <tr><td>16–19</td><td>05 · Resultados</td><td class="n">3 min 30 s</td></tr>
+  <tr><td>20–21</td><td>Conclusão e encerramento</td><td class="n">1 min</td></tr>
+</table>
+
+<div class="quadro">
+  <h3>Se o tempo apertar</h3>
+  <ul>
+    <li>Passe rápido pelo slide 12 (as 9 regras): cite RX04, RX02 e RX07 — as que aparecem nos resultados — e siga.</li>
+    <li>Nunca corte os slides 16 e 17: são o coração dos resultados.</li>
+  </ul>
+</div>
+
+<div class="quadro">
+  <h3>Três números para ter de cabeça</h3>
+  <ul>
+    <li><b>41/41</b> testes de aceitação passaram em todas as 6 execuções, já na primeira entrega.</li>
+    <li><b>14 × 0</b> violações arquiteturais na primeira entrega (A1 = 4, A2 = 7, A3 = 3; todas as B = 0).</li>
+    <li><b>1 × 0</b> intervenção humana por execução (todas as A precisaram de uma rodada de correção; nenhuma B).</li>
+  </ul>
+</div>
+
+<!-- ================= PARTE 0 ================= -->
+<div class="parte nova-pagina">Abertura</div>
+<h1 class="parte-titulo">Slides 1 e 2</h1>
+<p class="parte-intro">Apresente-se e diga, logo de cara, qual pergunta o trabalho responde.</p>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-01.png" alt="">
+    <div class="meta"><div class="num">Slide 1</div><h2>Capa — Harness para agentes de IA</h2><span class="tempo">30 s</span>
+      <div class="objetivo"><b>Objetivo:</b> situar o trabalho e despertar a pergunta central.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Bom dia. Meu trabalho é sobre como fazer um agente de IA programar do jeito que o projeto quer — no nosso caso, com programação reativa.</p>
+  <p>A pergunta é simples: se eu der para o agente um repositório com instruções, regras e verificações automáticas — o tal <i>harness</i> —, ele erra menos, viola menos a arquitetura e precisa de menos ajuda humana? Para responder, eu coloquei o mesmo agente para fazer a mesma tarefa com e sem esse harness e medi.”</p></div>
+  <div class="rot">O que mostrar</div>
+  <ul class="mostre"><li>A linha com bolinhas embaixo é um <b>diagrama de bolinhas</b> (<i>marble diagram</i>), o jeito clássico de desenhar fluxos no RxJS. Ele volta ao longo da apresentação.</li></ul>
+  <div class="transicao">“Vou seguir este caminho em cinco partes.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-02.png" alt="">
+    <div class="meta"><div class="num">Slide 2</div><h2>O caminho desta apresentação</h2><span class="tempo">20 s</span>
+      <div class="objetivo"><b>Objetivo:</b> dar o mapa para a turma saber onde está.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Primeiro o problema; depois os dois fundamentos — o que é um harness e o que é programação reativa; depois o que eu construí; como foi o experimento; e por fim os resultados e o que eles significam.”</p></div>
+  <div class="transicao">“Começando pelo problema.”</div>
+</div>
+
+<!-- ================= PARTE 1 ================= -->
+<div class="parte nova-pagina">01 · O problema</div>
+<h1 class="parte-titulo">Slides 3 e 4</h1>
+<p class="parte-intro">Mostre que “funcionar” não é o mesmo que “estar no paradigma certo”. É essa distância que o harness tenta fechar.</p>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-03.png" alt="">
+    <div class="meta"><div class="num">Slide 3</div><h2>O agente entrega código que funciona. Mas em qual paradigma?</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar que o agente tende ao estilo imperativo mesmo quando pedimos reativo.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Hoje os agentes de programação — Claude Code, Copilot, Cursor — já escrevem código que funciona. Mas eles seguem o estilo mais comum nos dados de treino, e para NestJS o mais comum é o imperativo.</p>
+  <p>Olhem este trecho: o pedido foi ‘use programação reativa com RxJS’, e o código até importa um <code>Subject</code>. Mas o estado está num <code>Map</code> que é alterado à mão, o encerramento usa <code>setTimeout</code>, e o serviço de leilões chama direto o serviço de notificações. Funciona — passa nos testes — mas não é reativo.</p>
+  <p>E aí vem a pergunta: quem garante a arquitetura? Normalmente, um humano revisando o código e pedindo correção.”</p></div>
+  <div class="rot">O que mostrar</div>
+  <ul class="mostre"><li>As três linhas problemáticas do código: <code>new Map</code>, a atribuição <code>leilao.maiorLance = …</code> e o <code>setTimeout</code>.</li><li>Os dois cartões: verde (“funciona”) e vermelho (“imperativo”).</li></ul>
+  <div class="atencao"><p><b>Esse código não foi inventado:</b> é um resumo do <i>anti-gabarito</i> (<code>avaliacao/anti-gabarito/</code>), a implementação imperativa que eu escrevi para validar o instrumento. Nas execuções reais sem harness o padrão foi parecido: <code>Map</code> mutável e <code>subscribe</code> criado a cada leilão.</p></div>
+  <div class="transicao">“É exatamente isso que o enunciado pede para investigar.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-04.png" alt="">
+    <div class="meta"><div class="num">Slide 4</div><h2>O que o enunciado pede</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> deixar claro que o trabalho tem duas metades — construir e medir.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“O enunciado tem três passos. Um: construir um harness focado em programação reativa e orientada a eventos — com instruções para agentes, regras arquiteturais, testes, lint e scripts de validação. Dois: implementar a mesma funcionalidade com e sem esse harness. Três: comparar três coisas — erros, violações arquiteturais e intervenções humanas.</p>
+  <p>O enunciado deixava escolher frontend ou backend. Eu escolhi backend, com NestJS e RxJS, e a funcionalidade é uma API de leilões em tempo real.”</p></div>
+  <div class="atencao"><p><b>Por que backend?</b> (ADR-001) Testes de API são simples e estáveis (HTTP + JSON); o NestJS já usa RxJS nativamente (controllers podem devolver <code>Observable</code>, SSE pronto); regras de arquitetura de backend são verificáveis por ferramenta; e as métricas ficam objetivas.</p></div>
+  <div class="transicao">“Antes de mostrar o que construí, dois conceitos. Primeiro: o que é, afinal, um harness?”</div>
+</div>
+
+<!-- ================= PARTE 2 ================= -->
+<div class="parte nova-pagina">02 · Fundamentos</div>
+<h1 class="parte-titulo">Slides 5 a 7</h1>
+<p class="parte-intro">Dois conceitos que sustentam todo o resto: harness (guiar, verificar, forçar o ciclo) e programação reativa (Observer, streams, Crie · Combine · Ouça).</p>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-05.png" alt="">
+    <div class="meta"><div class="num">Slide 5</div><h2>O que é um harness?</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> definir harness pelos seus três papéis.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Harness, ao pé da letra, é o arreio — o equipamento que conduz. Aqui, é o conjunto de arquivos do repositório que guia e verifica o agente.</p>
+  <p>Ele tem três papéis. <b>Guiar</b>, antes de escrever: arquivos como o <code>AGENTS.md</code> dizem ao agente como o projeto quer que ele trabalhe. <b>Verificar</b>, depois de escrever: testes, lint e verificadores dizem se o que ele fez está certo. E <b>forçar o ciclo</b>, durante: os hooks do Claude Code rodam a verificação automaticamente e não deixam o agente dizer ‘terminei’ enquanto a validação falha.</p>
+  <p>A ideia central é trocar o humano revisando por um feedback automático e objetivo vindo do próprio repositório.”</p></div>
+  <div class="atencao"><p><b>AGENTS.md</b> é uma convenção lida por vários agentes; o <b>CLAUDE.md</b> é o arquivo específico do Claude Code — no harness ele só importa o AGENTS.md (<code>@AGENTS.md</code>) e acrescenta duas regras sobre os hooks.</p>
+  <p><b>Hook</b> é um comando que o Claude Code executa automaticamente em certos momentos (depois de usar uma ferramenta, ao tentar encerrar, ao receber um prompt).</p></div>
+  <div class="transicao">“O segundo conceito é o paradigma que o harness quer impor: o reativo.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-06.png" alt="">
+    <div class="meta"><div class="num">Slide 6</div><h2>Do imperativo ao reativo</h2><span class="tempo">1 min 15 s</span>
+      <div class="objetivo"><b>Objetivo:</b> ligar o exemplo das aulas (Carrinho → Fatura) ao do trabalho (Leilões → Notificações).</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Nas aulas vimos o caso Carrinho e Fatura. No estilo imperativo, o carrinho é proativo: ele chama a fatura e muda ela — ‘este muda esse’. A fatura é passiva e nem sabe de quem depende. Cada novo interessado obriga a mexer no carrinho, e o estado espalhado fica exponencialmente complexo.</p>
+  <p>No meu sistema o par equivalente é Leilões e Notificações. No estilo imperativo, quando um lance é aceito, o serviço de leilões chama <code>notificacoes.adicionar(...)</code>. No reativo, leilões só <b>emite eventos</b> num fluxo, o <code>eventos$</code>; notificações, o estado atual e o stream em tempo real <b>observam</b> esse fluxo e se atualizam sozinhos. É o padrão Observer: quem muda não conhece quem reage.”</p></div>
+  <div class="rot">O que mostrar</div>
+  <ul class="mostre"><li>A seta vermelha única do lado esquerdo (acoplamento direto) contra o fluxo com três saídas do lado direito.</li></ul>
+  <div class="atencao"><p>O <code>$</code> no fim do nome (<code>eventos$</code>) é só uma convenção do RxJS para indicar “isto é um Observable”.</p></div>
+  <div class="transicao">“E como se monta esse fluxo? A aula resume em três verbos.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-07.png" alt="">
+    <div class="meta"><div class="num">Slide 7</div><h2>Crie · Combine · Ouça</h2><span class="tempo">1 min 15 s</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar o vocabulário da aula (Sink, Stream, Listeners) aplicado ao sistema.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“A aula de programação reativa termina com três verbos: crie, combine, ouça.</p>
+  <p><b>Crie</b>: os comandos — criar leilão, dar lance — entram por um <i>Sink</i>, que é um <code>Subject</code> privado. <b>Combine</b>: um operador <code>scan</code> processa um comando por vez, usando funções puras, e produz eventos. Esses eventos formam um log com replay, que é a fonte da verdade. <b>Ouça</b>: o estado atual, as notificações, o stream em tempo real e o temporizador são ouvintes desse log.</p>
+  <p>Repare na seta laranja embaixo: até o tempo é um fluxo. Quando o prazo de um leilão chega, o temporizador devolve ao Sink um comando ‘encerrar leilão’, que passa pelo mesmo caminho de qualquer outro comando.”</p></div>
+  <div class="atencao"><p><b>Por que <code>scan</code> resolve concorrência?</b> O <code>scan</code> recebe um valor por vez, na ordem de chegada, e carrega o estado anterior. Vinte lances simultâneos viram vinte comandos processados em fila — não há duas atualizações ao mesmo tempo sobre o mesmo estado. A suíte oculta tem um teste exatamente com 20 lances simultâneos.</p>
+  <p><b>Replay</b>: quem assina o log depois recebe todos os eventos anteriores (<code>shareReplay</code>). É o que permite o SSE mandar o histórico completo assim que o cliente conecta.</p></div>
+  <div class="transicao">“Com esses dois conceitos, vamos ao que foi construído — começando pela tarefa que o agente recebeu.”</div>
+</div>
+
+<!-- ================= PARTE 3 ================= -->
+<div class="parte nova-pagina">03 · O que construímos</div>
+<h1 class="parte-titulo">Slides 8 a 13</h1>
+<p class="parte-intro">A tarefa, a prova de que testes não enxergam paradigma, a arquitetura exigida e as peças do harness.</p>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-08.png" alt="">
+    <div class="meta"><div class="num">Slide 8</div><h2>A tarefa: API de leilões em tempo real</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar que a tarefa é pequena, mas cheia de eventos, tempo e concorrência.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“A tarefa entregue ao agente é uma especificação de cerca de 150 linhas, idêntica nas duas condições. São seis rotas: criar e consultar leilões, dar lance, ver o histórico de eventos, acompanhar em tempo real por SSE e consultar as notificações de um participante.</p>
+  <p>O lado direito mostra a vida de um leilão: ele é criado, recebe lances e, se um lance chega na janela final — o anti-sniping —, o prazo é empurrado e sai um evento <code>LeilaoProrrogado</code>. No fim, o leilão encerra sozinho, sem nenhuma requisição.</p>
+  <p>Escolhi leilão porque tudo é evento, tem tempo, tem observadores naturais, tem concorrência e dá para testar tudo de fora, por HTTP.”</p></div>
+  <div class="atencao"><p><b>Ordem das regras do lance</b> (cai em prova!): 404 (leilão inexistente) → 400 (corpo inválido) → 409 (encerrado) → 422 (já lidera ou abaixo do mínimo) → 201 (aceito). Respostas 400, 404 e 409 <b>não</b> geram eventos; os 422 geram <code>LanceRejeitado</code>.</p>
+  <p><b>SSE</b> (<i>Server-Sent Events</i>): uma conexão HTTP que fica aberta e por onde o servidor empurra mensagens. Aqui ela manda o histórico, depois cada novo evento, e fecha após o <code>LeilaoEncerrado</code>.</p></div>
+  <div class="transicao">“Antes de usar agentes, eu precisei provar que dá para medir paradigma. Para isso escrevi duas soluções.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-09.png" alt="">
+    <div class="meta"><div class="num">Slide 9</div><h2>Mesmo comportamento, paradigmas opostos</h2><span class="tempo">1 min 15 s</span>
+      <div class="objetivo"><b>Objetivo:</b> provar que os testes funcionais não distinguem os paradigmas — e o verificador sim.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Estas são as duas implementações de referência. À esquerda, o anti-gabarito, imperativo: <code>Map</code> mutável, <code>Subject</code> público, leilões conhecendo notificações e <code>setTimeout</code>. À direita, o gabarito, reativo: Sink privado, <code>scan</code>, log de eventos com replay e o tempo como fluxo com <code>switchMap</code> e <code>timer</code>.</p>
+  <p>As duas passam nos <b>mesmos 41 testes</b>. O que separa uma da outra é o verificador de regras: 12 violações num lado, zero no outro. Ou seja: se eu medisse só testes, não veria diferença nenhuma. Guardem isso, porque é exatamente o que aparece nos resultados.”</p></div>
+  <div class="rot">O que mostrar</div>
+  <ul class="mostre"><li>As linhas destacadas em vermelho (violações) à esquerda e em verde à direita.</li><li>O <code>switchMap(e =&gt; timer(...))</code> no fim do gabarito: o novo prazo cancela automaticamente o temporizador anterior — é a prorrogação sem <code>clearTimeout</code>.</li></ul>
+  <div class="atencao"><p>As 12 violações do anti-gabarito: RX02 ×1, RX03 ×1, RX04 ×5, RX05 ×3 e RX07 ×2.</p></div>
+  <div class="transicao">“Vamos ver a arquitetura reativa completa, que é o que o harness pede ao agente.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-10.png" alt="">
+    <div class="meta"><div class="num">Slide 10</div><h2>A arquitetura que o harness pede</h2><span class="tempo">1 min 15 s</span>
+      <div class="objetivo"><b>Objetivo:</b> percorrer o caminho de um comando, do HTTP aos observadores.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Vou seguir um lance. Ele chega no controller, que valida a entrada e manda um comando para o Sink. O <code>scan</code> chama duas funções puras do domínio: <code>decidir</code>, que diz quais eventos o comando gera, e <code>evoluir</code>, que aplica o evento ao estado. Os eventos vão para o log, o <code>eventos$</code>.</p>
+  <p>Daí em diante, tudo é projeção: o <code>estado$</code> responde aos GETs; o stream SSE filtra os eventos daquele leilão e termina quando ele encerra; o temporizador agrupa por leilão e reagenda o encerramento a cada prorrogação, realimentando o Sink. E, à direita, Notificações é um observador em outro módulo: leilões nunca importa notificações.”</p></div>
+  <div class="atencao"><p><b>Camadas:</b> <code>dominio/</code> só tem tipos e funções puras (sem NestJS, sem RxJS, sem <code>Date.now()</code> — o instante chega por parâmetro, o que deixa o tempo testável); <code>aplicacao/</code> tem os fluxos RxJS; <code>http/</code> tem os controllers, que devolvem <code>Observable</code> e deixam o NestJS assinar.</p>
+  <p><b>groupBy + switchMap:</b> o <code>groupBy</code> cria um sub-fluxo por leilão; dentro dele, cada novo prazo (criação ou prorrogação) entra no <code>switchMap</code>, que cancela o <code>timer</code> anterior e começa outro.</p></div>
+  <div class="transicao">“Para o agente chegar nisso sozinho, o repositório precisa ensinar e cobrar. Essas são as peças do harness.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-11.png" alt="">
+    <div class="meta"><div class="num">Slide 11</div><h2>O harness: cada item do enunciado vira um artefato</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar que cada exigência do enunciado tem um artefato concreto.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Cada item do enunciado virou um artefato. As <b>instruções para agentes</b> são o <code>AGENTS.md</code> e o <code>CLAUDE.md</code>, com uma regra de ouro: a tarefa só termina quando <code>npm run validate</code> imprime ‘VALIDAÇÃO OK’. As <b>regras arquiteturais</b> estão em dois documentos e são verificadas pelo dependency-cruiser. Os <b>testes</b> são 11 testes de contrato da API, e o harness exige teste unitário para cada arquivo do domínio. O <b>lint</b> é o oxlint mais um lint arquitetural que eu escrevi. O <b>script de validação</b> junta tudo. E, além do enunciado, os <b>hooks</b> do Claude Code fecham o ciclo.”</p></div>
+  <div class="atencao"><p><b>O harness não contém a solução.</b> Nenhum arquivo do domínio de leilões vem pronto. Ele traz padrões genéricos de código (Sink + <code>scan</code>, <code>switchMap(timer)</code>…), como um time real colocaria no repositório (ADR-011).</p>
+  <p><b>Só 11 testes no harness, contra 41 na avaliação</b>, de propósito (ADR-013): se fossem os mesmos, B passaria “por construção”.</p></div>
+  <div class="transicao">“O coração do lint arquitetural são nove regras.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-12.png" alt="">
+    <div class="meta"><div class="num">Slide 12</div><h2>As 9 regras reativas</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar que o paradigma virou regras verificáveis por máquina.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Para cobrar o paradigma, eu o transformei em nove regras que uma máquina consegue verificar. Não vou ler todas; vou destacar as três que aparecem nos resultados.</p>
+  <p><b>RX04, estado mutável</b>: guardar estado num campo da classe e alterá-lo nos métodos — o oposto de derivar o estado do fluxo. <b>RX02, subscribe fora do ciclo de vida</b>: criar uma assinatura a cada requisição, que ninguém cancela. <b>RX07, emissor conhece observador</b>: leilões importando notificações, que quebra o Observer.</p>
+  <p>O verificador usa a API do compilador do TypeScript para percorrer a árvore sintática de cada arquivo.”</p></div>
+  <div class="atencao"><p><b>Limitação conhecida:</b> por ser estático, o verificador não segue apelidos (<code>const l = this.mapa.get(id); l.x = 1</code> não é detectado) e a RX07 se baseia em nomes de arquivos e caminhos. Está documentado em <code>docs/regras-reativas.md</code>.</p>
+  <p>O verificador tem 10 casos de teste próprios (um por regra + um de código correto), todos passando.</p></div>
+  <div class="transicao">“E como essas regras chegam até o agente durante o trabalho?”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-13.png" alt="">
+    <div class="meta"><div class="num">Slide 13</div><h2>O ciclo de feedback</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> explicar o <code>validate</code> e os três hooks.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“O <code>npm run validate</code> roda sete etapas, em ordem: tipos, lint, regras reativas, dependências entre camadas, estrutura de pastas, testes unitários e testes de contrato contra o servidor de verdade. As etapas três a cinco são as que cobram o paradigma e a arquitetura. Ele roda todas, mesmo que uma falhe, e mostra só os erros — a saída foi pensada para um agente ler.</p>
+  <p>Os hooks fecham o ciclo: a cada edição, o verificador roda no arquivo editado; e, quando o agente tenta encerrar, o hook <b>Stop</b> roda o <code>validate</code> e, se falhar, bloqueia o encerramento e devolve os erros — até três vezes, para não virar laço infinito. Tudo isso fica registrado num log.”</p></div>
+  <div class="atencao"><p>O limite de 3 bloqueios é por pedido do usuário; um terceiro hook (<code>UserPromptSubmit</code>) zera o contador a cada novo prompt (ADR-010).</p>
+  <p>Guarde a ideia do hook “a cada edição”: nos resultados vamos ver que ele <b>nunca chegou a disparar</b>, e por quê.</p></div>
+  <div class="transicao">“Com o harness pronto, falta o experimento.”</div>
+</div>
+
+<!-- ================= PARTE 4 ================= -->
+<div class="parte nova-pagina">04 · O experimento</div>
+<h1 class="parte-titulo">Slides 14 e 15</h1>
+<p class="parte-intro">Como garantir uma comparação justa: desenho, controles, papéis e um instrumento validado.</p>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-14.png" alt="">
+    <div class="meta"><div class="num">Slide 14</div><h2>Desenho do experimento</h2><span class="tempo">1 min 15 s</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar que a única coisa que muda entre A e B é o harness.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“São duas condições. A: o agente recebe um projeto NestJS limpo. B: o mesmo projeto com a camada de harness por cima. Três repetições de cada, porque o modelo não é determinístico.</p>
+  <p>A ordem foi A1, B1, B2, A2, A3, B3 — intercalada, para que nada que mude com o tempo favoreça um lado. Tudo o mais é igual: a mesma tarefa, palavra por palavra; sessão nova numa pasta isolada; o mesmo modelo; o mesmo avaliador; e as mesmas regras de parada.</p>
+  <p>Sobre os papéis: quem implementa é o Claude Code, com o modelo Sonnet 5.5 em esforço médio, sem interação. Quem conduz é <b>outro</b> agente, seguindo um roteiro fechado e registrando tudo num log auditável. E cada checkpoint vira um commit no git.”</p></div>
+  <div class="atencao"><p><b>Por que um agente condutor?</b> Uma primeira B1 foi feita pelo mesmo agente que construiu o harness e o gabarito — ele tinha a solução em contexto. Ela foi <b>descartada</b> (está em <code>experimento/descartadas/</code>) e a condução passou a outro agente (Antigravity, com Gemini 4), com o implementador rodando em sessão isolada por script.</p>
+  <p><b>Isolamento:</b> cada execução roda numa pasta fora do repositório (o Claude Code lê <code>CLAUDE.md</code> das pastas-pai); a auditoria conferiu que nenhuma transcrição menciona o repositório principal.</p>
+  <p><b>Parada:</b> aprovado (build ok, 41/41 e 0 violações), 8 rodadas de correção ou 120 minutos.</p></div>
+  <div class="transicao">“E como medimos os erros e as violações?”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-15.png" alt="">
+    <div class="meta"><div class="num">Slide 15</div><h2>Como medimos: o kit de avaliação oculto</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar que o instrumento é independente do harness e foi validado.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“O kit de avaliação fica fora do alcance do agente. Erros são medidos por 41 testes caixa-preta, por HTTP, contra o servidor rodando de verdade — duas vezes por checkpoint. Violações, pelo verificador de regras. Intervenções são contadas: cada prompt de correção, gerado pelo próprio kit, conta uma.</p>
+  <p>Antes de qualquer execução eu validei o instrumento: o gabarito passa em tudo; o anti-gabarito passa nos 41 testes mas tem 12 violações; e dez rodadas seguidas deram 410 de 410.</p>
+  <p>E, importante: dos 41 testes ocultos, 27 não têm nenhum equivalente no harness. Então B não ‘decorou’ a prova.”</p></div>
+  <div class="atencao"><p><b>Prompt de intervenção padronizado:</b> o kit escreve a revisão (testes que falharam com a mensagem, violações agrupadas por regra com “como corrigir”). O condutor só cola esse texto. Isso tira a subjetividade da revisão humana.</p>
+  <p>Cobertura do harness sobre os 41 testes: 7 cobertos (✓), 7 parcialmente (◐), 27 sem correspondente (✗).</p></div>
+  <div class="transicao">“Agora, os resultados.”</div>
+</div>
+
+<!-- ================= PARTE 5 ================= -->
+<div class="parte nova-pagina">05 · Resultados</div>
+<h1 class="parte-titulo">Slides 16 a 19</h1>
+<p class="parte-intro">O centro da apresentação. Fale devagar, aponte os números e deixe claro o que eles dizem e o que não dizem.</p>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-16.png" alt="">
+    <div class="meta"><div class="num">Slide 16</div><h2>As 6 execuções terminaram aprovadas. A diferença está no caminho.</h2><span class="tempo">45 s</span>
+      <div class="objetivo"><b>Objetivo:</b> dar a visão geral — todos chegaram, mas por caminhos diferentes.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Primeiro, a visão geral. As seis execuções terminaram aprovadas: no final, todas com 41 de 41 testes e zero violações. A diferença está no caminho.</p>
+  <p>Olhem a primeira entrega — o código no momento em que o agente diz ‘terminei’. Na linha de cima, sem harness: 41 de 41 testes em todas, mas 4, 7 e 3 violações, e cada uma precisou de uma intervenção. Na linha de baixo, com harness: 41 de 41 e zero violações nas três, sem nenhuma intervenção.”</p></div>
+  <div class="atencao"><p>Em todas: build ok, 0 erros de tipo, 0 erros de lint, 0 testes instáveis. Nenhuma edição manual de código e nenhuma mensagem extra (“continue”) foi necessária.</p></div>
+  <div class="transicao">“Vamos olhar as violações de perto.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-17.png" alt="">
+    <div class="meta"><div class="num">Slide 17</div><h2>Violações na 1ª entrega: 14 sem harness, 0 com</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar o tamanho do efeito e quais regras o agente violou.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Somando as três execuções sem harness, foram 14 violações; com harness, nenhuma. Em média, 4,7 contra zero.</p>
+  <p>À direita, quais regras: a campeã é a RX04, estado mutável, com 9 ocorrências — <code>this.leiloes.set(...)</code>, <code>this.notificacoes.set(...)</code>. Depois a RX02, com 3 — uma em cada execução A —, que é criar um <code>subscribe</code> novo a cada leilão para agendar o encerramento. E uma RX03 e uma RX07, ambas na A2.</p>
+  <p>O padrão foi sempre ‘misto’: o agente usava RxJS por fora — tinha <code>Subject</code>, <code>switchMap</code>, <code>timer</code> —, mas guardava o estado em <code>Map</code> mutável. Ele sabe RxJS; o que faltava era a arquitetura.”</p></div>
+  <div class="atencao"><p><b>Delta de Cliff</b> (resposta pronta): mede o quanto duas distribuições se separam, de −1 a +1. É a proporção de pares (a, b) em que a &gt; b menos a proporção em que a &lt; b. Deu 1: <b>todo</b> valor de A é maior que <b>todo</b> valor de B — não há sobreposição. Pelos limiares de Romano et al. (2006), é efeito “grande”. Foi escolhido porque não supõe normalidade e serve para amostras pequenas.</p></div>
+  <div class="transicao">“Isso teve consequências no esforço humano e no esforço do próprio agente.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-18.png" alt="">
+    <div class="meta"><div class="num">Slide 18</div><h2>Menos intervenção, menos esforço do agente</h2><span class="tempo">1 min</span>
+      <div class="objetivo"><b>Objetivo:</b> mostrar os ganhos secundários (custo, tempo, testes) com honestidade sobre as distorções.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Intervenções: de uma para zero. Custo do implementador: em média 98 centavos de dólar sem harness contra 48 com. Tempo mediano: de 6 para 4 minutos. O agente também usou menos ferramentas, errou menos ao usá-las e gastou cerca de 10% menos tokens — e com muito menos variação entre execuções.</p>
+  <p>E o número que mais me surpreendeu: com harness, o agente escreveu em média 20 casos de teste próprios; sem harness, 1,3. Duas das três execuções A não escreveram nenhum teste.”</p></div>
+  <div class="atencao"><p><b>Use a mediana do tempo, não a média.</b> A A2 parou por limite de uso da conta (erro 429) das 12:28 às 20:08: o relógio marcou 467 min, mas o trabalho ativo do implementador somou 255 s. Isso infla a média de A para 159 min.</p>
+  <p>O custo da A2 (US$ 1,50) inclui US$ 0,51 da chamada interrompida pelo limite.</p>
+  <p>Por que tanto teste em B? O harness exige teste unitário para cada arquivo do domínio (regra E02 do verificador de estrutura). É efeito do harness, não acaso.</p></div>
+  <div class="transicao">“E o código em si ficou diferente?”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-19.png" alt="">
+    <div class="meta"><div class="num">Slide 19</div><h2>O que o agente produziu na 1ª entrega</h2><span class="tempo">45 s</span>
+      <div class="objetivo"><b>Objetivo:</b> tornar visível a diferença de organização do código.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“À esquerda, a A1: cinco arquivos, tudo de leilões, temporizadores e notificações dentro de um só <code>leilao.service.ts</code>, e nenhum teste. Embaixo, o que o kit apontou: os <code>Map</code> sendo alterados e o <code>subscribe</code> criado a cada leilão.</p>
+  <p>À direita, a B2: treze arquivos, dois módulos, cada um com domínio, aplicação e HTTP, testes ao lado do domínio. E um detalhe de integridade: o agente B não alterou nenhum dos 16 arquivos do harness — não ‘afrouxou’ nenhuma regra para passar.”</p></div>
+  <div class="atencao"><p>Linhas de código no final: A ≈ 523 em média, B ≈ 731 (+40%). Mais código em B não é problema aqui: é a separação em camadas, os módulos e a validação de entrada.</p>
+  <p>Depois da intervenção, as A também migraram para <code>scan</code> e assinaturas no <code>onModuleInit</code> — o agente sabe fazer; precisava ser cobrado.</p></div>
+  <div class="transicao">“Para fechar, o que fica.”</div>
+</div>
+
+<!-- ================= PARTE 6 ================= -->
+<div class="parte nova-pagina">Conclusão</div>
+<h1 class="parte-titulo">Slides 20 e 21</h1>
+<p class="parte-intro">Feche com as três lições e abra para perguntas.</p>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-20.png" alt="">
+    <div class="meta"><div class="num">Slide 20</div><h2>O que fica</h2><span class="tempo">45 s</span>
+      <div class="objetivo"><b>Objetivo:</b> deixar três lições claras e apontar caminhos futuros.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Três lições. Primeira: testes funcionais não bastam — código imperativo passa 41 de 41. Se o projeto tem um paradigma, ele precisa de verificação própria. Segunda: um harness troca a revisão humana por feedback automático do repositório — zero violações e zero intervenções nas três execuções com harness. Terceira: o efeito foi além das regras: arquitetura em camadas e cerca de quinze vezes mais testes escritos pelo agente, a um custo menor.</p>
+  <p>Como próximos passos: mais repetições e uma tarefa mais difícil, para testar de novo a H1; outros agentes e modelos; uma ablação, para separar o efeito das instruções, da validação e dos hooks; um hook que também veja comandos de terminal; e uma versão frontend.”</p></div>
+  <div class="transicao">“Obrigado.”</div>
+</div>
+
+<div class="slide-bloco">
+  <div class="cabeca"><img src="../imagens/slides/slide-21.png" alt="">
+    <div class="meta"><div class="num">Slide 21</div><h2>Obrigado · Perguntas</h2><span class="tempo">—</span>
+      <div class="objetivo"><b>Objetivo:</b> abrir para perguntas e indicar onde está todo o material.</div></div></div>
+  <div class="rot">Fala sugerida</div>
+  <div class="fala"><p>“Obrigado. Tudo está versionado no repositório: a documentação, o harness, o kit de avaliação, os registros de cada execução e os resultados. E o livro do trabalho detalha cada etapa. Fico à disposição para perguntas.”</p></div>
+</div>
+
+<!-- ================= FAQ ================= -->
+<div class="parte nova-pagina">Perguntas prováveis</div>
+<h1 class="parte-titulo">Respostas prontas</h1>
+<p class="parte-intro">Perguntas que o professor ou a turma podem fazer, com uma resposta curta baseada nos dados do trabalho.</p>
+
+<div class="faq">
+<h3>“Se todos passaram nos testes, qual o problema do código sem harness?”</h3>
+<p>Ele funciona, mas não segue o paradigma pedido nem a arquitetura do projeto: estado mutável espalhado, assinaturas que ninguém cancela, módulos acoplados. É o tipo de dívida que um revisor teria que apontar — e foi o que o kit apontou, uma vez em cada execução A.</p>
+
+<h3>“Não é injusto o harness ensinar exatamente as regras que você mede?”</h3>
+<p>É uma ameaça declarada. Mas é justamente o que se quer saber: um projeto real tem regras; a pergunta é se colocá-las no repositório faz o agente segui-las sem um humano cobrar. Para os erros funcionais, a medida é independente: 27 dos 41 testes ocultos não existem no harness.</p>
+
+<h3>“Por que a H1 não deu diferença?”</h3>
+<p>Porque as seis execuções passaram nos 41 testes já na primeira entrega. Para esse modelo, a especificação foi clara o bastante. Uma tarefa mais difícil, ou um modelo menor, poderia separar as condições — é um trabalho futuro.</p>
+
+<h3>“Três repetições é pouco, não?”</h3>
+<p>É, e por isso a análise é descritiva, sem teste de significância. O que dá alguma confiança é a consistência: as três A tiveram violações (3 a 7) e as três B nenhuma — distribuições sem sobreposição (delta de Cliff = 1).</p>
+
+<h3>“O agente B poderia ter visto os testes ocultos ou o gabarito?”</h3>
+<p>Não. Cada execução rodou numa pasta fora do repositório, com git próprio; a auditoria procurou o nome do repositório nas transcrições e não encontrou nenhuma ocorrência. A primeira B1, feita por um agente que tinha o gabarito em contexto, foi descartada justamente por isso.</p>
+
+<h3>“Por que a A2 demorou 467 minutos?”</h3>
+<p>A conta atingiu o limite de uso (erro 429) durante a intervenção; a condução ficou pausada das 12:28 às 20:08 e a chamada foi repetida tecnicamente, sem contar como nova intervenção. O trabalho ativo do implementador na A2 somou 255 segundos. Por isso uso a mediana do tempo.</p>
+
+<h3>“O hook pós-edição não disparou. Então o harness não funcionou?”</h3>
+<p>Funcionou, mas por outras peças: as instruções (o agente já organizou o código nas camadas pedidas) e o <code>npm run validate</code>, que o agente rodou por conta própria e que o hook Stop rodou ao final. O hook pós-edição não disparou porque os arquivos foram escritos via terminal (Bash), e ele só observava as ferramentas Edit e Write.</p>
+
+<h3>“O que é o delta de Cliff?”</h3>
+<p>Uma medida de tamanho de efeito não paramétrica: compara todos os pares (um valor de A, um de B) e calcula a proporção em que A &gt; B menos a proporção em que A &lt; B. Vai de −1 a +1; 1 significa que todo valor de A supera todo valor de B.</p>
+
+<h3>“Por que <code>scan</code> e não um <code>Map</code> com cuidado?”</h3>
+<p>Com <code>scan</code>, o estado é uma função do histórico de eventos: um comando por vez, em ordem, sem condição de corrida, e qualquer projeção nova (notificações, SSE) é só mais um ouvinte. Com <code>Map</code>, o estado é alterado em vários pontos e cada novo interessado exige mexer no emissor.</p>
+
+<h3>“Quanto custou o experimento?”</h3>
+<p>Somando o implementador: A1 US$ 0,68; A2 US$ 1,50 (com US$ 0,51 da chamada interrompida); A3 US$ 0,76; B1 US$ 0,47; B2 US$ 0,47; B3 US$ 0,49.</p>
+
+<h3>“Por que NestJS 12 veio com AGENTS.md?”</h3>
+<p>O gerador oficial do NestJS 12 já cria <code>AGENTS.md</code>, <code>CLAUDE.md</code> e skills para agentes. Eu removi tudo da base (ADR-004) para que a condição A fosse de fato sem harness. É um sinal de que o próprio ecossistema já está adotando a ideia.</p>
+</div>
+
+<div class="quadro" style="margin-top:18pt">
+  <h3>Checklist antes de apresentar</h3>
+  <ul>
+    <li>Abrir o PDF dos slides em tela cheia e testar a passagem com o controle/teclado.</li>
+    <li>Ter este roteiro impresso ou num segundo dispositivo.</li>
+    <li>Ensaiar uma vez cronometrando: a meta é ~19 minutos.</li>
+    <li>Ter à mão, se houver tempo para demonstração: <code>experimento/resultados/resultados.md</code> e um <code>harness-hooks.log</code> de uma execução B.</li>
+  </ul>
+</div>
+
+</body>
+</html>

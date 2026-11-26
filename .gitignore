@@ -17,3 +17,7 @@ Slides/
 .DS_Store
 *.log
 .env
+
+# Pacote de entrega (zip do próprio repositório) e cópias avulsas dos PDFs
+PLP.zip
+Harness-Reativo-1-Slides_removed.pdf

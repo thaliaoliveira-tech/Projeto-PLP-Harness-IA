@@ -1,0 +1,32 @@
+/* Base para os documentos paginados (roteiro e livro), renderizados com Paged.js. */
+@page {
+  size: A4;
+  margin: 24mm 20mm 24mm 22mm;
+  @bottom-right { content: counter(page); font: 600 8.5pt 'Inter', sans-serif; color: #6a7282; }
+  @bottom-left { content: string(titulo-doc); font: 500 8pt 'Inter', sans-serif; color: #a3a7b0; }
+  @top-right { content: string(capitulo); font: 600 8pt 'Inter', sans-serif; color: #eb6834; letter-spacing: .06em; text-transform: uppercase; }
+}
+@page capa { margin: 0; @bottom-right { content: none; } @bottom-left { content: none; } @top-right { content: none; } }
+@page limpa { @top-right { content: none; } @bottom-left { content: none; } }
+
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; background: #fff; color: var(--tinta-2); }
+.titulo-doc { string-set: titulo-doc content(text); display: none; }
+
+.capa { page: capa; break-after: page; height: 297mm; width: 210mm; position: relative; overflow: hidden; background: var(--noite); color: #c9d2e0; }
+.limpa { page: limpa; }
+
+a { color: inherit; text-decoration: none; }
+code, .mono { font-family: var(--mono); font-size: .86em; color: var(--tinta); background: #f1f0ec; padding: 0 .25em; border-radius: 3px; }
+pre.codigo code, pre.codigo .mono { background: none; padding: 0; color: inherit; font-size: inherit; }
+
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 8.6pt; margin: 10pt 0 14pt; break-inside: avoid; }
+th { text-align: left; font-weight: 700; color: var(--tinta); border-bottom: 1.5pt solid var(--tinta); padding: 5pt 6pt; font-size: 8pt; }
+td { border-bottom: .6pt solid var(--linha); padding: 4.5pt 6pt; vertical-align: top; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+caption { caption-side: top; text-align: left; font: 700 8.5pt var(--sans); color: var(--tinta); padding-bottom: 5pt; }
+
+figure { margin: 12pt 0 16pt; break-inside: avoid; }
+figure img { width: 100%; display: block; border-radius: 6pt; border: .6pt solid var(--linha); }
+figcaption { font: 400 8.4pt/1.45 var(--sans); color: var(--suave); margin-top: 6pt; }
+figcaption b { color: var(--tinta); }

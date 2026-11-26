@@ -1,0 +1,49 @@
+/* Identidade visual comum: slides, roteiro e livro. */
+@import url('fontes.css');
+
+:root {
+  --tinta: #0e1726;        /* azul-noite: títulos, capas */
+  --tinta-2: #364152;      /* texto corrido */
+  --suave: #6a7282;        /* legendas, rótulos */
+  --linha: #e3e1da;        /* fios, grades */
+  --linha-forte: #c9c6bb;
+  --papel: #fbfaf7;        /* fundo claro */
+  --cartao: #ffffff;
+  --noite: #0e1726;        /* fundo escuro das capas */
+  --noite-2: #18243a;
+
+  /* As duas condições do experimento (paleta validada para daltonismo) */
+  --A: #2a78d6;            /* A — sem harness */
+  --A-claro: #e7f0fb;
+  --B: #eb6834;            /* B — com harness (cor de destaque da identidade) */
+  --B-claro: #fdeee6;
+
+  --ok: #1e8e5a;  --ok-claro: #e3f4ec;
+  --erro: #c62f3f; --erro-claro: #fbe7e9;
+
+  --sans: 'Inter', 'DejaVu Sans', system-ui, sans-serif;
+  --serif: 'Source Serif 4', 'DejaVu Serif', Georgia, serif;
+  --mono: 'JetBrains Mono', 'DejaVu Sans Mono', monospace;
+}
+
+/* Código (realce manual por classes) */
+.cod { font-family: var(--mono); font-size: 0.86em; }
+pre.codigo {
+  font-family: var(--mono); background: #0f1a2b; color: #dbe3ef; border-radius: 10px;
+  padding: 14px 18px; line-height: 1.5; white-space: pre; overflow: hidden; margin: 0;
+}
+pre.codigo .k { color: #c792ea; }      /* palavra-chave */
+pre.codigo .t { color: #82aaff; }      /* tipo / função */
+pre.codigo .s { color: #c3e88d; }      /* string */
+pre.codigo .c { color: #7f8ba3; font-style: italic; } /* comentário */
+pre.codigo .r { color: #ff9a8a; }      /* problema */
+pre.codigo .o { color: #ffcb6b; }      /* operador RxJS */
+pre.codigo .m { background: rgba(255,120,110,.16); border-radius: 3px; }  /* linha marcada (erro) */
+pre.codigo .g { background: rgba(195,232,141,.12); border-radius: 3px; }  /* linha marcada (bom) */
+
+.marca-A { color: var(--A); } .marca-B { color: var(--B); }
+.pill { display: inline-block; border-radius: 999px; padding: 2px 10px; font: 600 0.8em var(--sans); }
+.pill.A { background: var(--A-claro); color: #1d5aa6; }
+.pill.B { background: var(--B-claro); color: #b2481c; }
+.pill.ok { background: var(--ok-claro); color: #166d45; }
+.pill.erro { background: var(--erro-claro); color: #a3212f; }

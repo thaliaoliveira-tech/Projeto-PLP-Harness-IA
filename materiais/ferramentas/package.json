@@ -1,0 +1,8 @@
+{
+  "name": "materiais-render",
+  "private": true,
+  "type": "module",
+  "description": "Gera os PDFs dos slides, do roteiro e do livro a partir dos HTML (Chrome headless + Paged.js).",
+  "scripts": { "pdf": "node gerar-pdfs.mjs" },
+  "dependencies": { "pagedjs": "0.4.3", "puppeteer-core": "23.11.1" }
+}

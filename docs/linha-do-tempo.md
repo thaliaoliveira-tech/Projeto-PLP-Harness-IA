@@ -84,3 +84,14 @@ As linhas abaixo são acrescentadas automaticamente pelos scripts do experimento
 
 - **12:04–20:29** — Condução completa das 6 execuções na ordem **A1 → B1 → B2 → A2 → A3 → B3** (`claude-sonnet-5-5/medium`, Claude Code `2.1.300`), com pausa entre 12:28 e 20:08 em A2 devido ao limite de sessão (`429 usage_limit_reached`) tratada conforme seção 7 do roteiro.
 - **20:29–20:30** — Todas as 6 execuções finalizadas e aprovadas (`41/41` testes, `0` violações ao final): sem harness (A1–A3) teve média de `4,7 ± 2,1` violações na 1ª entrega e exigiu `1` intervenção cada; com harness (B1–B3) teve `0` violações na 1ª entrega e `0` intervenções. Resultados consolidados em `experimento/resultados/resultados.md`, `experimento/resultados/relatorio-final.md` e `experimento/resultados/graficos/`, histórico git atualizado em `docs/historico-git.md`, e auditoria completa registrada em `experimento/auditoria/log-condutor.md`.
+
+## 23/11/2026 — Materiais de apresentação
+
+- **22:05–22:40** — Criados em `materiais/` os três materiais finais, todos com os dados de `experimento/resultados/` e `docs/`: **slides** (25, PDF 16:9), **roteiro de apresentação** (PDF A4, 30 páginas, com fala sugerida, pontos técnicos e perguntas prováveis por slide) e **livro do trabalho** (PDF A4, 69 páginas, 12 capítulos, referências e apêndices). Os três seguem a mesma identidade visual. As fontes estão em HTML e os PDFs são regenerados com `materiais/ferramentas` (Chrome headless + Paged.js). Achado registrado nos materiais: o hook `PostToolUse` não disparou em nenhuma execução, porque os agentes escreveram os arquivos via `Bash` (heredoc) e o filtro do hook era `Edit|Write|MultiEdit`.
+
+## 25–26/11/2026 — Revisão final dos materiais e autoria
+
+- **Slides** reduzidos de 25 para **21**: saíram os slides do bug do temporizador, do harness em ação, das hipóteses e das limitações (o conteúdo continua no livro). Subtítulos simplificados: “Leilões → Notificações” (slide 6) e “Arquitetura: Sink → Stream → Listeners.” (slide 7).
+- **Roteiro** acompanha os 21 slides (26 páginas, ≈ 19 minutos): falas dos slides removidos retiradas, numeração, miniaturas, tabela de tempo e transições ajustadas.
+- **Autoria**: slides, roteiro e livro passam a trazer **Thalia Oliveira**. O histórico git foi reescrito (`git filter-repo`) com autoria `Thalia Oliveira <thalia.oliveira@arapiraca.ufal.br>` e caminhos absolutos trocados por relativos (raiz do repositório ou `~/`); os hashes citados nos registros foram atualizados para os commits reescritos.
+- **Materiais versionados**: `materiais/` (fontes HTML, ferramentas de geração, imagens e os três PDFs) entra no repositório.
